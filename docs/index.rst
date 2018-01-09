@@ -1,10 +1,19 @@
-Index
+Futils
 =====
 
+Utils
+-----
+
+A Collection of ``c++`` utils.
+
+Projects
+--------
+
+Projects using futils.
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    introduction
    utils
-   gettingstarted
-   references
+   fender
