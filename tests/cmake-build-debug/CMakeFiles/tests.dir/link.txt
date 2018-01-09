@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/tests.dir/Callback.cpp.o  -o tests -lcriterion -lpthread -ldl 
