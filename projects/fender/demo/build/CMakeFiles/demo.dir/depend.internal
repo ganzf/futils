@@ -5,6 +5,7 @@ CMakeFiles/demo.dir/src/App/App.cpp.o
  ../../src/Components/AbsoluteTransform.hpp
  ../../src/Components/Border.hpp
  ../../src/Components/Camera.hpp
+ ../../src/Components/ChildInfo.hpp
  ../../src/Components/Children.hpp
  ../../src/Components/GameObject.hpp
  ../../src/Components/Input.hpp
@@ -41,6 +42,7 @@ CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o
  ../../src/Components/AbsoluteTransform.hpp
  ../../src/Components/Border.hpp
  ../../src/Components/Camera.hpp
+ ../../src/Components/ChildInfo.hpp
  ../../src/Components/Children.hpp
  ../../src/Components/Color.hpp
  ../../src/Components/GameObject.hpp

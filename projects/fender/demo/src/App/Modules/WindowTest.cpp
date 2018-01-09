@@ -17,7 +17,7 @@ void WindowTest::initWindow()
             if (worlds.empty())
                 return ;
             auto &world = worlds.front();
-            world->unit *= 2;
+            world->unit += 16;
         }
         else if (key == futils::Keys::G)
         {
@@ -25,7 +25,7 @@ void WindowTest::initWindow()
             if (worlds.empty())
                 return ;
             auto &world = worlds.front();
-            world->unit /= 2;
+            world->unit -= 16;
         }
         else if (key == futils::Keys::D)
         {
@@ -74,7 +74,7 @@ void WindowTest::initWindow()
 }
 
 
-void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z)
+void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z, bool cam)
 {
     auto &go = em.create<fender::entities::GameObject>();
     auto &border = go.get<fender::components::Border>();
@@ -86,16 +86,26 @@ void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z)
     pos.position.z = z;
     pos.size.w = w;
     pos.size.h = h;
+    if (cam)
+    {
+        auto camera = em.get<fender::components::Camera>();
+        if (camera.empty())
+            return ;
+        std::cout << "Cam found"<< std::endl;
+        auto &myCam = camera.front()->getEntity();
+        auto &gui = myCam.get<fender::components::Children>();
+        gui.add(go);
+    }
 }
 
-void createGo(futils::EntityManager &em)
+void createGo(futils::EntityManager &em, bool cam = false)
 {
     static int count = 0;
     for(auto i = 0; i<10; i++) {
         futils::IntegralRange<int> rng(-50, 50);
         futils::IntegralRange<int> zrng(1, 10);
         testGO(em, rng.getRandom(), rng.getRandom(), 1, 1,
-               zrng.getRandom());
+               zrng.getRandom(), cam);
         count++;
         std::cout << count << std::endl;
     }
@@ -133,7 +143,7 @@ void WindowTest::run(float) {
         {
             while (i < 10) {
                 i++;
-                createGo(*entityManager);
+                createGo(*entityManager, true);
             }
         }
     }

@@ -699,6 +699,8 @@ fender.hpp
 ../src/Components/fender.hpp
 rendering.hpp
 ../src/Components/rendering.hpp
+ChildInfo.hpp
+../src/Components/ChildInfo.hpp
 
 ../src/Components/Color.hpp
 fender.hpp
@@ -983,12 +985,16 @@ rendering.hpp
 /home/arroganz/cpp/futils/projects/fender/src/Components/Children.cpp
 Children.hpp
 /home/arroganz/cpp/futils/projects/fender/src/Components/Children.hpp
+Entities/GameObject.hpp
+/home/arroganz/cpp/futils/projects/fender/src/Components/Entities/GameObject.hpp
 
 /home/arroganz/cpp/futils/projects/fender/src/Components/Children.hpp
 fender.hpp
 /home/arroganz/cpp/futils/projects/fender/src/Components/fender.hpp
 rendering.hpp
 /home/arroganz/cpp/futils/projects/fender/src/Components/rendering.hpp
+ChildInfo.hpp
+/home/arroganz/cpp/futils/projects/fender/src/Components/ChildInfo.hpp
 
 /home/arroganz/cpp/futils/projects/fender/src/Components/Color.cpp
 Color.hpp
@@ -1173,6 +1179,8 @@ Components/World.hpp
 /home/arroganz/cpp/futils/projects/fender/src/Systems/SFML/Components/World.hpp
 
 /home/arroganz/cpp/futils/projects/fender/src/Systems/SFML/Children.cpp
+Entities/GameObject.hpp
+/home/arroganz/cpp/futils/projects/fender/src/Systems/SFML/Entities/GameObject.hpp
 Children.hpp
 /home/arroganz/cpp/futils/projects/fender/src/Systems/SFML/Children.hpp
 

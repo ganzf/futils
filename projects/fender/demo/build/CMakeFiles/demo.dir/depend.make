@@ -4,6 +4,7 @@
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../../src/Components/AbsoluteTransform.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../../src/Components/Border.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../../src/Components/Camera.hpp
+CMakeFiles/demo.dir/src/App/App.cpp.o: ../../src/Components/ChildInfo.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../../src/Components/Children.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../../src/Components/GameObject.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../../src/Components/Input.hpp
@@ -40,6 +41,7 @@ CMakeFiles/demo.dir/src/App/App.cpp.o: ../src/App/Modules/WindowTest.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../../src/Components/AbsoluteTransform.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../../src/Components/Border.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../../src/Components/Camera.hpp
+CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../../src/Components/ChildInfo.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../../src/Components/Children.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../../src/Components/Color.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../../src/Components/GameObject.hpp

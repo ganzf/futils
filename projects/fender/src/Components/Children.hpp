@@ -6,6 +6,7 @@
 
 # include "fender.hpp"
 # include "rendering.hpp"
+#include "ChildInfo.hpp"
 
 namespace fender::entities
 {
@@ -14,12 +15,14 @@ namespace fender::entities
 
 namespace fender::components {
     struct Children : futils::IComponent {
-        bool reversed;
-        float padding;
-        futils::Align align;
-        futils::VAlign valign;
-        futils::Ordering order;
-        std::vector<entities::GameObject *> content;
+//        bool reversed;
+//        float padding;
+//        futils::Align align;
+//        futils::VAlign valign;
+//        futils::Ordering order;
+        std::unordered_map<entities::GameObject *, entities::GameObject *> content;
+        void add(entities::GameObject &obj);
+        void remove(entities::GameObject &obj);
     };
 }
 

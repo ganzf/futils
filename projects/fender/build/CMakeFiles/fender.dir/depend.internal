@@ -84,6 +84,11 @@ CMakeFiles/fender.dir/src/Components/ChildInfo.cpp.o
 CMakeFiles/fender.dir/src/Components/Children.cpp.o
  ../include/events.hpp
  ../include/fender.hpp
+ ../src/Components/AbsoluteTransform.hpp
+ ../src/Components/Border.hpp
+ ../src/Components/GameObject.hpp
+ ../src/Components/Transform.hpp
+ ../src/Entities/GameObject.hpp
  ../utils/clock.hpp
  ../utils/customTraits.hpp
  ../utils/datapacket.hpp
@@ -95,10 +100,12 @@ CMakeFiles/fender.dir/src/Components/Children.cpp.o
  ../utils/log.hpp
  ../utils/math.hpp
  ../utils/mediator.hpp
+ ../utils/position.hpp
  ../utils/queue.hpp
  ../utils/range.hpp
  ../utils/rendering.hpp
  ../utils/types.hpp
+ /home/arroganz/cpp/futils/projects/fender/src/Components/ChildInfo.hpp
  /home/arroganz/cpp/futils/projects/fender/src/Components/Children.cpp
  /home/arroganz/cpp/futils/projects/fender/src/Components/Children.hpp
 CMakeFiles/fender.dir/src/Components/Color.cpp.o
@@ -229,6 +236,7 @@ CMakeFiles/fender.dir/src/Entities/Camera.cpp.o
  ../src/Components/AbsoluteTransform.hpp
  ../src/Components/Border.hpp
  ../src/Components/Camera.hpp
+ ../src/Components/ChildInfo.hpp
  ../src/Components/Children.hpp
  ../src/Components/GameObject.hpp
  ../src/Components/Transform.hpp
@@ -633,6 +641,7 @@ CMakeFiles/fender.dir/src/Systems/SFML/Camera.cpp.o
  ../src/Components/AbsoluteTransform.hpp
  ../src/Components/Border.hpp
  ../src/Components/Camera.hpp
+ ../src/Components/ChildInfo.hpp
  ../src/Components/Children.hpp
  ../src/Components/Color.hpp
  ../src/Components/GameObject.hpp
@@ -666,8 +675,13 @@ CMakeFiles/fender.dir/src/Systems/SFML/Camera.cpp.o
 CMakeFiles/fender.dir/src/Systems/SFML/Children.cpp.o
  ../include/events.hpp
  ../include/fender.hpp
+ ../src/Components/AbsoluteTransform.hpp
+ ../src/Components/Border.hpp
  ../src/Components/ChildInfo.hpp
  ../src/Components/Children.hpp
+ ../src/Components/GameObject.hpp
+ ../src/Components/Transform.hpp
+ ../src/Entities/GameObject.hpp
  ../utils/clock.hpp
  ../utils/customTraits.hpp
  ../utils/datapacket.hpp
@@ -679,6 +693,7 @@ CMakeFiles/fender.dir/src/Systems/SFML/Children.cpp.o
  ../utils/log.hpp
  ../utils/math.hpp
  ../utils/mediator.hpp
+ ../utils/position.hpp
  ../utils/queue.hpp
  ../utils/range.hpp
  ../utils/rendering.hpp
@@ -1019,6 +1034,7 @@ CMakeFiles/fender.dir/src/Systems/SFML/Window.cpp.o
  ../src/Components/AbsoluteTransform.hpp
  ../src/Components/Border.hpp
  ../src/Components/Camera.hpp
+ ../src/Components/ChildInfo.hpp
  ../src/Components/Children.hpp
  ../src/Components/Color.hpp
  ../src/Components/GameObject.hpp

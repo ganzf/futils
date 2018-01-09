@@ -20,11 +20,19 @@ rendering.hpp
 fender.hpp
 ../../src/Components/fender.hpp
 
+../../src/Components/ChildInfo.hpp
+fender.hpp
+../../src/Components/fender.hpp
+rendering.hpp
+../../src/Components/rendering.hpp
+
 ../../src/Components/Children.hpp
 fender.hpp
 ../../src/Components/fender.hpp
 rendering.hpp
 ../../src/Components/rendering.hpp
+ChildInfo.hpp
+../../src/Components/ChildInfo.hpp
 
 ../../src/Components/Color.hpp
 fender.hpp
