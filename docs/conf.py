@@ -165,5 +165,7 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
+# Html theme : ReadTheDocs theme
+html_theme = "sphinx_rtd_theme"
 
 
