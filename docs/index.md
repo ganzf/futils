@@ -16,6 +16,6 @@ You'll find unit tests (not enough probably) in the ```tests``` folder.
 
 ## Projects
 
-### Fender
+### [Fender](./fender/index.md)
 
 Fender is a **modern c++ game engine** that supports (not yet, but soon) 2d and 3d rendering.
