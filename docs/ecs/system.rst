@@ -1,7 +1,7 @@
 class futils::ISystem
 =====================
 
-.. code-block:: c
+.. code-block:: cpp
 
    class   ISystem
    {

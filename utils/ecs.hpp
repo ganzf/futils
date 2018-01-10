@@ -22,33 +22,33 @@ namespace futils
     class   EntityManager;
     class   IEntity;
 
-    class   IComponent
+  class   IComponent
+  {
+  protected:
+    futils::type_index _typeindex;
+    IEntity     *__entity{nullptr};
+  public:
+    virtual ~IComponent() {}
+
+    // Friend of EntityManager
+    void setTypeindex(futils::type_index index) {
+      _typeindex = index;
+    }
+    // END
+
+    void                setEntity(IEntity &ent) {
+      __entity = &ent;
+    }
+
+    IEntity &getEntity() const
     {
-    protected:
-        futils::type_index _typeindex;
-        IEntity     *__entity{nullptr};
-    public:
-        virtual ~IComponent() {}
+      return *__entity;
+    }
 
-        // Friend of EntityManager
-        void setTypeindex(futils::type_index index) {
-            _typeindex = index;
-        }
-        // END
-
-        void                setEntity(IEntity &ent) {
-            __entity = &ent;
-        }
-
-        IEntity &getEntity() const
-        {
-            return *__entity;
-        }
-
-        futils::type_index getTypeindex() const {
-            return _typeindex;
-        }
-    };
+    futils::type_index getTypeindex() const {
+      return _typeindex;
+    }
+  };
 
   class   ISystem
   {
