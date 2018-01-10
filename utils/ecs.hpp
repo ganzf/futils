@@ -191,7 +191,7 @@ namespace futils
         EntityCreated(T const &entity): entity(entity) { verifType(); }
     };
 
-    class   EntityManager
+  class   EntityManager
     {
         int                                     status{0};
         std::unordered_map<std::string, ISystem *>   systemsMap;
