@@ -92,3 +92,25 @@ If everything goes well, here's what you could see
    -->     LOG => [Children] loaded.
    -->     LOG => [Border] loaded.
    -->     LOG => [mySystem] loaded.
+
+Shutting down
+-------------
+
+Fender will run as long as at least one system is up.
+So how do you exit your program cleanly ? send the ``Shutdown`` event declared in ``events.hpp``.
+
+.. rst-class:: fa fa-warning fa-2x
+
+   > Therefore, all systems **must** require this event and remove themselves from the engine.
+
+.. code-block:: cpp
+
+   addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &){
+                (...)
+                this->entityManager->removeSystem(this->name);
+                (...)
+   });
+
+.. rst-class:: fa fa-exclamation
+
+   > I didn't want to force all systems to react in a single way to Shutdown event. But don't forget to add your own reaction.

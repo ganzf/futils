@@ -28,3 +28,9 @@ Notations
 +------------+------------------------------------+
 | { Name }   | Indicates that name is a trinity   |
 +------------+------------------------------------+
+
+Tutorial goal
+-------------
+
+In this tutorial you will learn how to use fender to create a simple snake game.
+**This is a work in progress** : you may not actually build an entire game with this tutorial, as it is written during development of the engine.
