@@ -50,31 +50,31 @@ namespace futils
         }
     };
 
-    class   ISystem
-    {
-    protected:
-        std::string name{"Undefined"};
-        EntityManager *entityManager{nullptr};
-        Mediator *events{nullptr};
-        std::function<void(EntityManager *)> afterDeath{[](EntityManager *){}};
+  class   ISystem
+  {
+  protected:
+    std::string name{"Undefined"};
+    EntityManager *entityManager{nullptr};
+    Mediator *events{nullptr};
+    std::function<void(EntityManager *)> afterDeath{[](EntityManager *){}};
 
-        // It will segfault if events is not set. Be careful !
-        template <typename T>
-        void addReaction(std::function<void(IMediatorPacket &pkg)> fun)
-        {
-            events->require<T>(this, fun);
-        }
-    public:
-        virtual ~ISystem() {}
-        virtual void run(float elapsed = 0) = 0;
-        void provideManager(EntityManager &manager) { entityManager = &manager; }
-        void provideMediator(Mediator &mediator) { events = &mediator; }
-        std::string const &getName() const { return name; }
-        std::function<void(EntityManager *)> getAfterDeath()
-        {
-            return afterDeath;
-        }
-    };
+    // It will segfault if events is not set. Be careful !
+    template <typename T>
+    void addReaction(std::function<void(IMediatorPacket &pkg)> fun)
+    {
+      events->require<T>(this, fun);
+    }
+  public:
+    virtual ~ISystem() {}
+    virtual void run(float elapsed = 0) = 0;
+    void provideManager(EntityManager &manager) { entityManager = &manager; }
+    void provideMediator(Mediator &mediator) { events = &mediator; }
+    std::string const &getName() const { return name; }
+    std::function<void(EntityManager *)> getAfterDeath()
+    {
+      return afterDeath;
+    }
+  };
 
     class StateSystem : public ISystem
     {
