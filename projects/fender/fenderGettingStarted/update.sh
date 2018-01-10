@@ -3,7 +3,7 @@
 # Cloning into teamfcm/futils
 
 rm -rf dl_futils
-git clone -b master --single-branch http://github.com/teamfcm/futils dl_futils --depth=1
+git clone -b master --single-branch http://github.com/ganz_f/futils dl_futils --depth=1
 
 # Cloning ok
 echo "Ok - Recovered latest Futils version."
