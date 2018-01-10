@@ -1,5 +1,5 @@
-EntiyComponentSystem explained
-==============================
+ECS Design Explained
+====================
 
 Disclaimer : This is not actual working code, this is only intended to help you understand the underlying design of the engine.
 

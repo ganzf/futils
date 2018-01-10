@@ -6,8 +6,8 @@ Futils
 
    introduction
    installation
-   gettingstarted
    ecs
+   gettingstarted
    fender
    entities
    components

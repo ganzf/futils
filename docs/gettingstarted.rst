@@ -77,3 +77,18 @@ If you want to add your own systems, here's where you should do it.
                 
    }
 
+.. rst-class:: fa fa-warning fa-2x
+
+   > Do not add your systems before you call ``engine.start()``
+
+If everything goes well, here's what you could see
+
+.. code-block:: bash
+
+   -->     LOG => [Window] loaded.
+   -->     LOG => [Input] loaded.
+   -->     LOG => [Camera] loaded.
+   -->     LOG => [Grid] loaded.
+   -->     LOG => [Children] loaded.
+   -->     LOG => [Border] loaded.
+   -->     LOG => [mySystem] loaded.
