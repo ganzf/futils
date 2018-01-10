@@ -7,14 +7,13 @@ The ECS is a design pattern used to favor **composition** over inheritance. You 
 
 For example, here is a Window :
 
-.. code-block:: c++
-class Window : public Entity
-{
-  	Window(string name, string icon = "defaultIcon.ico") {
-      attach<Meta>(name, icon);
-  	}
-};
-```
+.. code-block:: cpp
+   class Window : public Entity
+   {
+                Window(string name, string icon = "defaultIcon.ico") {
+                attach<Meta>(name, icon);
+                }
+   };
 
 As you can see it is an entity (```public Entity```) composed of a Meta component (```attach<Meta>```) that holds the name of our Window, and a path to an icon.
 
