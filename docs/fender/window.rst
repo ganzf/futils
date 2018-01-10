@@ -74,4 +74,31 @@ I'm holding a **pointer** to entity because I need to **create** the entity with
      }
    }
 
-I'm using a static int to switch **states** : i'll initialize once and then forever just return.
+I'm using a static int to switch **states** : i'll initialize once and then forever just return. You are not forced to have an ``init`` function, but its often required (if only for event reactions).
+
+.. code-block:: cpp
+   :emphasize-lines: 3
+
+   void Snake::init()
+   {
+     myWindow = &entityManager->create<fender::entities::Window>();
+
+
+Here, you can see that I create my window using ``entityManager->create<fender::entitied::Window>()``. Note that i'll take the **address of the reference** because i'm storing a pointer.
+You **cannot** have a reference as class member, because that would require initializing it in the init-list, and you **cannot** do that because entityManager is **nullptr**.
+
+.. code-block:: cpp
+   :emphasize-lines: 4
+
+
+   void Snake::init()
+   {
+     myWindow = &entityManager->create<fender::entities::Window>();
+     auto &winComponent = myWindow.get<fender::components::Window>();
+
+Note that i'm taking a reference to the component of myWindow of type ``<fender::components::Window>``.
+
+.. rst-class:: fa fa-warning fa-2x
+
+    > **Never take a copy of the component**. This is a **common** mistake. **Always** take a reference or pointer to it.
+
