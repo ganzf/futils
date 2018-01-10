@@ -29,8 +29,8 @@ Use ``all.sh`` for all of the above.
 
    > The update.sh script will clone futils in a hidden folder.
 
-How to use
-----------
+Creating and adding your systems
+--------------------------------
 
 In the newly created directory, you'll find basic main.cpp
 
