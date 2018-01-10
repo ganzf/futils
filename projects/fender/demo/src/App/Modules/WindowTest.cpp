@@ -5,6 +5,7 @@
 #include "WindowTest.hpp"
 #include "Components/Color.hpp"
 #include "Components/World.hpp"
+#include "Entities/Image.hpp"
 #include "inputKeys.hpp"
 
 void WindowTest::initWindow()
@@ -70,6 +71,19 @@ void WindowTest::initWindow()
         cam.window = window;
         cam.activated = true;
         cam.debugMode = true;
+
+        auto image = &entityManager->create<fender::entities::Image>();
+
+        auto &imgTransform = image->get<fender::components::Transform>();
+        auto &imgBorder = image->get<fender::components::Border>();
+        auto img = image->get<fender::components::Image>();
+
+        imgBorder.visible = false;
+        imgTransform.position.x = 0;
+        imgTransform.position.y = 0;
+        imgTransform.size.x = 3;
+        imgTransform.size.y = 3;
+        img.file = "poulpi.png";
     }
 }
 
@@ -138,7 +152,7 @@ void WindowTest::run(float) {
         initInputs();
     } else
     {
-        static int i = 0;
+        static int i = 1;
         if (i == 0)
         {
             while (i < 10) {

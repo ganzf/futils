@@ -9,11 +9,20 @@ namespace fender::systems::SFMLSystems
 {
     void Image::renderImage(components::Image const &image, sf::RenderWindow &window){
         auto &absolute = image.getEntity().get<components::AbsoluteTransform>();
+
+        /*sf::Texture texture;
+        if (!texture.loadFromFile(image.file))
+            std::cout << "charge pas :(" << std::endl;
+
+        sf::Sprite sprite;
+        sprite.setTexture(texture);
+        sprite.setPosition(absolute.position.x, absolute.position.y);*/
+
         sf::RectangleShape shape;
         sf::Color color;
-        color = sf::Color::Black;
+        color = sf::Color::Blue;
         shape.setFillColor(sf::Color::Transparent);
-        shape.setOutlineThickness(2);
+        shape.setOutlineThickness(10);
         shape.setOutlineColor(color);
         shape.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
         shape.setPosition(absolute.position.x, absolute.position.y);
@@ -27,9 +36,13 @@ namespace fender::systems::SFMLSystems
             for (auto &obj: packet.objects)
             {
                 auto &image = obj->get<components::Image>();
+                // Faudrait get que les images pour render que les images et pas avoir de pb de sfml load texture mon cul
+                // Et du coup file toujours vide alors que je le set dans WindowTest
+                std::cout << "l'image : " << image.file << std::endl;
                 renderImage(image, *packet.window);
             }
         });
+        phase = Run;
     }
 
     void Image::run(float) {

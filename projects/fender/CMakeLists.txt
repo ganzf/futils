@@ -28,7 +28,7 @@ set(SOURCE_FILES
 		${COMPONENTS}
 		${SYSTEMS}
 		${SRC}
-		)
+        src/Entities/Image.cpp src/Entities/Image.hpp)
 
 if (UNIX)
 	add_compile_options(-Wall -Wextra -Werror)

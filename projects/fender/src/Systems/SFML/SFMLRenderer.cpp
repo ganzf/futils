@@ -9,6 +9,7 @@
 #include "Grid.hpp"
 #include "Children.hpp"
 #include "Border.hpp"
+#include "Image.hpp"
 
 fender::systems::SFMLRenderer::SFMLRenderer()
 {
@@ -23,6 +24,7 @@ void fender::systems::SFMLRenderer::init() {
     entityManager->addSystem<SFMLSystems::Grid>();
     entityManager->addSystem<SFMLSystems::Children>();
     entityManager->addSystem<SFMLSystems::Border>();
+    entityManager->addSystem<SFMLSystems::Image>();
     addReaction<events::Shutdown>([this](futils::IMediatorPacket &){
         entityManager->removeSystem(name);
     });
