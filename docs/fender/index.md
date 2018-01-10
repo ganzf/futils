@@ -1,2 +1,0 @@
-# Fender - A Game Engine
-

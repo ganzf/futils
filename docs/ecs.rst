@@ -1,3 +1,3 @@
-ecs
-===
+EntiyComponentSystem explained
+==============================
 
