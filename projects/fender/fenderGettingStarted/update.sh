@@ -5,17 +5,8 @@
 # Cloning into teamfcm/futils
 
 if [ ! -d ".dl_futils" ]; then
-    echo " - Downloading futils..."
-
-    if [ "$1" == "dev" ]; then
-        echo " -- Status: Dev"
-        git clone -b dev --single-branch git@github.com:ganzf/futils.git .dl_futils --depth=1
-    fi
-    if [ "$1" == "stable" ]; then
-        echo " -- Status: Stable"
-        git clone -b master --single-branch git@github.com:ganzf/futils.git .dl_futils --depth=1
-    fi
-
+    echo "Downloading futils ..."
+    git clone -b master --single-branch git@github.com:ganzf/futils.git .dl_futils --depth=1
     echo " - Done."
 fi
 
