@@ -9,6 +9,10 @@
 # include <sstream>
 # include "math.hpp"
 
+//TODO: j'ai rajouté ca pour accéder a fender::vector2i ca pose pas de souci ?
+
+# include "fender.hpp"
+
 namespace futils {
     enum class EventType
     {
@@ -32,6 +36,20 @@ namespace futils {
         Down,
         GoingUp,
         GoingDown,
+    };
+
+    struct MouseClicked
+    {
+        fender::vec2i pos;
+    };
+
+    struct MouseMoved
+    {
+        //TODO: je ne vois pas l'interet
+        //enum EventType type{EventType::MouseMoved};
+
+        fender::vec2i lastPos;
+        fender::vec2i newPos;
     };
 
     enum class Keys : int {

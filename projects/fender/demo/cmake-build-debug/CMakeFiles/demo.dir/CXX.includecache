@@ -6,13 +6,33 @@
 
 #IncludeRegexTransform: 
 
+../../src/Components/AbsoluteTransform.hpp
+fender.hpp
+-
+
+../../src/Components/Border.hpp
+fender.hpp
+../../src/Components/fender.hpp
+rendering.hpp
+../../src/Components/rendering.hpp
+
 ../../src/Components/Camera.hpp
 fender.hpp
 ../../src/Components/fender.hpp
 
+../../src/Components/ChildInfo.hpp
+fender.hpp
+../../src/Components/fender.hpp
+rendering.hpp
+../../src/Components/rendering.hpp
+
 ../../src/Components/Children.hpp
 fender.hpp
 ../../src/Components/fender.hpp
+rendering.hpp
+../../src/Components/rendering.hpp
+ChildInfo.hpp
+../../src/Components/ChildInfo.hpp
 
 ../../src/Components/Color.hpp
 fender.hpp
@@ -40,6 +60,10 @@ position.hpp
 fender.hpp
 ../../src/Components/fender.hpp
 
+../../src/Components/World.hpp
+fender.hpp
+../../src/Components/fender.hpp
+
 ../../src/Entities/Camera.hpp
 fender.hpp
 ../../src/Entities/fender.hpp
@@ -51,6 +75,10 @@ Components/Children.hpp
 ../../src/Entities/Components/Children.hpp
 
 ../../src/Entities/GameObject.hpp
+Components/AbsoluteTransform.hpp
+-
+Components/Border.hpp
+-
 fender.hpp
 ../../src/Entities/fender.hpp
 Components/GameObject.hpp
@@ -219,6 +247,14 @@ log.hpp
 ../utils/log.hpp
 
 ../utils/inputKeys.hpp
+vector
+-
+string
+-
+sstream
+-
+math.hpp
+../utils/math.hpp
 
 ../utils/log.hpp
 iostream
@@ -293,6 +329,8 @@ WindowTest.hpp
 /home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/WindowTest.hpp
 Components/Color.hpp
 /home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Components/Color.hpp
+Components/World.hpp
+/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Components/World.hpp
 inputKeys.hpp
 /home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/inputKeys.hpp
 

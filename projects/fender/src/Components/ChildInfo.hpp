@@ -8,12 +8,16 @@
 # include "fender.hpp"
 # include "rendering.hpp"
 
+namespace fender::entities
+{
+    class GameObject;
+}
+
 namespace fender::components {
     struct ChildInfo : futils::IComponent {
-        futils::VAlign valign;
-        futils::Align align;
-        bool isGridRelative{false};
         vec3f offset;
+        bool isGridRelative{false};
+        futils::IEntity *parent{nullptr};
     };
 }
 

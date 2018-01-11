@@ -28,7 +28,7 @@ set(SOURCE_FILES
 		${COMPONENTS}
 		${SYSTEMS}
 		${SRC}
-		)
+        src/Entities/Image.cpp src/Entities/Image.hpp src/Components/Clickable.cpp src/Components/Clickable.hpp src/Systems/SFML/Clickable.cpp src/Systems/SFML/Clickable.hpp)
 
 if (UNIX)
 	add_compile_options(-Wall -Wextra -Werror)

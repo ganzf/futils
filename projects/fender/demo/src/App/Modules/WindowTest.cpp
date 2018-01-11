@@ -5,6 +5,7 @@
 #include "WindowTest.hpp"
 #include "Components/Color.hpp"
 #include "Components/World.hpp"
+#include "Entities/Image.hpp"
 #include "inputKeys.hpp"
 
 void WindowTest::initWindow()
@@ -17,7 +18,7 @@ void WindowTest::initWindow()
             if (worlds.empty())
                 return ;
             auto &world = worlds.front();
-            world->unit *= 2;
+            world->unit += 16;
         }
         else if (key == futils::Keys::G)
         {
@@ -25,7 +26,7 @@ void WindowTest::initWindow()
             if (worlds.empty())
                 return ;
             auto &world = worlds.front();
-            world->unit /= 2;
+            world->unit -= 16;
         }
         else if (key == futils::Keys::D)
         {
@@ -70,11 +71,28 @@ void WindowTest::initWindow()
         cam.window = window;
         cam.activated = true;
         cam.debugMode = true;
+
+        auto image = &entityManager->create<fender::entities::Image>();
+
+        auto &imgTransform = image->get<fender::components::Transform>();
+        auto &imgBorder = image->get<fender::components::Border>();
+        auto &img = image->get<fender::components::Image>();
+        auto &click = image->get<fender::components::Clickable>();
+
+        imgBorder.visible = false;
+        imgTransform.position.x = 0;
+        imgTransform.position.y = 0;
+        imgTransform.size.x = 1;
+        imgTransform.size.y = 1;
+        img.file = "poulpi.png";
+        click.func = [this]() {
+            events->send<fender::events::Shutdown>();
+        };
     }
 }
 
 
-void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z)
+void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z, bool cam)
 {
     auto &go = em.create<fender::entities::GameObject>();
     auto &border = go.get<fender::components::Border>();
@@ -86,16 +104,26 @@ void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z)
     pos.position.z = z;
     pos.size.w = w;
     pos.size.h = h;
+    if (cam)
+    {
+        auto camera = em.get<fender::components::Camera>();
+        if (camera.empty())
+            return ;
+        std::cout << "Cam found"<< std::endl;
+        auto &myCam = camera.front()->getEntity();
+        auto &gui = myCam.get<fender::components::Children>();
+        gui.add(go);
+    }
 }
 
-void createGo(futils::EntityManager &em)
+void createGo(futils::EntityManager &em, bool cam = false)
 {
     static int count = 0;
     for(auto i = 0; i<10; i++) {
         futils::IntegralRange<int> rng(-50, 50);
         futils::IntegralRange<int> zrng(1, 10);
         testGO(em, rng.getRandom(), rng.getRandom(), 1, 1,
-               zrng.getRandom());
+               zrng.getRandom(), cam);
         count++;
         std::cout << count << std::endl;
     }
@@ -128,12 +156,12 @@ void WindowTest::run(float) {
         initInputs();
     } else
     {
-        static int i = 0;
+        static int i = 1;
         if (i == 0)
         {
             while (i < 10) {
                 i++;
-                createGo(*entityManager);
+                createGo(*entityManager, true);
             }
         }
     }

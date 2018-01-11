@@ -1,0 +1,6 @@
+.idea/
+projects/fender/build/
+projects/fender/cmake-build-debug/
+projects/fender/demo/build/
+projects/fender/demo/demo
+projects/fender/.idea/

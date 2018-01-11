@@ -20,6 +20,8 @@ namespace fender::systems::SFMLSystems
         };
 
         void init();
+        void updateAllChildren();
+        void rec_updateChildInfo(components::ChildInfo &);
     public:
         Children() : System("Children") {}
         void run(float) override;
