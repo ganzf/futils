@@ -22,7 +22,7 @@ namespace fender::systems::SFMLSystems
             if (window->has<components::Color>()) {
                 color << window->get<components::Color>().color;
                 realWindow->clear(color);
-            } else { std::cerr << "Cannot clear window because of missing (Color)." << std::endl;}
+            }
         });
         addReaction<RequestWindow>([this](futils::IMediatorPacket &pkg){
             auto &request = futils::Mediator::rebuild<RequestWindow>(pkg);
