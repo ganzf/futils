@@ -4,6 +4,14 @@ Opening a Window
 Now that you know the basics (**creating and adding a system**, **sending and receiving events**), let's see what you can do with the engine.
 Since this engine is targeted at developers, it requires you to create everything, starting with the window.
 
+Expected result
+---------------
+
+.. image:: simpleWindow.png
+   :width: 100%
+   :alt: A Simple Window
+
+
 Creating the game system
 ------------------------
 
@@ -78,8 +86,8 @@ I'm holding a **pointer** to entity because I need to **create** the entity with
 
 I'm using a static int to switch **states** : i'll initialize once and then forever just return. You are not forced to have an ``init`` function, but its often required (if only for event reactions).
 
-Window ini
-----------
+Window init
+-----------
 
 .. code-block:: cpp
    :emphasize-lines: 3
@@ -122,11 +130,4 @@ Note that i'm taking a reference to the component of myWindow of type ``<fender:
      }
      
 If the window isn't open already, then i'll set **visible** to **true** (the system will know it must render this window) and set other self-explanatory variables.
-
-Expected result
----------------
-
-.. image:: simpleWindow.png
-   :width: 100%
-   :alt: A Simple Window
 

@@ -8,7 +8,7 @@
 # include "Components/World.hpp"
 
 namespace fender::entities {
-    class World : futils::IEntity {
+    class World : public futils::IEntity {
     public:
         World() {
             attach<components::World>();
