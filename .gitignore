@@ -1,8 +1,9 @@
-.idea/
+.idea/*
 projects/fender/build/
 projects/fender/cmake-build-debug/
 projects/fender/demo/build/
 projects/fender/demo/demo
-projects/fender/.idea
+projects/fender/.idea/*
+projects/fender/.idea/*.xml
 projects/fender/demo/libfender.a
 docs/_build
