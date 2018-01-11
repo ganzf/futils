@@ -4,25 +4,27 @@ Opening a Window
 Now that you know the basics (**creating and adding a system**, **sending and receiving events**), let's see what you can do with the engine.
 Since this engine is targeted at developers, it requires you to create everything, starting with the window.
 
-First step
-----------
+Creating the game system
+------------------------
 
-Remember, we want to create a simple snake game. We're gonna create a Snake system.
+Remember, we want to create a simple snake game. We're gonna create a Game system.
 
 .. code-block:: cpp
 
+   # include "fender.hpp"
+   # include "events.hpp"
    # include "Entities/Window.hpp"
 
-   class Snake : public futils::ISystem
+   class Game : public futils::ISystem
    {
                 fender::entities::Window *myWindow{nullptr};
                 void init();
    public:
-                Snake() = default;
+                Game() = default;
                 void run(float) final;
    }
 
-   void Snake::run(float)
+   void Game::run(float)
    {
      static int phase = 0;
      switch(phase) {
@@ -34,21 +36,21 @@ Remember, we want to create a simple snake game. We're gonna create a Snake syst
      }
    }
 
-   void Snake::init()
+   void Game::init()
    {
      myWindow = &entityManager->create<fender::entities::Window>();
-     auto &winComponent = myWindow.get<fender::components::Window>();
+     auto &winComponent = myWindow->get<fender::components::Window>();
      if (!winComponent.isOpen) {
-       win.visible = true;
-       win.title = "Snake";
-       win.size.w = 800; // in px
-       win.size.h = 600; // in px
+       winComponent.visible = true;
+       winComponent.title = "Snake - Fender";
+       winComponent.size.w = 800; // in px
+       winComponent.size.h = 600; // in px
      }
-     addReaction<Shutdown>([this](futils::IMediatorPacket &)
+     addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &)
      {
        this->entityManager->removeSystem(this->name);
      });
-   }
+   };
 
 Let's take some time to understand this bit of code. First, you should know that if you compile and run, it will only open a window and display a black background.
 But it's a start !
@@ -62,7 +64,7 @@ I'm holding a **pointer** to entity because I need to **create** the entity with
 .. code-block:: cpp
    :emphasize-lines: 3,4
 
-   void Snake::run(float)
+   void Game::run(float)
    {
      static int phase = 0;
      switch(phase) {
@@ -76,10 +78,13 @@ I'm holding a **pointer** to entity because I need to **create** the entity with
 
 I'm using a static int to switch **states** : i'll initialize once and then forever just return. You are not forced to have an ``init`` function, but its often required (if only for event reactions).
 
+Window ini
+----------
+
 .. code-block:: cpp
    :emphasize-lines: 3
 
-   void Snake::init()
+   void Game::init()
    {
      myWindow = &entityManager->create<fender::entities::Window>();
 
@@ -91,14 +96,37 @@ You **cannot** have a reference as class member, because that would require init
    :emphasize-lines: 4
 
 
-   void Snake::init()
+   void Game::init()
    {
      myWindow = &entityManager->create<fender::entities::Window>();
-     auto &winComponent = myWindow.get<fender::components::Window>();
+     auto &winComponent = myWindow->get<fender::components::Window>();
 
 Note that i'm taking a reference to the component of myWindow of type ``<fender::components::Window>``.
 
 .. rst-class:: fa fa-warning fa-2x
 
     > **Never take a copy of the component**. This is a **common** mistake. **Always** take a reference or pointer to it.
+
+.. code-block:: cpp
+   :emphasize-lines: 5,6,7,8,9,10
+
+   void Game::init()
+   {
+     myWindow = &entityManager->create<fender::entities::Window>();
+     auto &winComponent = myWindow.get<fender::components::Window>();
+     if (!winComponent.isOpen) {
+       winComponent.visible = true;
+       winComponent.title = "Snake - Fender";
+       winComponent.size.w = 800; // in px
+       winComponent.size.h = 600; // in px
+     }
+     
+If the window isn't open already, then i'll set **visible** to **true** (the system will know it must render this window) and set other self-explanatory variables.
+
+Expected result
+---------------
+
+.. image:: simpleWindow.png
+   :width: 100%
+   :alt: A Simple Window
 
