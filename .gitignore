@@ -4,3 +4,5 @@ projects/fender/cmake-build-debug/
 projects/fender/demo/build/
 projects/fender/demo/demo
 projects/fender/.idea/
+projects/fender/demo/libfender.a
+docs/_build
