@@ -29,6 +29,8 @@ namespace fender::systems::SFMLSystems
             for (auto &obj: packet.objects)
             {
                 //TODO: test with another game object -> method has in an entity
+                if (!obj->has<components::Image>())
+                    continue ;
                 auto &image = obj->get<components::Image>();
                 renderImage(image, *packet.window);
             }
