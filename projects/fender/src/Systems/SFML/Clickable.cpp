@@ -17,8 +17,6 @@ namespace fender::systems::SFMLSystems
 
             for (auto &click : clickables)
             {
-                if (!click->has<components::AbsoluteTransform>())
-                    continue ;
                 auto absolute = click->getEntity().get<components::AbsoluteTransform>();
                 if (packet.pos.x >= absolute.position.x && packet.pos.x <= absolute.position.x + absolute.size.w
                     && packet.pos.y >= absolute.position.y && packet.pos.y <= absolute.position.y + absolute.size.h)
