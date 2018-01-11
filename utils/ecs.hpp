@@ -155,7 +155,7 @@ namespace futils
         template <typename T>
         bool has()
         {
-            static_assert(std::is_base_of<IComponent, T>::value, "Error : " + std::string(typeid(T).name()) + " is not a Component in entity->has<T>()");
+            static_assert(std::is_base_of<IComponent, T>::value, "Error : T is not a Component in entity->has<T>()");
             for (auto &it: components)
             {
                 if (it.first == futils::type<T>::index)
