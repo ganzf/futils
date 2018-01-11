@@ -9,24 +9,17 @@ namespace fender::systems::SFMLSystems
 {
     void Image::renderImage(components::Image const &image, sf::RenderWindow &window){
         auto &absolute = image.getEntity().get<components::AbsoluteTransform>();
+        //TODO: stock texture in a map with filename as key -> ASSETS LOADER
+        sf::Texture texture;
+        texture.loadFromFile(image.file);
+        texture.setSmooth(true);
 
-        /*sf::Texture texture;
-        if (!texture.loadFromFile(image.file))
-            std::cout << "charge pas :(" << std::endl;
+        sf::RectangleShape sprite;
+        sprite.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
+        sprite.setTexture(&texture);
+        sprite.setPosition(absolute.position.x, absolute.position.y);
 
-        sf::Sprite sprite;
-        sprite.setTexture(texture);
-        sprite.setPosition(absolute.position.x, absolute.position.y);*/
-
-        sf::RectangleShape shape;
-        sf::Color color;
-        color = sf::Color::Blue;
-        shape.setFillColor(sf::Color::Transparent);
-        shape.setOutlineThickness(10);
-        shape.setOutlineColor(color);
-        shape.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
-        shape.setPosition(absolute.position.x, absolute.position.y);
-        window.draw(shape);
+        window.draw(sprite);
     }
 
     void Image::init() {
@@ -35,10 +28,8 @@ namespace fender::systems::SFMLSystems
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
+                //TODO: test with another game object -> method has in an entity
                 auto &image = obj->get<components::Image>();
-                // Faudrait get que les images pour render que les images et pas avoir de pb de sfml load texture mon cul
-                // Et du coup file toujours vide alors que je le set dans WindowTest
-                std::cout << "l'image : " << image.file << std::endl;
                 renderImage(image, *packet.window);
             }
         });
