@@ -10,6 +10,7 @@
 #include "Children.hpp"
 #include "Border.hpp"
 #include "Image.hpp"
+#include "Clickable.hpp"
 
 fender::systems::SFMLRenderer::SFMLRenderer()
 {
@@ -25,6 +26,7 @@ void fender::systems::SFMLRenderer::init() {
     entityManager->addSystem<SFMLSystems::Children>();
     entityManager->addSystem<SFMLSystems::Border>();
     entityManager->addSystem<SFMLSystems::Image>();
+    entityManager->addSystem<SFMLSystems::Clickable>();
     addReaction<events::Shutdown>([this](futils::IMediatorPacket &){
         entityManager->removeSystem(name);
     });

@@ -77,6 +77,7 @@ void WindowTest::initWindow()
         auto &imgTransform = image->get<fender::components::Transform>();
         auto &imgBorder = image->get<fender::components::Border>();
         auto &img = image->get<fender::components::Image>();
+        auto &click = image->get<fender::components::Clickable>();
 
         imgBorder.visible = false;
         imgTransform.position.x = 0;
@@ -84,6 +85,9 @@ void WindowTest::initWindow()
         imgTransform.size.x = 1;
         imgTransform.size.y = 1;
         img.file = "poulpi.png";
+        click.func = [this]() {
+            events->send<fender::events::Shutdown>();
+        };
     }
 }
 

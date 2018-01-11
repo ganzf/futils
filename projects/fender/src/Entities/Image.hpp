@@ -6,6 +6,7 @@
 #pragma once
 
 #include <Components/Image.hpp>
+#include <Components/Clickable.hpp>
 # include "fender.hpp"
 # include "GameObject.hpp"
 # include "Components/Camera.hpp"
@@ -14,11 +15,14 @@
 namespace fender::entities {
     class Image : public GameObject {
     public:
+        //TODO: enlever le component clickable et faire une entité bouton
         Image() {;
             attach<components::Image>();
+            attach<components::Clickable>();
         }
         ~Image() {
             detach<components::Image>();
+            detach<components::Clickable>();
         }
     };
 }
