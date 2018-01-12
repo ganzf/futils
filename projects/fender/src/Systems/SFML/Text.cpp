@@ -16,12 +16,14 @@ namespace fender::systems::SFMLSystems
         //TODO: stock font dans une map d'assets au démarrage?
         //TODO: avoir ces données
         sf::Font font;
+        sf::Color color;
 
-        font.loadFromFile("arial.ttf");
+        color << txt.style.color;
+        font.loadFromFile(txt.style.font);
         text.setFont(font);
         text.setString(txt.str);
-        text.setCharacterSize(24);
-        text.setFillColor(sf::Color::Red);
+        text.setCharacterSize(txt.style.size);
+        text.setFillColor(color);
         text.setPosition(sf::Vector2f(absolute.position.x, absolute.position.y));
 
         window.draw(text);

@@ -6,6 +6,7 @@
 #include "Components/Color.hpp"
 #include "Components/World.hpp"
 #include "Entities/Image.hpp"
+#include "Entities/Text.hpp"
 #include "inputKeys.hpp"
 
 void WindowTest::initWindow()
@@ -71,6 +72,13 @@ void WindowTest::initWindow()
         cam.window = window;
         cam.activated = true;
         cam.debugMode = true;
+
+        auto text = &entityManager->create<fender::entities::Text>("Salut");
+        auto &txtTransform = text->get<fender::components::Transform>();
+
+        txtTransform.position.x = 3;
+        txtTransform.position.y = 3;
+
 
         auto image = &entityManager->create<fender::entities::Image>();
 

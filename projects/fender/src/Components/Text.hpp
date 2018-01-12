@@ -10,6 +10,7 @@ namespace fender::components
 {
     class Text : public futils::IComponent {
     public:
-        std::string str;
+        futils::TextStyle   style;
+        std::string         str;
     };
 }

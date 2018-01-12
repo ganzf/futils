@@ -12,8 +12,13 @@ namespace fender::entities
     class Text : public GameObject
     {
     public:
-        Text() {
+        Text(std::string const &s) {
             attach<components::Text>();
+            auto &text = get<components::Text>();
+            text.style.size = 24;
+            text.style.color = futils::White;
+            text.style.font = "arial.ttf";
+            text.str = s;
         }
 
         ~Text() {
