@@ -23,7 +23,6 @@ namespace fender::systems::SFMLSystems
         __init();
 
         addReaction<RenderLayer>([this](futils::IMediatorPacket &pkg){
-            //std::cout << "Combien de texture ? = " << _textures->size() << std::endl;
             if (_textures == nullptr)
                 return;
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
