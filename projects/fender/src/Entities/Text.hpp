@@ -17,7 +17,7 @@ namespace fender::entities
             auto &text = get<components::Text>();
             text.style.size = 24;
             text.style.color = futils::White;
-            text.style.font = "arial.ttf";
+            text.style.font = "ressources/arial.ttf";
             text.str = s;
         }
 

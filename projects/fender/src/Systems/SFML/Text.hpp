@@ -16,10 +16,10 @@ namespace fender::systems::SFMLSystems
             Init = 0,
             Run
         };
-        //void renderBorder(components::Border const &, sf::RenderWindow &);
+        std::unordered_map<std::string, sf::Font> *_fonts = nullptr;
         void renderText(components::Text const &, sf::RenderWindow &);
         void init();
-        //bool shouldPrint; // debug only
+
     public:
         Text(): System("Text") {}
         void run(float) override;

@@ -4,27 +4,27 @@
 
 #include "Image.hpp"
 #include "Camera.hpp"
+#include "AssetLoader.hpp"
 
 namespace fender::systems::SFMLSystems
 {
     void Image::renderImage(components::Image const &image, sf::RenderWindow &window){
         auto &absolute = image.getEntity().get<components::AbsoluteTransform>();
-        //TODO: stock texture in a map with filename as key -> ASSETS LOADER
-        sf::Texture texture;
-        texture.loadFromFile(image.file);
-        texture.setSmooth(true);
 
+        sf::Texture texture = (*_textures)[image.file];
         sf::RectangleShape sprite;
         sprite.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
         sprite.setTexture(&texture);
         sprite.setPosition(absolute.position.x, absolute.position.y);
-
         window.draw(sprite);
     }
 
     void Image::init() {
         __init();
+
         addReaction<RenderLayer>([this](futils::IMediatorPacket &pkg){
+            if (_textures == nullptr)
+                return;
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
@@ -34,6 +34,13 @@ namespace fender::systems::SFMLSystems
                 renderImage(image, *packet.window);
             }
         });
+
+        addReaction<AssetsLoaded>([this](futils::IMediatorPacket &pkg){
+            auto &packet = futils::Mediator::rebuild<AssetsLoaded>(pkg);
+                _textures = packet.textures;
+        });
+
+        events->send<RequestAssets>(RequestAssets());
         phase = Run;
     }
 

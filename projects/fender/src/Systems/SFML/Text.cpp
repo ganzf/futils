@@ -5,6 +5,7 @@
 #include "Text.hpp"
 #include "Components/AbsoluteTransform.hpp"
 #include "Camera.hpp"
+#include "AssetLoader.hpp"
 
 namespace fender::systems::SFMLSystems
 {
@@ -13,16 +14,17 @@ namespace fender::systems::SFMLSystems
         auto &absolute = txt.getEntity().get<components::AbsoluteTransform>();
         sf::Text text;
 
-        //TODO: stock font dans une map d'assets au démarrage?
-        //TODO: avoir ces données
-        sf::Font font;
         sf::Color color;
 
         color << txt.style.color;
-        font.loadFromFile(txt.style.font);
-        text.setFont(font);
+        text.setFont((*_fonts)[txt.style.font]);
         text.setString(txt.str);
+        //std::cout << 0.25 *absolute.size.h << "compare to " << txt.style.size << std::endl;
         text.setCharacterSize(txt.style.size);
+
+        if (text.getGlobalBounds().width > absolute.size.x)
+            text.setCharacterSize((absolute.size.h / absolute.size.w) / absolute.size.w);
+
         text.setFillColor(color);
         text.setPosition(sf::Vector2f(absolute.position.x, absolute.position.y));
 
@@ -32,17 +34,25 @@ namespace fender::systems::SFMLSystems
     void Text::init() {
         __init();
         addReaction<RenderLayer>([this](futils::IMediatorPacket &pkg){
+            if (_fonts == nullptr)
+                return;
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
-                //TODO: test with another game object -> method has in an entity
-                try {
-                    auto &text = obj->get<components::Text>();
-                    renderText(text, *packet.window);
-                }
-                catch (...) {}
+                if (!obj->has<components::Text>())
+                    continue ;
+                auto &text = obj->get<components::Text>();
+                renderText(text, *packet.window);
             }
         });
+
+        addReaction<AssetsLoaded>([this](futils::IMediatorPacket &pkg){
+            auto &packet = futils::Mediator::rebuild<AssetsLoaded>(pkg);
+            _fonts = packet.fonts;
+        });
+
+        events->send<RequestAssets>(RequestAssets());
+
         phase = Run;
     }
 

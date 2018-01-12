@@ -16,6 +16,7 @@ namespace fender::systems::SFMLSystems
             Init = 0,
             Run
         };
+        std::unordered_map<std::string, sf::Texture> *_textures = nullptr;
         void renderImage(components::Image const &, sf::RenderWindow &);
         void init();
     public:

@@ -7,6 +7,7 @@
 #include "Components/World.hpp"
 #include "Entities/Image.hpp"
 #include "Entities/Text.hpp"
+#include "Entities/Button.hpp"
 #include "inputKeys.hpp"
 
 void WindowTest::initWindow()
@@ -75,25 +76,47 @@ void WindowTest::initWindow()
 
         auto text = &entityManager->create<fender::entities::Text>("Salut");
         auto &txtTransform = text->get<fender::components::Transform>();
+        auto &txtBorder = text->get<fender::components::Border>();
 
         txtTransform.position.x = 3;
         txtTransform.position.y = 3;
-
+        txtTransform.size.x = 2;
+        txtTransform.size.y = 1;
+        txtBorder.visible = false;
 
         auto image = &entityManager->create<fender::entities::Image>();
 
         auto &imgTransform = image->get<fender::components::Transform>();
         auto &imgBorder = image->get<fender::components::Border>();
         auto &img = image->get<fender::components::Image>();
-        auto &click = image->get<fender::components::Clickable>();
 
         imgBorder.visible = false;
         imgTransform.position.x = 0;
         imgTransform.position.y = 0;
         imgTransform.size.x = 1;
         imgTransform.size.y = 1;
-        img.file = "poulpi.png";
-        click.func = [this]() {
+        img.file = "ressources/poulpi.png";
+
+        auto button = &entityManager->create<fender::entities::Button>();
+        auto &buttTransform = button->get<fender::components::Transform>();
+        auto &buttBorder = button->get<fender::components::Border>();
+        auto &buttImage = button->get<fender::components::Image>();
+        auto &buttText = button->get<fender::components::Text>();
+        auto &buttClick = button->get<fender::components::Clickable>();
+
+        buttBorder.visible = false;
+        buttTransform.position.x = -2;
+        buttTransform.position.y = -2;
+        buttTransform.size.x = 1;
+        buttTransform.size.y = 1;
+        buttImage.file = "ressources/poulpi.png";
+
+        buttText.style.size = 24;
+        buttText.style.color = futils::White;
+        buttText.style.font = "ressources/arial.ttf";
+        buttText.str = "OUI";
+
+        buttClick.func = [this]() {
             events->send<fender::events::Shutdown>();
         };
     }
