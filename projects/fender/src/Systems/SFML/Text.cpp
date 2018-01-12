@@ -5,6 +5,7 @@
 #include "Text.hpp"
 #include "Components/AbsoluteTransform.hpp"
 #include "Camera.hpp"
+#include "AssetLoader.hpp"
 
 namespace fender::systems::SFMLSystems
 {
@@ -13,14 +14,10 @@ namespace fender::systems::SFMLSystems
         auto &absolute = txt.getEntity().get<components::AbsoluteTransform>();
         sf::Text text;
 
-        //TODO: stock font dans une map d'assets au démarrage?
-        //TODO: avoir ces données
-        sf::Font font;
         sf::Color color;
 
         color << txt.style.color;
-        font.loadFromFile(txt.style.font);
-        text.setFont(font);
+        text.setFont((*_fonts)[txt.style.font]);
         text.setString(txt.str);
         text.setCharacterSize(txt.style.size);
         text.setFillColor(color);
@@ -32,6 +29,8 @@ namespace fender::systems::SFMLSystems
     void Text::init() {
         __init();
         addReaction<RenderLayer>([this](futils::IMediatorPacket &pkg){
+            if (_fonts == nullptr)
+                return;
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
@@ -41,6 +40,14 @@ namespace fender::systems::SFMLSystems
                 renderText(text, *packet.window);
             }
         });
+
+        addReaction<SendAssets>([this](futils::IMediatorPacket &pkg){
+            auto &packet = futils::Mediator::rebuild<SendAssets>(pkg);
+            _fonts = packet.fonts;
+        });
+
+        events->send<RequestAssets>(RequestAssets());
+
         phase = Run;
     }
 
