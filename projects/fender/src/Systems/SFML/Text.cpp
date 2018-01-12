@@ -35,12 +35,10 @@ namespace fender::systems::SFMLSystems
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
-                //TODO: test with another game object -> method has in an entity
-                try {
-                    auto &text = obj->get<components::Text>();
-                    renderText(text, *packet.window);
-                }
-                catch (...) {}
+                if (!obj->has<components::Text>())
+                    continue ;
+                auto &text = obj->get<components::Text>();
+                renderText(text, *packet.window);
             }
         });
         phase = Run;
