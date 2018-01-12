@@ -41,8 +41,8 @@ namespace fender::systems::SFMLSystems
             }
         });
 
-        addReaction<SendAssets>([this](futils::IMediatorPacket &pkg){
-            auto &packet = futils::Mediator::rebuild<SendAssets>(pkg);
+        addReaction<AssetsLoaded>([this](futils::IMediatorPacket &pkg){
+            auto &packet = futils::Mediator::rebuild<AssetsLoaded>(pkg);
             _fonts = packet.fonts;
         });
 
