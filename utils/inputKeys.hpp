@@ -9,7 +9,7 @@
 # include <sstream>
 # include "math.hpp"
 
-//TODO: j'ai rajouté ca pour accéder a fender::vector2i ca pose pas de souci ?
+//TODO: j'ai rajouté ca pour accéder a fender::vector2i ca pose pas de souci ? 
 
 # include "fender.hpp"
 
