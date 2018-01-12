@@ -92,7 +92,7 @@ void WindowTest::initWindow()
         imgTransform.position.y = 0;
         imgTransform.size.x = 1;
         imgTransform.size.y = 1;
-        img.file = "poulpi.png";
+        img.file = "ressources/poulpi.png";
         click.func = [this]() {
             events->send<fender::events::Shutdown>();
         };
