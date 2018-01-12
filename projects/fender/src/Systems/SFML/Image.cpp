@@ -28,7 +28,6 @@ namespace fender::systems::SFMLSystems
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
-                //TODO: test with another game object -> method has in an entity
                 if (!obj->has<components::Image>())
                     continue ;
                 auto &image = obj->get<components::Image>();
