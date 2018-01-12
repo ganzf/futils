@@ -73,12 +73,14 @@ void WindowTest::initWindow()
         cam.activated = true;
         cam.debugMode = true;
 
-        auto text = &entityManager->create<fender::entities::Text>("Salut");
-        auto &txtTransform = text->get<fender::components::Transform>();
+        auto text = &entityManager->create<fender::entities::Text>(world.name);
 
-        txtTransform.position.x = 3;
-        txtTransform.position.y = 3;
+        auto &gui = camera->get<fender::components::Children>();
+        gui.add(*text);
 
+        auto &txtTransform = text->get<fender::components::ChildInfo>();
+        txtTransform.offset.x = 0;
+        txtTransform.offset.y = 0;
 
         auto image = &entityManager->create<fender::entities::Image>();
 
