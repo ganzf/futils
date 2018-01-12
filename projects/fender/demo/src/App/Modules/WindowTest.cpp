@@ -9,6 +9,7 @@
 #include "Entities/Text.hpp"
 #include "Entities/Button.hpp"
 #include "inputKeys.hpp"
+#include "Entities/ListView.hpp"
 
 void WindowTest::initWindow()
 {
@@ -79,9 +80,19 @@ void WindowTest::initWindow()
         auto &gui = camera->get<fender::components::Children>();
         gui.add(*text);
 
+        auto list = &entityManager->create<fender::entities::ListView>();
+        auto &menuPos = list->get<fender::components::Transform>();
+        menuPos.position.x = 10;
+        menuPos.position.y = 5;
+        auto &myMenu = list->get<fender::components::ListView>();
+
+        myMenu.content.push_back(&entityManager->create<fender::entities::Text>("First Push"));
+        myMenu.content.push_back(&entityManager->create<fender::entities::Text>("Second"));
+        myMenu.content.push_back(&entityManager->create<fender::entities::Text>("Last Of myMenu"));
+
         auto &txtTransform = text->get<fender::components::ChildInfo>();
-        txtTransform.offset.x = 0;
-        txtTransform.offset.y = 0;
+        txtTransform.offset.x = 80;
+        txtTransform.offset.y = 90;
 
         auto image = &entityManager->create<fender::entities::Image>();
 
