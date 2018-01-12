@@ -19,7 +19,12 @@ namespace fender::systems::SFMLSystems
         color << txt.style.color;
         text.setFont((*_fonts)[txt.style.font]);
         text.setString(txt.str);
+        //std::cout << 0.25 *absolute.size.h << "compare to " << txt.style.size << std::endl;
         text.setCharacterSize(txt.style.size);
+
+        if (text.getGlobalBounds().width > absolute.size.x)
+            text.setCharacterSize((absolute.size.h / absolute.size.w) / absolute.size.w);
+
         text.setFillColor(color);
         text.setPosition(sf::Vector2f(absolute.position.x, absolute.position.y));
 
