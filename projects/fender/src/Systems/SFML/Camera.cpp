@@ -17,6 +17,13 @@ namespace fender::systems::SFMLSystems
         addReaction<ResponseWindow>([this](futils::IMediatorPacket &pkg){
             auto &packet = futils::Mediator::rebuild<ResponseWindow>(pkg);
             camToWindow[packet.camera] = packet.window;
+            auto worlds = entityManager->get<components::World>();
+            if (worlds.empty())
+                return ;
+            auto unit = worlds.front()->unit;
+            auto &transform = packet.camera->get<components::Transform>();
+            transform.size.w = packet.window->getSize().x / unit;
+            transform.size.h = packet.window->getSize().y / unit;
         });
         addReaction<futils::Keys>([this](futils::IMediatorPacket &pkg){
             auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
