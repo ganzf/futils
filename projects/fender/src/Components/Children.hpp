@@ -15,11 +15,6 @@ namespace fender::entities
 
 namespace fender::components {
     struct Children : futils::IComponent {
-//        bool reversed;
-//        float padding;
-//        futils::Align align;
-//        futils::VAlign valign;
-//        futils::Ordering order;
         std::unordered_map<entities::GameObject *, entities::GameObject *> content;
         void add(entities::GameObject &obj);
         void remove(entities::GameObject &obj);
