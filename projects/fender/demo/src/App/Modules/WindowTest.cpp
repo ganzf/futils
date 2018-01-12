@@ -76,10 +76,13 @@ void WindowTest::initWindow()
 
         auto text = &entityManager->create<fender::entities::Text>("Salut");
         auto &txtTransform = text->get<fender::components::Transform>();
+        auto &txtBorder = text->get<fender::components::Border>();
 
         txtTransform.position.x = 3;
         txtTransform.position.y = 3;
-
+        txtTransform.size.x = 2;
+        txtTransform.size.y = 1;
+        txtBorder.visible = false;
 
         auto image = &entityManager->create<fender::entities::Image>();
 
