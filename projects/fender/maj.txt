@@ -1,0 +1,30 @@
+v.0.1 - Alpha
+Notes - This version is the first one worth keeping track of. 
+      Entities :
+               Window
+               World
+               Camera
+               Input
+               GameObject
+               Image
+      Components :
+               AbsoluteTransform
+               Border
+               Camera
+               ChilInfo
+               Children
+               Color
+               GameObject
+               Input
+               Transform
+               Window
+               World
+      Systems :
+              Border
+              Camera
+              Children
+              Grid
+              Input
+              Log
+              SFMLRenderer
+              Window

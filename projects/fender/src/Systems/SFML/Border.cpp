@@ -39,6 +39,8 @@ namespace fender::systems::SFMLSystems
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
+                if (!obj->has<components::Border>())
+                    continue ;
                 auto &border = obj->get<components::Border>();
                 if (border.visible) {
                     renderBorder(border, *packet.window);

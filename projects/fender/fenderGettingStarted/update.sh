@@ -1,18 +1,18 @@
 #!/bin/bash
 
+# checking args
+
 # Cloning into teamfcm/futils
 
-
-
 if [ ! -d ".dl_futils" ]; then
-    echo " - Downloading futils..."
+    echo "Downloading futils ..."
     git clone -b master --single-branch git@github.com:ganzf/futils.git .dl_futils --depth=1
     echo " - Done."
 fi
 
 cd .dl_futils
 echo "Fetching update..."
-git pull origin master
+git pull origin HEAD
 cd ..
 
 if [ ! -d "./futils" ]; then

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-./update.sh
+./update.sh "$1"
 ./build.sh
 ./compile.sh

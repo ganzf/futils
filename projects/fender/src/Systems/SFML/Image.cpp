@@ -28,12 +28,10 @@ namespace fender::systems::SFMLSystems
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
             {
-                try {
-                    //TODO: test with another game object -> method has in an entity
-                    auto &image = obj->get<components::Image>();
-                    renderImage(image, *packet.window);
-                }
-                catch (...) {}
+                if (!obj->has<components::Image>())
+                    continue ;
+                auto &image = obj->get<components::Image>();
+                renderImage(image, *packet.window);
             }
         });
         phase = Run;

@@ -19,8 +19,10 @@ namespace fender::systems::SFMLSystems
             auto &winCompo = window->get<components::Window>();
             auto realWindow = _windows.at(&winCompo).win;
             sf::Color color;
-            color << winCompo.getEntity().get<components::Color>().color;
-            realWindow->clear(color);
+            if (window->has<components::Color>()) {
+                color << window->get<components::Color>().color;
+                realWindow->clear(color);
+            }
         });
         addReaction<RequestWindow>([this](futils::IMediatorPacket &pkg){
             auto &request = futils::Mediator::rebuild<RequestWindow>(pkg);

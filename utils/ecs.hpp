@@ -153,6 +153,18 @@ namespace futils
         };
 
         template <typename T>
+        bool has()
+        {
+            static_assert(std::is_base_of<IComponent, T>::value, "Error : T is not a Component in entity->has<T>()");
+            for (const auto &it: components)
+            {
+                if (it.first == futils::type<T>::index)
+                    return true;
+            }
+            return false;
+        }
+
+        template <typename T>
         T &get() const
         {
             for (auto &it: components)
@@ -160,7 +172,7 @@ namespace futils
                 if (it.first == futils::type<T>::index)
                     return static_cast<T &>(*it.second);
             }
-            throw std::runtime_error("Entity does not have requested component");
+            throw std::runtime_error("Entity does not have requested component : " + std::string(typeid(T).name()));
         };
 
         template <typename Compo>
