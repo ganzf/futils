@@ -12,6 +12,7 @@
 #include "Image.hpp"
 #include "Clickable.hpp"
 #include "Text.hpp"
+#include "AssetLoader.hpp"
 
 fender::systems::SFMLRenderer::SFMLRenderer()
 {
@@ -25,6 +26,7 @@ void fender::systems::SFMLRenderer::init() {
     entityManager->addSystem<SFMLSystems::Camera>();
     entityManager->addSystem<SFMLSystems::Grid>();
     entityManager->addSystem<SFMLSystems::Children>();
+    entityManager->addSystem<SFMLSystems::AssetLoader>();
     entityManager->addSystem<SFMLSystems::Border>();
     entityManager->addSystem<SFMLSystems::Image>();
     entityManager->addSystem<SFMLSystems::Clickable>();
