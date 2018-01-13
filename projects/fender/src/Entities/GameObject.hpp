@@ -13,22 +13,42 @@
 
 namespace fender::entities {
     class GameObject : public futils::IEntity {
+    protected:
+        components::Transform *_transform;
+        components::AbsoluteTransform *_absoluteTransform;
+        components::Border *_border;
+
     public:
         GameObject() {
             attach<components::GameObject>();
-            auto &transform = attach<components::Transform>();
-            transform.position.z = 1;
-            attach<components::AbsoluteTransform>();
-            auto &border = attach<components::Border>();
-            border.color = futils::Indianred;
-            border.thickness = 2;
-            border.visible = true;
+            _transform = &attach<components::Transform>();
+            _transform->position.z = 1;
+           _absoluteTransform = &attach<components::AbsoluteTransform>();
+            _border = &attach<components::Border>();
+            _border->color = futils::Indianred;
+            _border->thickness = 2;
+            _border->visible = true;
         }
         ~GameObject() {
             detach<components::GameObject>();
             detach<components::Transform>();
             detach<components::AbsoluteTransform>();
         }
+
+        void setPosition(int x, int y) {
+            _transform->position.x = x;
+            _transform->position.y = y;
+        }
+
+        void setSize(int w, int h) {
+            _transform->size.x = w;
+            _transform->size.y = h;
+        }
+
+        void setBorderVisibile(bool b) {
+            _border->visible = b;
+        }
+
     };
 }
 

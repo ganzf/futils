@@ -65,7 +65,7 @@ void WindowTest::initWindow()
 //            if (key == futils::Keys::Escape || key == futils::Keys::K)
 //                events->send<fender::events::Shutdown>();
 //        });
-        addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &){
+        addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &) {
             entityManager->removeSystem(name);
         });
 
@@ -87,12 +87,12 @@ void WindowTest::initWindow()
         myMenu.order = futils::Ordering::Vertical;
 
         auto &listHover = list->attach<fender::components::Hoverable>();
-        listHover.onEnter = [list](){
+        listHover.onEnter = [list]() {
             auto &listBorder = list->get<fender::components::Border>();
             listBorder.visible = true;
             listBorder.color = futils::White;
         };
-        listHover.onLeave = [list](){
+        listHover.onLeave = [list]() {
             auto &listBorder = list->get<fender::components::Border>();
             listBorder.visible = false;
             listBorder.color = futils::White;
@@ -126,47 +126,33 @@ void WindowTest::initWindow()
         txtTransform.offset.x = 80;
         txtTransform.offset.y = 90;
 
-//        auto image = &entityManager->create<fender::entities::Image>();
-//        myMenu.content.push_back(image);
-//        auto &imgTransform = image->get<fender::components::Transform>();
-//        auto &imgBorder = image->get<fender::components::Border>();
-//        auto &img = image->get<fender::components::Image>();
-//
-//        imgBorder.visible = false;
-//        imgBorder.color = futils::Darkslateblue;
-//        imgTransform.position.x = 0;
-//        imgTransform.position.y = 0;
-//        imgTransform.size.x = 1;
-//        imgTransform.size.y = 1;
-//        img.file = "ressources/poulpi.png";
 
-        auto button = &entityManager->create<fender::entities::Button>();
+        auto button = &entityManager->create<fender::entities::Button>("           - Quit - ",
+                                                                       "ressources/button.png",
+                                                                       "ressources/arial.ttf");
         myMenu.content.push_back(button);
-        auto &buttTransform = button->get<fender::components::Transform>();
-        auto &buttBorder = button->get<fender::components::Border>();
-        auto &buttImage = button->get<fender::components::Image>();
-        auto &buttText = button->get<fender::components::Text>();
         auto &buttClick = button->get<fender::components::Clickable>();
+
+
 
         auto &buttColor = button->attach<fender::components::Color>();
         buttColor.color = futils::Violetred;
 
-        buttBorder.visible = false;
-        buttTransform.position.x = -2;
-        buttTransform.position.y = -2;
-        buttTransform.size.x = 4;
-        buttTransform.size.y = 1;
-        buttImage.file = "ressources/button.png";
-
-        buttText.style.size = 24;
-        buttText.style.color = futils::Antiquewhite;
-        buttText.style.font = "ressources/arial.ttf";
-        buttText.str = "           - Quit - ";
+        button->setSize(4, 1);
+        button->setBorderVisibile(false);
+        button->setPosition(-2, -2);
+        //buttText.style.size = 24;
+        //buttText.style.color = futils::Antiquewhite;
 
         buttClick.waitForRelease = true;
         buttClick.func = [this]() {
             events->send<fender::events::Shutdown>();
         };
+
+        auto image = &entityManager->create<fender::entities::Image>("ressources/poulpi.png");
+        image->setPosition(2, 2);
+        image->setSize(1, 1);
+        image->setBorderVisibile(false);
     }
 }
 

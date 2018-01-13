@@ -14,12 +14,21 @@
 
 namespace fender::entities {
     class Image : public GameObject {
+        components::Image *_image;
     public:
-        Image() {;
-            attach<components::Image>();
+        Image() {
+            _image = &attach<components::Image>();
+        }
+        Image(std::string const &file) {
+            _image = &attach<components::Image>();
+            _image->file = file;
         }
         ~Image() {
             detach<components::Image>();
+        }
+
+        void setImageFile(std::string const &file) {
+            _image->file = file;
         }
     };
 }
