@@ -210,7 +210,7 @@ namespace fender::systems::SFMLSystems
             case Run:
                 events->send<StartingRendering>();
                 sortGameObjects();
-                if (t >= 0.16)
+                if (t >= 0.02)
                     t = 0.0;
                 if (t == 0.0)
                     renderEachCam();

@@ -11,7 +11,9 @@ file(GLOB SYSTEMS
 		"src/Systems/*.cpp"
 		"src/Systems/*.hpp"
 		"src/Systems/SFML/*.cpp"
-		"src/Systems/SFML/*.hpp")
+		"src/Systems/SFML/*.hpp"
+		"src/Systems/Fysics/*.cpp"
+		"src/Systems/Fysics/*.hpp")
 file(GLOB ENTITIES
 		"src/Entities/*.cpp"
 		"src/Entities/*.hpp")

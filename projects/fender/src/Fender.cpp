@@ -2,8 +2,9 @@
 // Created by arroganz on 11/26/17.
 //
 
-# include "sigCatch.hpp"
 # include "fender.hpp"
+# include "Systems/Fysics/Fysics.hpp"
+# include "sigCatch.hpp"
 # include "goToBinDir.hpp"
 # include "Systems/Log.hpp"
 # include "Systems/SFML/SFMLRenderer.hpp"
@@ -37,6 +38,9 @@ void fender::Fender::loadSystemDir(std::string const &path)
 
 int fender::Fender::start() {
     addSystem<systems::Log>();
+    entityManager->run(); // I Want log to be the first thing to exist so that any string event can be tracked.
+    addSystem<systems::Fysics>();
+    entityManager->run(); // This way, the output is more coherent
     addSystem<systems::SFMLRenderer>();
     return entityManager->run(); // this will init all systems
 }

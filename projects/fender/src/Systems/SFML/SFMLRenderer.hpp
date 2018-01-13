@@ -14,7 +14,7 @@
 
 namespace fender::systems {
     class SFMLRenderer : public futils::ISystem {
-         enum State
+        enum State
         {
             NONE = -1,
             INIT = 0,

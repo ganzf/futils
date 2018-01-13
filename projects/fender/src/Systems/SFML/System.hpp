@@ -24,7 +24,7 @@ namespace fender::systems::SFMLSystems
 
         System(std::string const &systemName)
         {
-            name = systemName;
+            name = "SFML/" + systemName;
         }
     public:
         virtual ~System() {}

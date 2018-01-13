@@ -2,6 +2,7 @@
 // Created by arroganz on 1/1/18.
 //
 
+#include <Components/rigidBody.hpp>
 #include "WindowTest.hpp"
 #include "Components/Color.hpp"
 #include "Components/World.hpp"
@@ -113,6 +114,16 @@ void WindowTest::initWindow()
         someText1Border.visible = false;
 
         auto someText2 = &entityManager->create<fender::entities::Text>("v0.1 - Alpha");
+        addReaction<futils::Keys>([this, someText1](futils::IMediatorPacket &pkg){
+            auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
+            if (key == futils::Keys::Q) {
+                auto &txt = someText1->get<fender::components::Text>();
+                auto &_camPos = camera->get<fender::components::Transform>();
+                txt.str = "Cam (" + std::to_string(_camPos.position.x) + ", "
+                        + std::to_string(_camPos.position.y) + ", "
+                        + std::to_string(_camPos.position.z) + ")";
+            }
+        });
         auto &someText2Transform = someText2->get<fender::components::Transform>();
         someText2Transform.size.w = 4;
         someText2Transform.size.h = 1;
@@ -166,6 +177,27 @@ void WindowTest::initWindow()
         buttClick.waitForRelease = true;
         buttClick.func = [this]() {
             events->send<fender::events::Shutdown>();
+        };
+
+        auto &listClick = list->attach<fender::components::Clickable>();
+        auto rigid = &entityManager->create<fender::entities::GameObject>();
+        auto &rigidBorder = rigid->get<fender::components::Border>();
+        rigidBorder.visible = true;
+        rigidBorder.color = futils::White;
+        rigidBorder.thickness = 3;
+        auto &rigidPos = rigid->get<fender::components::Transform>();
+        rigidPos.position.x = 0;
+        rigidPos.position.y = 0;
+        rigidPos.position.z = 5;
+        rigidPos.size.w = 1;
+        rigidPos.size.h = 1;
+
+        rigid->attach<fender::components::rigidBody>();
+        listClick.func = [this, rigid](){
+            auto &body = rigid->get<fender::components::rigidBody>();
+            body.force.y = -1;
+            body.force.x = 0;
+            body.weight = 1;
         };
     }
 }

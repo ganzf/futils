@@ -57,7 +57,6 @@ namespace fender::systems::SFMLSystems
 
     void Window::onWindowDestroyed(Component &win)
     {
-        std::cout << "Trying to close : " << win.title << " at " << &win << std::endl;
         if (_windows.find(&win) == _windows.end())
             return ;
         auto &real = _windows.at(&win);
@@ -67,7 +66,6 @@ namespace fender::systems::SFMLSystems
     void Window::onNewWindow(Component &win)
     {
         auto &real = _windows[&win];
-        std::cout << "Stored new window " << win.title << " at " << &win << std::endl;
         real.data = &win;
         auto mode = sf::VideoMode::getDesktopMode();
         win.screenSize.w = mode.width;

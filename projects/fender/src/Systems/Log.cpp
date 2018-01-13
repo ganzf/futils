@@ -17,7 +17,7 @@ void fender::systems::Log::init() {
             (this,
              [this](futils::IMediatorPacket &pkg) {
         auto &s = futils::Mediator::rebuild<std::string>(pkg);
-        LOUT("LOG => " + s);
+        std::cout << "--> \t" << s << std::endl;
     });
     addReaction<events::Shutdown>([this](futils::IMediatorPacket &){
        entityManager->removeSystem(name);

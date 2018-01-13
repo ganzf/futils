@@ -10,7 +10,6 @@ namespace fender::systems::SFMLSystems
         __init();
         //TODO: Dans image et text system-> send ce packet et attendre la réponse avant de se run
         addReaction<RequestAssets>([this](futils::IMediatorPacket &){
-            std::cout << "Request asset received " << std::endl;
             if (_textures.size() == Texture.size() && _fonts.size() == Font.size()) {
                 AssetsLoaded assets;
                 assets.fonts = &_fonts;
@@ -21,14 +20,17 @@ namespace fender::systems::SFMLSystems
 
         for (auto file : Texture) {
             sf::Texture texture;
-            texture.loadFromFile(file);
-            std::cout << "Loaded texture " << file << std::endl;
+            if (!texture.loadFromFile(file))
+                events->send<std::string>("\e[31m ☒ \e[00m Font \"" + file + "\" loaded.");
+            events->send<std::string>("\e[32m ☑ \e[00m Texture \"" + file + "\" loaded.");
             _textures[file] = texture;
         }
-
+        
         for (auto file : Font) {
             sf::Font font;
-            font.loadFromFile(file);
+            if (!font.loadFromFile(file))
+                events->send<std::string>("\e[31m ☒ \e[00m Font \"" + file + "\" loaded.");
+            events->send<std::string>("\e[32m ☑ \e[00m Font \"" + file + "\" loaded.");
             _fonts[file] = font;
         }
 
