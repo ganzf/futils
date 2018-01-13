@@ -126,10 +126,7 @@ void WindowTest::initWindow()
         img.file = "ressources/poulpi.png";
 
         auto button = &entityManager->create<fender::entities::Button>();
-<<<<<<< HEAD
-=======
         myMenu.content.push_back(button);
->>>>>>> 8e719b21c28b79dfb7d832a97eba0d07b3e96ad3
         auto &buttTransform = button->get<fender::components::Transform>();
         auto &buttBorder = button->get<fender::components::Border>();
         auto &buttImage = button->get<fender::components::Image>();
