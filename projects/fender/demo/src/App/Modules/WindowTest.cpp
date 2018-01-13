@@ -9,6 +9,7 @@
 #include "Entities/Text.hpp"
 #include "Entities/Button.hpp"
 #include "inputKeys.hpp"
+#include "Entities/ListView.hpp"
 
 void WindowTest::initWindow()
 {
@@ -74,23 +75,50 @@ void WindowTest::initWindow()
         cam.activated = true;
         cam.debugMode = true;
 
-        auto text = &entityManager->create<fender::entities::Text>("Salut");
-        auto &txtTransform = text->get<fender::components::Transform>();
-        auto &txtBorder = text->get<fender::components::Border>();
+        auto text = &entityManager->create<fender::entities::Text>(world.name);
 
-        txtTransform.position.x = 3;
-        txtTransform.position.y = 3;
-        txtTransform.size.x = 2;
-        txtTransform.size.y = 1;
-        txtBorder.visible = false;
+        auto &gui = camera->get<fender::components::Children>();
+        gui.add(*text);
+
+        auto list = &entityManager->create<fender::entities::ListView>();
+
+        auto &myMenu = list->get<fender::components::ListView>();
+        gui.add(*list);
+        myMenu.order = futils::Ordering::Horizontal;
+
+        auto &myMenuPos = list->get<fender::components::ChildInfo>();
+        myMenuPos.offset.x = 2;
+        myMenuPos.offset.y = 2;
+
+        auto someText1 = &entityManager->create<fender::entities::Text>("SomeText1");
+        auto &someText1Transform = someText1->get<fender::components::Transform>();
+        someText1Transform.size.w = 2;
+        someText1Transform.size.h = 1;
+        auto &someText1Border = someText1->get<fender::components::Border>();
+        someText1Border.visible = false;
+
+        auto someText2 = &entityManager->create<fender::entities::Text>("SomeText2");
+        auto &someText2Transform = someText2->get<fender::components::Transform>();
+        someText2Transform.size.w = 2;
+        someText2Transform.size.h = 1;
+        auto &someText2Border = someText2->get<fender::components::Border>();
+        someText2Border.visible = false;
+
+        myMenu.content.push_back(someText1);
+        myMenu.content.push_back(someText2);
+
+        auto &txtTransform = text->get<fender::components::ChildInfo>();
+        txtTransform.offset.x = 80;
+        txtTransform.offset.y = 90;
 
         auto image = &entityManager->create<fender::entities::Image>();
-
+        myMenu.content.push_back(image);
         auto &imgTransform = image->get<fender::components::Transform>();
         auto &imgBorder = image->get<fender::components::Border>();
         auto &img = image->get<fender::components::Image>();
 
-        imgBorder.visible = false;
+        imgBorder.visible = true;
+        imgBorder.color = futils::Darkslateblue;
         imgTransform.position.x = 0;
         imgTransform.position.y = 0;
         imgTransform.size.x = 1;
@@ -98,6 +126,7 @@ void WindowTest::initWindow()
         img.file = "ressources/poulpi.png";
 
         auto button = &entityManager->create<fender::entities::Button>();
+        myMenu.content.push_back(button);
         auto &buttTransform = button->get<fender::components::Transform>();
         auto &buttBorder = button->get<fender::components::Border>();
         auto &buttImage = button->get<fender::components::Image>();
@@ -121,7 +150,6 @@ void WindowTest::initWindow()
         };
     }
 }
-
 
 void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z, bool cam)
 {
@@ -160,7 +188,6 @@ void createGo(futils::EntityManager &em, bool cam = false)
     }
 }
 
-
 void WindowTest::initInputs()
 {
     input = &entityManager->create<fender::entities::Input>();
@@ -181,6 +208,7 @@ void WindowTest::initInputs()
         createGo(*entityManager);
     };
 }
+
 void WindowTest::run(float) {
     if (window == nullptr) {
         initWindow();

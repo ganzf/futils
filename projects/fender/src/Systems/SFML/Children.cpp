@@ -3,6 +3,7 @@
 //
 
 #include "Entities/GameObject.hpp"
+#include "Camera.hpp"
 #include "Children.hpp"
 
 namespace fender::systems::SFMLSystems
@@ -23,8 +24,14 @@ namespace fender::systems::SFMLSystems
             } // TODO: create your own exception type
             auto &parent = info.parent->get<components::Transform>();
             auto &self = info.getEntity().get<components::Transform>();
-            self.position.x = info.offset.x / 100 * parent.size.w + parent.position.x;
-            self.position.y = info.offset.y / 100 * parent.size.h + parent.position.y;
+            if (parent.getEntity().has<components::Camera>()) {
+                self.position.x = info.offset.x / 100 * parent.size.w + parent.position.x - parent.size.w / 2;
+                self.position.y = info.offset.y / 100 * parent.size.h + parent.position.y - parent.size.h / 2;
+            } else {
+                self.position.x = info.offset.x / 100 * parent.size.w + parent.position.x;
+                self.position.y = info.offset.y / 100 * parent.size.h + parent.position.y;
+            }
+
             // TODO : Use info.isGridRelative !
         }
     }
@@ -40,12 +47,15 @@ namespace fender::systems::SFMLSystems
         switch (phase)
         {
             case Init : return init();
-            case Run : return updateAllChildren();
+            case Run : return ;
         }
     }
 
     void Children::init() {
         __init();
+        addReaction<StartingRendering>([this](futils::IMediatorPacket &){
+            updateAllChildren();
+        });
         phase = Run;
     }
 }

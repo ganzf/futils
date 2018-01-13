@@ -14,6 +14,11 @@
 
 namespace fender::systems::SFMLSystems
 {
+    struct StartingRendering
+    {
+
+    };
+
     class Camera : public System
     {
         enum States
