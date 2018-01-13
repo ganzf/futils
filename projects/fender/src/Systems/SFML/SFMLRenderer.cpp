@@ -12,7 +12,10 @@
 #include "Image.hpp"
 #include "Clickable.hpp"
 #include "Text.hpp"
+<<<<<<< HEAD
 #include "AssetLoader.hpp"
+=======
+>>>>>>> dev_listview
 #include "ListView.hpp"
 
 fender::systems::SFMLRenderer::SFMLRenderer()
@@ -27,7 +30,10 @@ void fender::systems::SFMLRenderer::init() {
     entityManager->addSystem<SFMLSystems::Camera>();
     entityManager->addSystem<SFMLSystems::Grid>();
     entityManager->addSystem<SFMLSystems::Children>();
+<<<<<<< HEAD
     entityManager->addSystem<SFMLSystems::AssetLoader>();
+=======
+>>>>>>> dev_listview
     entityManager->addSystem<SFMLSystems::ListView>();
     entityManager->addSystem<SFMLSystems::Border>();
     entityManager->addSystem<SFMLSystems::Text>();
