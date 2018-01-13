@@ -137,7 +137,8 @@ namespace fender::systems::SFMLSystems
 
         if (event.type != sf::Event::KeyPressed && event.type != sf::Event::KeyReleased
             && event.type != sf::Event::MouseButtonPressed && event.type != sf::Event::MouseWheelMoved
-            && event.type != sf::Event::JoystickButtonPressed && event.type != sf::Event::MouseMoved)
+            && event.type != sf::Event::JoystickButtonPressed && event.type != sf::Event::MouseMoved
+                &&event.type != sf::Event::MouseButtonReleased)
         return ;
 
         futils::Keys key;
@@ -165,6 +166,18 @@ namespace fender::systems::SFMLSystems
                 events->send<futils::MouseClicked>(eventMouseClicked);
             }
         }
+
+        if (event.type == sf::Event::MouseButtonReleased) {
+            key = sfMouseToFutilsKeys.at(event.mouseButton.button);
+            if (key == futils::Keys::LButton) {
+                futils::MouseReleased eventMouseReleased;
+
+                eventMouseReleased.pos.x = event.mouseButton.x;
+                eventMouseReleased.pos.y = event.mouseButton.y;
+                events->send<futils::MouseReleased>(eventMouseReleased);
+            }
+        }
+
 
         if (event.type == sf::Event::MouseMoved)
         {

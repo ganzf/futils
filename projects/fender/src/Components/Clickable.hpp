@@ -9,6 +9,7 @@
 
 namespace fender::components {
     struct Clickable : futils::IComponent {
+        bool waitForRelease{false};
         std::function<void()> func;
     };
 }

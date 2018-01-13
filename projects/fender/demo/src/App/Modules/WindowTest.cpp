@@ -163,6 +163,7 @@ void WindowTest::initWindow()
         buttText.style.font = "ressources/arial.ttf";
         buttText.str = "           - Quit - ";
 
+        buttClick.waitForRelease = true;
         buttClick.func = [this]() {
             events->send<fender::events::Shutdown>();
         };

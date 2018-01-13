@@ -39,6 +39,11 @@ namespace futils {
         futils::Vec2<int> pos;
     };
 
+    struct MouseReleased
+    {
+        futils::Vec2<int> pos;
+    };
+
     struct MouseMoved
     {
         futils::Vec2<int> current;

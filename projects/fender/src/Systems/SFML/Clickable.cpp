@@ -19,8 +19,24 @@ namespace fender::systems::SFMLSystems
             {
                 auto absolute = click->getEntity().get<components::AbsoluteTransform>();
                 if (packet.pos.x >= absolute.position.x && packet.pos.x <= absolute.position.x + absolute.size.w
-                    && packet.pos.y >= absolute.position.y && packet.pos.y <= absolute.position.y + absolute.size.h)
-                    click->func();
+                    && packet.pos.y >= absolute.position.y && packet.pos.y <= absolute.position.y + absolute.size.h) {
+                    if (!click->waitForRelease)
+                        click->func();
+                }
+            }
+        });
+        addReaction<futils::MouseReleased>([this](futils::IMediatorPacket &pkg){
+            auto &packet = futils::Mediator::rebuild<futils::MouseReleased>(pkg);
+            auto clickables = entityManager->get<components::Clickable>();
+
+            for (auto &click : clickables)
+            {
+                auto absolute = click->getEntity().get<components::AbsoluteTransform>();
+                if (packet.pos.x >= absolute.position.x && packet.pos.x <= absolute.position.x + absolute.size.w
+                    && packet.pos.y >= absolute.position.y && packet.pos.y <= absolute.position.y + absolute.size.h) {
+                    if (click->waitForRelease)
+                        click->func();
+                }
             }
         });
         phase = Run;
