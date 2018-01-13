@@ -11,6 +11,7 @@
 #include "Entities/Button.hpp"
 #include "inputKeys.hpp"
 #include "Entities/ListView.hpp"
+#include "Entities/InputField.hpp"
 
 void WindowTest::initWindow()
 {
@@ -198,6 +199,25 @@ void WindowTest::initWindow()
             body.force.y = -1;
             body.force.x = 0;
             body.weight = 1;
+        };
+
+        auto in = &entityManager->create<fender::entities::InputField>();
+        auto &inT = in->get<fender::components::Transform>();
+        inT.size.w = 3;
+        inT.size.h = 1;
+        auto &editable = in->get<fender::components::Editable>();
+
+        auto &inBorder = in->get<fender::components::Border>();
+        inBorder.thickness = 3;
+        inBorder.color = futils::Lightskyblue;
+        inBorder.visible = false;
+        myMenu.content.push_back(in);
+
+        editable.onFocus = [this, &inBorder](){
+            inBorder.visible = true;
+        };
+        editable.onFocusLost = [this, &inBorder](){
+            inBorder.visible = false;
         };
     }
 }
