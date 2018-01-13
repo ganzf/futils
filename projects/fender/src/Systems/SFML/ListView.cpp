@@ -14,15 +14,32 @@ namespace fender::systems::SFMLSystems
 
     void ListView::update() {
         auto lists = entityManager->get<components::ListView>();
-        for (auto &list: lists)
-        {
+        for (auto &list: lists) {
             auto &listPos = list->getEntity().get<components::Transform>();
-            int current = listPos.position.x;
-            for (auto elem: list->content)
-            {
-                auto &transform = elem->get<components::Transform>();
-                transform.position.x = current;
-                current += transform.size.w;
+            if (list->order == futils::Ordering::Horizontal) {
+                float current = listPos.position.x;
+                float size = 0.0;
+                for (auto elem: list->content) {
+                    auto &transform = elem->get<components::Transform>();
+                    transform.position.x = current;
+                    transform.position.y = listPos.position.y;
+                    listPos.size.h = transform.size.h > listPos.size.h ? transform.size.h : listPos.size.h;
+                    current += transform.size.w;
+                    size += transform.size.w;
+                }
+                listPos.size.w = size;
+            } else {
+                float current = listPos.position.y;
+                float size = 0.0;
+                for (auto elem: list->content) {
+                    auto &transform = elem->get<components::Transform>();
+                    transform.position.y = current;
+                    transform.position.x = listPos.position.x;
+                    listPos.size.w = transform.size.w > listPos.size.w ? transform.size.w : listPos.size.w;
+                    current += transform.size.h;
+                    size += transform.size.h;
+                }
+                listPos.size.h = size;
             }
         }
     }

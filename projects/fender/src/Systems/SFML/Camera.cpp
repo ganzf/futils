@@ -156,10 +156,10 @@ namespace fender::systems::SFMLSystems
                 absolute.position.y = (int)(windowSize.y / 2 + (transform.position.y - camPos.position.y) * unit * zoom);
                 absolute.size.x = (int)(transform.size.x * unit * zoom);
                 absolute.size.y = (int)(transform.size.y * unit * zoom);
-//                if ((absolute.position.x > 0 && absolute.position.y > 0
-//                     && absolute.position.x < (int)windowSize.x && absolute.position.y < (int)windowSize.y)
-//                    || (absolute.position.x + absolute.size.w > 0 && absolute.position.x + absolute.size.w < (int)windowSize.x)
-//                    || (absolute.position.y + absolute.size.h > 0 && absolute.position.y + absolute.size.h < (int)windowSize.y))
+                if ((absolute.position.x > 0 && absolute.position.y > 0
+                     && absolute.position.x < (int)windowSize.x && absolute.position.y < (int)windowSize.y)
+                    || (absolute.position.x + absolute.size.w > 0 && absolute.position.x + absolute.size.w < (int)windowSize.x)
+                    || (absolute.position.y + absolute.size.h > 0 && absolute.position.y + absolute.size.h < (int)windowSize.y))
                 event.objects.push_back(it->second);
             }
             event.window = realWindow;
@@ -201,13 +201,19 @@ namespace fender::systems::SFMLSystems
         }
     }
 
-    void Camera::run(float) {
+    void Camera::run(float e) {
+        static float t = 0.0;
+        t+=e;
         switch (phase)
         {
             case Init: return init();
             case Run:
+                events->send<StartingRendering>();
                 sortGameObjects();
-                renderEachCam();
+                if (t >= 0.16)
+                    t = 0.0;
+                if (t == 0.0)
+                    renderEachCam();
                 return ;
         }
     }

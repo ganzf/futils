@@ -2,8 +2,8 @@
 // Created by arroganz on 1/3/18.
 //
 
-#include <Components/Camera.hpp>
 #include "Entities/GameObject.hpp"
+#include "Camera.hpp"
 #include "Children.hpp"
 
 namespace fender::systems::SFMLSystems
@@ -47,12 +47,15 @@ namespace fender::systems::SFMLSystems
         switch (phase)
         {
             case Init : return init();
-            case Run : return updateAllChildren();
+            case Run : return ;
         }
     }
 
     void Children::init() {
         __init();
+        addReaction<StartingRendering>([this](futils::IMediatorPacket &){
+            updateAllChildren();
+        });
         phase = Run;
     }
 }

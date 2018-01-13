@@ -12,11 +12,9 @@ namespace fender::systems::SFMLSystems
     void Text::renderText(components::Text const &txt, sf::RenderWindow &window)
     {
         auto &absolute = txt.getEntity().get<components::AbsoluteTransform>();
-        sf::Text text;
-
         if (absolute.size.w == 0 || absolute.size.h == 0)
             return ;
-
+        sf::Text text;
         sf::Color color;
 
         color << txt.style.color;
