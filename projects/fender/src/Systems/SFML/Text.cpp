@@ -14,6 +14,9 @@ namespace fender::systems::SFMLSystems
         auto &absolute = txt.getEntity().get<components::AbsoluteTransform>();
         sf::Text text;
 
+        if (absolute.size.w == 0 || absolute.size.h == 0)
+            return ;
+
         sf::Color color;
 
         color << txt.style.color;

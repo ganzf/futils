@@ -12,11 +12,8 @@
 #include "Image.hpp"
 #include "Clickable.hpp"
 #include "Text.hpp"
-<<<<<<< HEAD
 #include "AssetLoader.hpp"
-=======
 #include "ListView.hpp"
->>>>>>> ListView Ok
 
 fender::systems::SFMLRenderer::SFMLRenderer()
 {
