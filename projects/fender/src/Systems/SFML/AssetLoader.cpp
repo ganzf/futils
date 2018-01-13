@@ -22,6 +22,7 @@ namespace fender::systems::SFMLSystems
         for (auto file : Texture) {
             sf::Texture texture;
             texture.loadFromFile(file);
+            std::cout << "Loaded texture " << file << std::endl;
             _textures[file] = texture;
         }
 

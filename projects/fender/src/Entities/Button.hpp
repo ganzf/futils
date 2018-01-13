@@ -7,6 +7,7 @@
 #include <Components/Image.hpp>
 #include <Components/Clickable.hpp>
 #include <Components/Text.hpp>
+#include <Components/Hoverable.hpp>
 # include "fender.hpp"
 # include "GameObject.hpp"
 # include "Components/Camera.hpp"
@@ -19,6 +20,15 @@ namespace fender::entities {
             attach<components::Image>();
             attach<components::Text>();
             attach<components::Clickable>();
+            auto &hover = attach<components::Hoverable>();
+            hover.onHover = [this](){
+                auto &border = this->get<components::Border>();
+                border.visible = true;
+            };
+            hover.onLeave = [this](){
+                auto &border = this->get<components::Border>();
+                border.visible = false;
+            };
         }
         ~Button() {
             detach<components::Image>();

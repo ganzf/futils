@@ -2,6 +2,7 @@
 // Created by clara on 1/8/18.
 //
 
+#include <Components/Color.hpp>
 #include "Image.hpp"
 #include "Camera.hpp"
 #include "AssetLoader.hpp"
@@ -9,13 +10,20 @@
 namespace fender::systems::SFMLSystems
 {
     void Image::renderImage(components::Image const &image, sf::RenderWindow &window){
-        auto &absolute = image.getEntity().get<components::AbsoluteTransform>();
+        auto &entity = image.getEntity();
+        auto &absolute = entity.get<components::AbsoluteTransform>();
 
         sf::Texture texture = (*_textures)[image.file];
         sf::RectangleShape sprite;
         sprite.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
         sprite.setTexture(&texture);
         sprite.setPosition(absolute.position.x, absolute.position.y);
+        if (entity.has<components::Color>()) {
+            auto &colorComponent = entity.get<components::Color>();
+            sf::Color c;
+            c << colorComponent.color;
+            sprite.setFillColor(c);
+        }
         window.draw(sprite);
     }
 

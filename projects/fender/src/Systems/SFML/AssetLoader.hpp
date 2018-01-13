@@ -23,6 +23,7 @@ namespace fender::systems::SFMLSystems
     class AssetLoader : public System {
         std::vector<std::string>    Texture = {
                 "ressources/poulpi.png",
+                "ressources/button.png"
         };
 
         std::vector<std::string>    Font = {

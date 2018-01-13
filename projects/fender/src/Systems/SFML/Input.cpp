@@ -113,6 +113,7 @@ namespace
                     {sf::Event::EventType::JoystickButtonReleased, futils::InputState::GoingUp},
                     {sf::Event::EventType::MouseButtonPressed, futils::InputState::Down},
                     {sf::Event::EventType::MouseButtonReleased, futils::InputState::GoingUp},
+                    {sf::Event::EventType::MouseMoved, futils::InputState::Undefined}
             };
 }
 
@@ -136,7 +137,7 @@ namespace fender::systems::SFMLSystems
 
         if (event.type != sf::Event::KeyPressed && event.type != sf::Event::KeyReleased
             && event.type != sf::Event::MouseButtonPressed && event.type != sf::Event::MouseWheelMoved
-            && event.type != sf::Event::JoystickButtonPressed)
+            && event.type != sf::Event::JoystickButtonPressed && event.type != sf::Event::MouseMoved)
         return ;
 
         futils::Keys key;
@@ -165,6 +166,15 @@ namespace fender::systems::SFMLSystems
             }
         }
 
+        if (event.type == sf::Event::MouseMoved)
+        {
+            futils::MouseMoved mm;
+
+            mm.current.x = event.mouseMove.x;
+            mm.current.y = event.mouseMove.y;
+            events->send<futils::MouseMoved>(mm);
+            return ;
+        }
 
         key = sfToFutilsKeys.at(event.key.code);
         state = sfToFutilsState.at(event.type);

@@ -84,22 +84,37 @@ void WindowTest::initWindow()
 
         auto &myMenu = list->get<fender::components::ListView>();
         gui.add(*list);
-        myMenu.order = futils::Ordering::Horizontal;
+        myMenu.order = futils::Ordering::Vertical;
+
+        auto &listHover = list->attach<fender::components::Hoverable>();
+        listHover.onEnter = [list](){
+            auto &listBorder = list->get<fender::components::Border>();
+            listBorder.visible = true;
+            listBorder.color = futils::White;
+        };
+        listHover.onLeave = [list](){
+            auto &listBorder = list->get<fender::components::Border>();
+            listBorder.visible = false;
+            listBorder.color = futils::White;
+        };
+
+        auto &myMenuBorder = list->get<fender::components::Border>();
+        myMenuBorder.visible = false;
 
         auto &myMenuPos = list->get<fender::components::ChildInfo>();
-        myMenuPos.offset.x = 2;
-        myMenuPos.offset.y = 2;
+        myMenuPos.offset.x = 33;
+        myMenuPos.offset.y = 33;
 
-        auto someText1 = &entityManager->create<fender::entities::Text>("SomeText1");
+        auto someText1 = &entityManager->create<fender::entities::Text>("Project Elixia");
         auto &someText1Transform = someText1->get<fender::components::Transform>();
-        someText1Transform.size.w = 2;
+        someText1Transform.size.w = 8;
         someText1Transform.size.h = 1;
         auto &someText1Border = someText1->get<fender::components::Border>();
         someText1Border.visible = false;
 
-        auto someText2 = &entityManager->create<fender::entities::Text>("SomeText2");
+        auto someText2 = &entityManager->create<fender::entities::Text>("v0.1 - Alpha");
         auto &someText2Transform = someText2->get<fender::components::Transform>();
-        someText2Transform.size.w = 2;
+        someText2Transform.size.w = 4;
         someText2Transform.size.h = 1;
         auto &someText2Border = someText2->get<fender::components::Border>();
         someText2Border.visible = false;
@@ -111,19 +126,19 @@ void WindowTest::initWindow()
         txtTransform.offset.x = 80;
         txtTransform.offset.y = 90;
 
-        auto image = &entityManager->create<fender::entities::Image>();
-        myMenu.content.push_back(image);
-        auto &imgTransform = image->get<fender::components::Transform>();
-        auto &imgBorder = image->get<fender::components::Border>();
-        auto &img = image->get<fender::components::Image>();
-
-        imgBorder.visible = true;
-        imgBorder.color = futils::Darkslateblue;
-        imgTransform.position.x = 0;
-        imgTransform.position.y = 0;
-        imgTransform.size.x = 1;
-        imgTransform.size.y = 1;
-        img.file = "ressources/poulpi.png";
+//        auto image = &entityManager->create<fender::entities::Image>();
+//        myMenu.content.push_back(image);
+//        auto &imgTransform = image->get<fender::components::Transform>();
+//        auto &imgBorder = image->get<fender::components::Border>();
+//        auto &img = image->get<fender::components::Image>();
+//
+//        imgBorder.visible = false;
+//        imgBorder.color = futils::Darkslateblue;
+//        imgTransform.position.x = 0;
+//        imgTransform.position.y = 0;
+//        imgTransform.size.x = 1;
+//        imgTransform.size.y = 1;
+//        img.file = "ressources/poulpi.png";
 
         auto button = &entityManager->create<fender::entities::Button>();
         myMenu.content.push_back(button);
@@ -133,17 +148,20 @@ void WindowTest::initWindow()
         auto &buttText = button->get<fender::components::Text>();
         auto &buttClick = button->get<fender::components::Clickable>();
 
+        auto &buttColor = button->attach<fender::components::Color>();
+        buttColor.color = futils::Violetred;
+
         buttBorder.visible = false;
         buttTransform.position.x = -2;
         buttTransform.position.y = -2;
-        buttTransform.size.x = 1;
+        buttTransform.size.x = 4;
         buttTransform.size.y = 1;
-        buttImage.file = "ressources/poulpi.png";
+        buttImage.file = "ressources/button.png";
 
         buttText.style.size = 24;
-        buttText.style.color = futils::White;
+        buttText.style.color = futils::Antiquewhite;
         buttText.style.font = "ressources/arial.ttf";
-        buttText.str = "OUI";
+        buttText.str = "           - Quit - ";
 
         buttClick.func = [this]() {
             events->send<fender::events::Shutdown>();

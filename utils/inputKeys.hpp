@@ -39,15 +39,10 @@ namespace futils {
         futils::Vec2<int> pos;
     };
 
-    /*
     struct MouseMoved
     {
-        //TODO: je ne vois pas l'interet
-        //enum EventType type{EventType::MouseMoved};
-
-        fender::vec2i lastPos;
-        fender::vec2i newPos;
-    };*/
+        futils::Vec2<int> current;
+    };
 
     enum class Keys : int {
         Undefined = 0,
