@@ -15,6 +15,7 @@
 #include "AssetLoader.hpp"
 #include "ListView.hpp"
 #include "Hoverable.hpp"
+#include "Editable.hpp"
 
 fender::systems::SFMLRenderer::SFMLRenderer()
 {
@@ -35,6 +36,7 @@ void fender::systems::SFMLRenderer::init() {
     entityManager->addSystem<SFMLSystems::Image>();
     entityManager->addSystem<SFMLSystems::Clickable>();
     entityManager->addSystem<SFMLSystems::Hoverable>();
+    entityManager->addSystem<SFMLSystems::Editable>();
     addReaction<events::Shutdown>([this](futils::IMediatorPacket &){
         entityManager->removeSystem(name);
     });

@@ -7,6 +7,7 @@
 # include <vector>
 # include <string>
 # include <sstream>
+# include <unordered_map>
 # include "math.hpp"
 
 namespace futils {
@@ -64,6 +65,46 @@ namespace futils {
         Slash, BackSlash,
         LButton, RButton, MouseWheelUp, MouseWheelDown, MouseWheelButton,
         NBR_SUPPORTED_KEYS
+    };
+
+    static const std::unordered_map<futils::Keys, char> keyToChar = {
+            std::pair<Keys, char>(Keys::A, 'a'),
+            std::pair<Keys, char>(Keys::B, 'b'),
+            std::pair<Keys, char>(Keys::C, 'c'),
+            std::pair<Keys, char>(Keys::D, 'd'),
+            std::pair<Keys, char>(Keys::E, 'e'),
+            std::pair<Keys, char>(Keys::F, 'f'),
+            std::pair<Keys, char>(Keys::G, 'g'),
+            std::pair<Keys, char>(Keys::H, 'h'),
+            std::pair<Keys, char>(Keys::I, 'i'),
+            std::pair<Keys, char>(Keys::J, 'j'),
+            std::pair<Keys, char>(Keys::K, 'k'),
+            std::pair<Keys, char>(Keys::L, 'l'),
+            std::pair<Keys, char>(Keys::M, 'm'),
+            std::pair<Keys, char>(Keys::N, 'n'),
+            std::pair<Keys, char>(Keys::O, 'o'),
+            std::pair<Keys, char>(Keys::P, 'p'),
+            std::pair<Keys, char>(Keys::Q, 'q'),
+            std::pair<Keys, char>(Keys::R, 'r'),
+            std::pair<Keys, char>(Keys::S, 's'),
+            std::pair<Keys, char>(Keys::T, 't'),
+            std::pair<Keys, char>(Keys::U, 'u'),
+            std::pair<Keys, char>(Keys::V, 'v'),
+            std::pair<Keys, char>(Keys::W, 'w'),
+            std::pair<Keys, char>(Keys::X, 'x'),
+            std::pair<Keys, char>(Keys::Y, 'y'),
+            std::pair<Keys, char>(Keys::Z, 'z'),
+            std::pair<Keys, char>(Keys::Space , ' '),
+            std::pair<Keys, char>(Keys::Num0, '0'),
+            std::pair<Keys, char>(Keys::Num1, '1'),
+            std::pair<Keys, char>(Keys::Num2, '2'),
+            std::pair<Keys, char>(Keys::Num3, '3'),
+            std::pair<Keys, char>(Keys::Num4, '4'),
+            std::pair<Keys, char>(Keys::Num5, '5'),
+            std::pair<Keys, char>(Keys::Num6, '6'),
+            std::pair<Keys, char>(Keys::Num7, '7'),
+            std::pair<Keys, char>(Keys::Num8, '8'),
+            std::pair<Keys, char>(Keys::Num9, '9'),
     };
 
     struct InputAction

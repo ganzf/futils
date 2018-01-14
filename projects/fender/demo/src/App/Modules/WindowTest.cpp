@@ -201,11 +201,16 @@ void WindowTest::initWindow()
             body.weight = 1;
         };
 
-        auto in = &entityManager->create<fender::entities::InputField>();
+        auto in = &entityManager->create<fender::entities::InputField>("placeholder");
         auto &inT = in->get<fender::components::Transform>();
         inT.size.w = 3;
         inT.size.h = 1;
         auto &editable = in->get<fender::components::Editable>();
+
+        auto &editableText = in->get<fender::components::Text>();
+        editableText.style.size = 22;
+        editableText.style.color = futils::Palevioletred;
+        editableText.style.font = "ressources/arial.ttf";
 
         auto &inBorder = in->get<fender::components::Border>();
         inBorder.thickness = 3;

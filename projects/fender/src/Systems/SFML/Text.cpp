@@ -2,6 +2,7 @@
 // Created by clara on 1/11/18.
 //
 
+#include <Components/Editable.hpp>
 #include "Text.hpp"
 #include "Components/AbsoluteTransform.hpp"
 #include "Camera.hpp"
@@ -19,7 +20,15 @@ namespace fender::systems::SFMLSystems
 
         color << txt.style.color;
         text.setFont((*_fonts)[txt.style.font]);
-        text.setString(txt.str);
+        if (txt.getEntity().has<components::Editable>())
+        {
+            auto &edit = txt.getEntity().get<components::Editable>();
+            if (edit.hasFocus)
+                text.setString(txt.str + "|");
+            else
+                text.setString(txt.str);
+        } else
+            text.setString(txt.str);
         //std::cout << 0.25 *absolute.size.h << "compare to " << txt.style.size << std::endl;
         text.setCharacterSize(txt.style.size);
 
