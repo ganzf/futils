@@ -75,7 +75,7 @@ void WindowTest::initWindow()
         auto &cam = camera->get<fender::components::Camera>();
         cam.window = window;
         cam.activated = true;
-        cam.debugMode = true;
+        cam.debugMode = false;
 
         auto text = &entityManager->create<fender::entities::Text>(world.name);
 
@@ -173,12 +173,8 @@ void WindowTest::initWindow()
         buttText.style.size = 24;
         buttText.style.color = futils::Antiquewhite;
         buttText.style.font = "ressources/arial.ttf";
-        buttText.str = "           - Quit - ";
-
+        buttText.str = "Print and leave";
         buttClick.waitForRelease = true;
-        buttClick.func = [this]() {
-            events->send<fender::events::Shutdown>();
-        };
 
         auto &listClick = list->attach<fender::components::Clickable>();
         auto rigid = &entityManager->create<fender::entities::GameObject>();
@@ -223,6 +219,11 @@ void WindowTest::initWindow()
         };
         editable.onFocusLost = [this, &inBorder](){
             inBorder.visible = false;
+        };
+        buttClick.func = [this, in]() {
+            auto &itxt = in->get<fender::components::Text>();
+            events->send<std::string>("User said \"" + itxt.str + "\"");
+            events->send<fender::events::Shutdown>();
         };
     }
 }

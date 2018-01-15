@@ -105,6 +105,7 @@ namespace futils {
             std::pair<Keys, char>(Keys::Num7, '7'),
             std::pair<Keys, char>(Keys::Num8, '8'),
             std::pair<Keys, char>(Keys::Num9, '9'),
+            std::pair<Keys, char>(Keys::Dot, '.'),
     };
 
     struct InputAction
