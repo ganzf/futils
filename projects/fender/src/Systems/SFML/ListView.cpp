@@ -19,7 +19,6 @@ namespace fender::systems::SFMLSystems
             if (list->order == futils::Ordering::Horizontal) {
                 float current = listPos.position.x;
                 float size = 0.0;
-                int count = 0;
                 for (auto elem: list->content) {
                     auto &transform = elem->get<components::Transform>();
                     transform.position.x = current;
