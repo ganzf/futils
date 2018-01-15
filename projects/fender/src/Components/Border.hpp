@@ -12,13 +12,13 @@ namespace fender::components
 {
     struct Border : futils::IComponent
     {
-        bool right;
-        bool left;
-        bool up;
-        bool down;
+        bool right{true};
+        bool left{true};
+        bool up{true};
+        bool down{true};
         bool visible;
         futils::Color color;
-        int thickness;
+        int thickness{1};
     };
 }
 

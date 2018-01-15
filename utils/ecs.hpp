@@ -25,32 +25,32 @@ namespace futils
   class   IComponent
   {
   protected:
-    futils::type_index _typeindex;
-    IEntity     *__entity{nullptr};
+      futils::type_index _typeindex;
+      IEntity     *__entity{nullptr};
   public:
-    virtual ~IComponent() {}
+      virtual ~IComponent() {}
 
-    // Friend of EntityManager
-    void setTypeindex(futils::type_index index) {
-      _typeindex = index;
-    }
-    // END
+      // Friend of EntityManager
+      void setTypeindex(futils::type_index index) {
+          _typeindex = index;
+      }
+      // END
 
-    void                setEntity(IEntity &ent) {
-      __entity = &ent;
-    }
+      void                setEntity(IEntity &ent) {
+          __entity = &ent;
+      }
 
-    IEntity &getEntity() const
-    {
-      return *__entity;
-    }
+      IEntity &getEntity() const
+      {
+          return *__entity;
+      }
 
-    futils::type_index getTypeindex() const {
-      return _typeindex;
-    }
+      futils::type_index getTypeindex() const {
+          return _typeindex;
+      }
   };
 
-  class   ISystem
+    class   ISystem
   {
   protected:
     std::string name{"Undefined"};
@@ -112,8 +112,8 @@ namespace futils
 
     class   IEntity
     {
+        int _id;
         std::unordered_map<futils::type_index, IComponent *>    components;
-        int                                 _id;
 
         template                            <typename Compo>
         void                                verifIsComponent()
@@ -125,8 +125,10 @@ namespace futils
         // TODO: SHOULD BE PRIVATE AND FRIEND WITH ENTITY MANAGER
         std::function<bool(IComponent &)> onExtension{[](IComponent &){return false;}};
         std::function<void(IComponent &)> onDetach{[](IComponent &){return false;}};
+        std::function<void()> afterBuild{[](){}};
         std::queue<std::pair<IComponent *, std::function<void()>>> lateinitComponents;
         futils::Mediator *events{nullptr};
+        EntityManager *entityManager{nullptr};
         // END.
         IEntity() {
             this->_id = futils::UID::get();
@@ -227,6 +229,7 @@ namespace futils
                 throw std::logic_error(std::string(typeid(T).name()) + " is not an Entity");
             auto entity = new T(args...);
             entity->events = events;
+            entity->entityManager = this;
             entities.push_front(entity);
             entity->onExtension = [this](IComponent &compo) {
                 components.insert(std::pair<futils::type_index, IComponent *>
@@ -252,6 +255,7 @@ namespace futils
                 front.second(); // Notification
                 entity->lateinitComponents.pop();
             }
+            entity->afterBuild();
             return *entity;
         }
 

@@ -8,34 +8,47 @@
 
 namespace fender::systems::SFMLSystems
 {
-    static std::string lastMessage = "";
-
     void Border::renderBorder(components::Border const &border, sf::RenderWindow &window)
     {
         auto &absolute = border.getEntity().get<components::AbsoluteTransform>();
         sf::RectangleShape shape;
         sf::Color color;
         color << border.color;
-        shape.setFillColor(sf::Color::Transparent);
-        shape.setOutlineThickness(border.thickness);
-        shape.setOutlineColor(color);
-        shape.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
-        shape.setPosition(absolute.position.x, absolute.position.y);
-        window.draw(shape);
-        lastMessage = "drawing rectangle shape at " + std::to_string(absolute.position.x) + ", " + std::to_string(absolute.position.y)
-                + " and size is (" + std::to_string(absolute.size.w) + ", " + std::to_string(absolute.size.h) + ")";
+        if (border.up && border.down && border.left && border.right) {
+            shape.setFillColor(sf::Color::Transparent);
+            shape.setOutlineThickness(border.thickness);
+            shape.setOutlineColor(color);
+            shape.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
+            shape.setPosition(absolute.position.x, absolute.position.y);
+            window.draw(shape);
+        } else {
+            sf::RectangleShape line;
+            line.setFillColor(color);
+            if (border.up) {
+                line.setPosition(absolute.position.x, absolute.position.y - border.thickness);
+                line.setSize(sf::Vector2f(absolute.size.w, border.thickness));
+                window.draw(line);
+            }
+            if (border.down) {
+                line.setPosition(absolute.position.x, absolute.position.y + absolute.size.h);
+                line.setSize(sf::Vector2f(absolute.size.w, border.thickness));
+                window.draw(line);
+            }
+            if (border.left) {
+                line.setPosition(absolute.position.x - border.thickness, absolute.position.y);
+                line.setSize(sf::Vector2f(border.thickness, absolute.size.h));
+                window.draw(line);
+            }
+            if (border.right) {
+                line.setPosition(absolute.position.x + absolute.size.w, absolute.position.y);
+                line.setSize(sf::Vector2f(border.thickness, absolute.size.h));
+                window.draw(line);
+            }
+        }
     }
 
     void Border::init() {
         __init();
-        addReaction<futils::Keys>([this](futils::IMediatorPacket &pkg){
-            if (this->shouldPrint == false)
-                return ;
-            auto &key = futils::Mediator::rebuild<futils::Keys >(pkg);
-            if (key == futils::Keys::Space)
-                std::cout << lastMessage << std::endl;
-            this->shouldPrint = false;
-        });
         addReaction<RenderLayer>([this](futils::IMediatorPacket &pkg){
             auto &packet = futils::Mediator::rebuild<RenderLayer>(pkg);
             for (auto &obj: packet.objects)
@@ -52,7 +65,6 @@ namespace fender::systems::SFMLSystems
     }
 
     void Border::run(float) {
-        this->shouldPrint = true;
         switch (phase)
         {
             case Init: return init();

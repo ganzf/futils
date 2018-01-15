@@ -7,6 +7,15 @@
 #include "Entities/Camera.hpp"
 #include "Camera.hpp"
 
+namespace
+{
+    std::unordered_map<futils::WStyle, decltype(sf::Style::None)> styleToSfStyle =
+            {
+                    {futils::WStyle::None, sf::Style::None},
+                    {futils::WStyle::Fullscreen, sf::Style::Fullscreen},
+            };
+}
+
 namespace fender::systems::SFMLSystems
 {
     void Window::requireEvents()
@@ -86,7 +95,7 @@ namespace fender::systems::SFMLSystems
         auto &data = *real.data;
         if (real.win == nullptr)
         {
-            real.win = new sf::RenderWindow(sf::VideoMode(data.size.w, data.size.h), data.title);
+            real.win = new sf::RenderWindow(sf::VideoMode(data.size.w, data.size.h), data.title, styleToSfStyle[real.data->style]);
             real.win->setFramerateLimit(60);
             if (real.win->isOpen()) {
                 data.isOpen = true;

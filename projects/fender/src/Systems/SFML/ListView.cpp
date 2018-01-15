@@ -19,10 +19,13 @@ namespace fender::systems::SFMLSystems
             if (list->order == futils::Ordering::Horizontal) {
                 float current = listPos.position.x;
                 float size = 0.0;
+                int count = 0;
                 for (auto elem: list->content) {
                     auto &transform = elem->get<components::Transform>();
                     transform.position.x = current;
                     transform.position.y = listPos.position.y;
+                    transform.size.h = transform.size.h < listPos.size.h ? listPos.size.h : transform.size.h;
+                    transform.size.w = transform.size.w == 0 ? 0.5 : transform.size.w;
                     listPos.size.h = transform.size.h > listPos.size.h ? transform.size.h : listPos.size.h;
                     current += transform.size.w;
                     size += transform.size.w;
@@ -35,6 +38,8 @@ namespace fender::systems::SFMLSystems
                     auto &transform = elem->get<components::Transform>();
                     transform.position.y = current;
                     transform.position.x = listPos.position.x;
+                    transform.size.w = transform.size.w < listPos.size.w ? listPos.size.w : transform.size.w;
+                    transform.size.h = transform.size.h == 0 ? 0.5 : transform.size.h;
                     listPos.size.w = transform.size.w > listPos.size.w ? transform.size.w : listPos.size.w;
                     current += transform.size.h;
                     size += transform.size.h;

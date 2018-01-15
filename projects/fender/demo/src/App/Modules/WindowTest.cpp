@@ -12,6 +12,7 @@
 #include "inputKeys.hpp"
 #include "Entities/ListView.hpp"
 #include "Entities/InputField.hpp"
+#include "Entities/TextBox.hpp"
 
 void WindowTest::initWindow()
 {
@@ -48,12 +49,12 @@ void WindowTest::initWindow()
     {
 
     } else {
-        win.size.w = 1024;
-        win.size.h = 780;
+        win.size.w = 1920;
+        win.size.h = 1080;
         win.position.x = 0;
         win.position.y = 0;
         win.visible = true;
-        win.style = futils::WStyle::None;
+        win.style = futils::WStyle::Fullscreen;
         auto &world = window->attach<fender::components::World>();
         world.unit = 64;
         world.name = "Project Elixia";
@@ -88,17 +89,17 @@ void WindowTest::initWindow()
         gui.add(*list);
         myMenu.order = futils::Ordering::Vertical;
 
-        auto &listHover = list->attach<fender::components::Hoverable>();
-        listHover.onEnter = [list](){
-            auto &listBorder = list->get<fender::components::Border>();
-            listBorder.visible = true;
-            listBorder.color = futils::White;
-        };
-        listHover.onLeave = [list](){
-            auto &listBorder = list->get<fender::components::Border>();
-            listBorder.visible = false;
-            listBorder.color = futils::White;
-        };
+//        auto &listHover = list->attach<fender::components::Hoverable>();
+//        listHover.onEnter = [list](){
+//            auto &listBorder = list->get<fender::components::Border>();
+//            listBorder.visible = true;
+//            listBorder.color = futils::White;
+//        };
+//        listHover.onLeave = [list](){
+//            auto &listBorder = list->get<fender::components::Border>();
+//            listBorder.visible = false;
+//            listBorder.color = futils::White;
+//        };
 
         auto &myMenuBorder = list->get<fender::components::Border>();
         myMenuBorder.visible = false;
@@ -200,7 +201,7 @@ void WindowTest::initWindow()
         auto in = &entityManager->create<fender::entities::InputField>("placeholder");
         auto &inT = in->get<fender::components::Transform>();
         inT.size.w = 3;
-        inT.size.h = 1;
+        inT.size.h = 0.55;
         auto &editable = in->get<fender::components::Editable>();
 
         auto &editableText = in->get<fender::components::Text>();
@@ -212,6 +213,9 @@ void WindowTest::initWindow()
         inBorder.thickness = 3;
         inBorder.color = futils::Lightskyblue;
         inBorder.visible = false;
+        inBorder.up = false;
+        inBorder.left = false;
+        inBorder.right = false;
         myMenu.content.push_back(in);
 
         editable.onFocus = [this, &inBorder](){
@@ -225,6 +229,26 @@ void WindowTest::initWindow()
             events->send<std::string>("User said \"" + itxt.str + "\"");
             events->send<fender::events::Shutdown>();
         };
+
+        auto *txtBox = &entityManager->create<fender::entities::TextBox>(5);
+        gui.add(*txtBox);
+        auto &txtBox_transform = txtBox->get<fender::components::Transform>();
+        txtBox_transform.size.w = 5;
+        txtBox_transform.size.h = 5;
+        auto &txtBox_childInfo = txtBox->get<fender::components::ChildInfo>();
+        txtBox_childInfo.offset.x = 2;
+        txtBox_childInfo.offset.y = 2;
+        auto &txtBox_border = txtBox->get<fender::components::Border>();
+        txtBox_border.visible = true;
+        txtBox_border.up = true;
+        txtBox_border.down = true;
+        txtBox_border.left = true;
+        txtBox_border.right = true;
+        txtBox_border.thickness = 1;
+        txtBox_border.color = futils::Cobaltgreen;
+        *txtBox << "MDR0";
+        *txtBox << "LOL1";
+        *txtBox << "LOL2";
     }
 }
 

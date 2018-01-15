@@ -9,11 +9,13 @@
 
 namespace fender::entities {
     class ListView : public GameObject {
+    protected:
+        components::ListView *_list{nullptr};
     public:
         ListView() {
-            attach<components::ListView>();
+            _list = &attach<components::ListView>();
         }
-        ~ListView()
+        virtual ~ListView()
         {
             detach<components::ListView>();
         }
