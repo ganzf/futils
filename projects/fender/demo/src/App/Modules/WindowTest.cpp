@@ -230,7 +230,7 @@ void WindowTest::initWindow()
             events->send<fender::events::Shutdown>();
         };
 
-        auto *txtBox = &entityManager->create<fender::entities::TextBox>(5);
+        auto *txtBox = &entityManager->create<fender::entities::TextBox>(2, true);
         gui.add(*txtBox);
         auto &txtBox_transform = txtBox->get<fender::components::Transform>();
         txtBox_transform.size.w = 5;
@@ -239,7 +239,7 @@ void WindowTest::initWindow()
         txtBox_childInfo.offset.x = 2;
         txtBox_childInfo.offset.y = 2;
         auto &txtBox_border = txtBox->get<fender::components::Border>();
-        txtBox_border.visible = true;
+        txtBox_border.visible = false;
         txtBox_border.up = true;
         txtBox_border.down = true;
         txtBox_border.left = true;
@@ -249,6 +249,9 @@ void WindowTest::initWindow()
         *txtBox << "MDR0";
         *txtBox << "LOL1";
         *txtBox << "LOL2";
+        *txtBox << "Bonjour michael";
+        *txtBox << "Bonjour michael";
+        *txtBox << "Bonjour michael";
     }
 }
 

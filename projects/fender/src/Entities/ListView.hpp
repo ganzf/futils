@@ -12,8 +12,9 @@ namespace fender::entities {
     protected:
         components::ListView *_list{nullptr};
     public:
-        ListView() {
+        ListView(int size = -1) {
             _list = &attach<components::ListView>();
+            _list->size = size;
         }
         virtual ~ListView()
         {

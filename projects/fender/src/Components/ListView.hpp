@@ -10,6 +10,8 @@
 
 namespace fender::components {
     struct ListView : futils::IComponent {
+        int offset{0};
+        int size{0};
         bool reversed;
         float padding;
         futils::Align align;
