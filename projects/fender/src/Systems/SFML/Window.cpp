@@ -12,6 +12,7 @@ namespace
     std::unordered_map<futils::WStyle, decltype(sf::Style::None)> styleToSfStyle =
             {
                     {futils::WStyle::None, sf::Style::None},
+                    {futils::WStyle::Default, sf::Style::Default},
                     {futils::WStyle::Fullscreen, sf::Style::Fullscreen},
             };
 }

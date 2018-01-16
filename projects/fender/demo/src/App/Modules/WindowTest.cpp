@@ -49,12 +49,12 @@ void WindowTest::initWindow()
     {
 
     } else {
-        win.size.w = 1920;
-        win.size.h = 1080;
+        win.size.w = 800;
+        win.size.h = 600;
         win.position.x = 0;
         win.position.y = 0;
         win.visible = true;
-        win.style = futils::WStyle::Fullscreen;
+        win.style = futils::WStyle::Default;
         auto &world = window->attach<fender::components::World>();
         world.unit = 64;
         world.name = "Project Elixia";
@@ -86,7 +86,7 @@ void WindowTest::initWindow()
         auto list = &entityManager->create<fender::entities::ListView>();
 
         auto &myMenu = list->get<fender::components::ListView>();
-        myMenu.name = "myMenu";
+        myMenu.name = "MainMenu";
         gui.add(*list);
         myMenu.order = futils::Ordering::Vertical;
 
@@ -182,7 +182,7 @@ void WindowTest::initWindow()
         auto rigid = &entityManager->create<fender::entities::GameObject>();
         auto &rigidBorder = rigid->get<fender::components::Border>();
         rigidBorder.visible = true;
-        rigidBorder.color = futils::White;
+        rigidBorder.color = futils::Sandybrown;
         rigidBorder.thickness = 3;
         auto &rigidPos = rigid->get<fender::components::Transform>();
         rigidPos.position.x = 0;
@@ -248,8 +248,10 @@ void WindowTest::initWindow()
         txtBox_border.thickness = 1;
         txtBox_border.color = futils::Cobaltgreen;
 
-        addReaction<futils::Keys>([this, txtBox](futils::IMediatorPacket &){
-            *txtBox << "Msg";
+        addReaction<futils::Keys>([this, txtBox](futils::IMediatorPacket &pkg){
+            auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
+            if (key == futils::Keys::I)
+                *txtBox << "Msg";
         });
 
         auto *txtBoxScroll = &entityManager->create<fender::entities::TextBox>(2, true);

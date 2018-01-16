@@ -43,7 +43,7 @@ namespace fender::entities {
         void initStream(int size) {
             _stream = &entityManager->create<ListView>(size);
             auto &list = _stream->get<components::ListView>();
-            list.name = "StreamList";
+            list.name = "TextBoxTextStream";
             list.order = futils::Ordering::Vertical;
             auto tmp = 0;
             while (tmp < size)
@@ -59,7 +59,7 @@ namespace fender::entities {
     public:
         explicit TextBox(int size = 1, bool scrollable = false) {
             afterBuild = [this, size, scrollable](){
-                _list->name = "TextBoxList";
+                _list->name = "TextBoxContainer";
                 if (scrollable) {
                     initScroll();
                     initStream(size);
