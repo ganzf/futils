@@ -12,7 +12,25 @@ namespace fender::systems::SFMLSystems
         phase = 1;
     }
 
-    void ListView::updateHorizontalList(components::ListView &list,
+    void ListView::updateVerticalListSize(components::ListView &list
+    {
+
+    }
+
+    void ListView::updateHorizontalListSize(components::ListView &list
+    {
+
+    }
+
+    void ListView::updateListSize(components::ListView &list)
+    {
+        if (list.order == futils::Ordering::Vertical)
+            updateVerticalListSize(list);
+        else
+            updateHorizontalListSize(list);
+    }
+
+    void ListView::updateVerticalList(components::ListView &list,
                                         components::Transform &listPos,
                                         int &count)
     {
@@ -34,7 +52,7 @@ namespace fender::systems::SFMLSystems
         listPos.size.h = size;
     }
 
-    void ListView::updateVerticalList(components::ListView &list,
+    void ListView::updateHorizontalList(components::ListView &list,
                                       components::Transform &listPos,
                                       int &count)
     {
@@ -59,6 +77,11 @@ namespace fender::systems::SFMLSystems
     void ListView::update() {
         auto lists = entityManager->get<components::ListView>();
         for (auto &list: lists) {
+            for (auto content : list->content)
+            {
+                if (content->has<components::ListView>())
+                    updateListSize(content->get<components::ListView>());
+            }
             auto &listPos = list->getEntity().get<components::Transform>();
             int count = -1;
             if (list->order == futils::Ordering::Horizontal) {

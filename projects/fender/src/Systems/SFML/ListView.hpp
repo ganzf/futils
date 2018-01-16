@@ -10,8 +10,11 @@
 
 namespace fender::systems::SFMLSystems {
     class ListView : public System {
-        void updateVerticalList(components::ListView &, components::Transform &, int &);
-        void updateHorizontalList(components::ListView &, components::Transform &, int &);
+        void updateVerticalList(components::ListView &);
+        void updateHorizontalList(components::ListView &);
+        void updateVerticalListSize(components::ListView &);
+        void updateHorizontalListSize(components::ListView &);
+        void updateListSize(components::ListView &);
 
         void init();
         void update();
