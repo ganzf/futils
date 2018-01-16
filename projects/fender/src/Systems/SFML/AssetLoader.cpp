@@ -20,16 +20,20 @@ namespace fender::systems::SFMLSystems
 
         for (auto file : Texture) {
             sf::Texture texture;
-            if (!texture.loadFromFile(file))
-                events->send<std::string>("\e[31m ☒ \e[00m Font \"" + file + "\" loaded.");
+            if (!texture.loadFromFile(file)) {
+                events->send<std::string>("\e[31m ☒ \e[00m Font \"" + file + "\" not found.");
+                continue ;
+            }
             events->send<std::string>("\e[32m ☑ \e[00m Texture \"" + file + "\" loaded.");
             _textures[file] = texture;
         }
         
         for (auto file : Font) {
             sf::Font font;
-            if (!font.loadFromFile(file))
-                events->send<std::string>("\e[31m ☒ \e[00m Font \"" + file + "\" loaded.");
+            if (!font.loadFromFile(file)) {
+                events->send<std::string>("\e[31m ☒ \e[00m Font \"" + file + "\" not found.");
+                continue ;
+            }
             events->send<std::string>("\e[32m ☑ \e[00m Font \"" + file + "\" loaded.");
             _fonts[file] = font;
         }
