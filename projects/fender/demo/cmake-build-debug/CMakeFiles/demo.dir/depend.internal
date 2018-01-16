@@ -46,7 +46,9 @@ CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o
  ../../src/Components/Children.hpp
  ../../src/Components/Clickable.hpp
  ../../src/Components/Color.hpp
+ ../../src/Components/Editable.hpp
  ../../src/Components/GameObject.hpp
+ ../../src/Components/Hoverable.hpp
  ../../src/Components/Image.hpp
  ../../src/Components/Input.hpp
  ../../src/Components/ListView.hpp
@@ -54,13 +56,16 @@ CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o
  ../../src/Components/Transform.hpp
  ../../src/Components/Window.hpp
  ../../src/Components/World.hpp
+ ../../src/Components/rigidBody.hpp
  ../../src/Entities/Button.hpp
  ../../src/Entities/Camera.hpp
  ../../src/Entities/GameObject.hpp
  ../../src/Entities/Image.hpp
  ../../src/Entities/Input.hpp
+ ../../src/Entities/InputField.hpp
  ../../src/Entities/ListView.hpp
  ../../src/Entities/Text.hpp
+ ../../src/Entities/TextBox.hpp
  ../../src/Entities/Window.hpp
  ../include/events.hpp
  ../include/fender.hpp

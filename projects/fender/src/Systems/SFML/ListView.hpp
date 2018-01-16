@@ -15,6 +15,7 @@ namespace fender::systems::SFMLSystems {
         void updateVerticalListSize(components::ListView &);
         void updateHorizontalListSize(components::ListView &);
         void updateListSize(components::ListView &);
+        void updateList(components::ListView &);
 
         void init();
         void update();

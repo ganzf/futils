@@ -146,6 +146,9 @@ namespace fender::systems::SFMLSystems
             for (auto it = range.first; it != range.second; it++)
             {
                 rangeCount++;
+                auto &obj = it->second->get<components::GameObject>();
+                if (!obj.visible)
+                    continue ;
                 auto &absolute = it->second->get<components::AbsoluteTransform>();
                 auto &transform = it->second->get<components::Transform>();
                 auto windowSize = realWindow->getSize();

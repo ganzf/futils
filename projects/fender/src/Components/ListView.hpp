@@ -10,6 +10,7 @@
 
 namespace fender::components {
     struct ListView : futils::IComponent {
+        std::string name;
         int offset{0};
         int size{0};
         bool reversed;

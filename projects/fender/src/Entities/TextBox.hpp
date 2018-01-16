@@ -12,8 +12,38 @@
 
 namespace fender::entities {
     class TextBox : public ListView {
-        void initTextList(components::ListView &list, int size)
+        ListView *_scroll{nullptr};
+        ListView *_stream{nullptr};
+        Button *_Up{nullptr};
+        Button *_Down{nullptr};
+
+        void initScroll()
         {
+            _list->order = futils::Ordering::Horizontal;
+            _scroll = &entityManager->create<ListView>();
+            _list->content.push_back(_scroll);
+            auto &scrollView = _scroll->get<components::ListView>();
+            scrollView.name = "ScrollView";
+            _Up = &entityManager->create<Button>();
+            auto &upAction = _Up->get<components::Clickable>();
+            upAction.func = [this](){
+                if (_list->offset > 0)
+                    _list->offset--;
+            };
+            _Down = &entityManager->create<Button>();
+            auto &downAction = _Down->get<components::Clickable>();
+            downAction.func = [this](){
+                if (_list->offset < _list->size)
+                    _list->offset++;
+            };
+            scrollView.content.push_back(_Up);
+            scrollView.content.push_back(_Down);
+        }
+
+        void initStream(int size) {
+            _stream = &entityManager->create<ListView>(size);
+            auto &list = _stream->get<components::ListView>();
+            list.name = "StreamList";
             list.order = futils::Ordering::Vertical;
             auto tmp = 0;
             while (tmp < size)
@@ -24,75 +54,20 @@ namespace fender::entities {
                 list.content.push_back(txt);
                 tmp++;
             }
-            _list = &list;
+            _list->content.push_back(_stream);
         }
-        void goUp()
-        {
-
-        }
-
-        void goDown()
-        {
-
-        }
-
     public:
         explicit TextBox(int size = 1, bool scrollable = false) {
-            //TODO: Remove rng
-            futils::IntegralRange rng(0, 100);
-            if (rng.getRandom() < 50)
-                scrollable = !scrollable;
-
             afterBuild = [this, size, scrollable](){
+                _list->name = "TextBoxList";
                 if (scrollable) {
-                    _list->order = futils::Ordering::Horizontal;
-                    auto *scrollbarContainer = &entityManager->create<entities::ListView>();
-                    auto &scrollBarContent = scrollbarContainer->get<components::ListView>();
-                    scrollBarContent.order = futils::Ordering::Vertical;
-                    auto buttonUp = &entityManager->create<Button>();
-                    auto &onUp = buttonUp->get<components::Clickable>();
-                    onUp.func = [this](){
-                        this->goUp();
-                    };
-                    auto buttonDown = &entityManager->create<Button>();
-                    auto &onDown = buttonDown->get<components::Clickable>();
-                    onDown.func = [this](){
-                        this->goDown();
-                    };
-                    scrollBarContent.content.push_back(buttonUp);
-                    scrollBarContent.content.push_back(buttonDown);
-                    auto &scrollBorder = scrollbarContainer->get<components::Border>();
-                    scrollBorder.visible = true;
-                    scrollBorder.color = futils::Orange;
-                    _list->content.push_back(scrollbarContainer);
-                    auto *box = &entityManager->create<entities::ListView>();
-                    initTextList(box->get<components::ListView>(), size);
-                    auto &boxBorder = box->get<components::Border>();
-                    boxBorder.visible = true;
-                    boxBorder.color = futils::Pink;
-                    _list->content.push_back(box);
+                    initScroll();
+                    initStream(size);
                 } else {
-                    initTextList(*_list, size);
+                    initStream(size);
                 }
             };
         }
         TextBox &operator << (std::string const &str);
     };
 }
-
-//namespace fender
-//{
-//    class TextBoxOutput
-//    {
-//        entities::TextBox &textBox;
-//        std::string str;
-//    public:
-//        TextBoxOutput(entities::TextBox &textBox, std::string const &str = ""): textBox(textBox), str(str) {}
-//        void set(std::string const &string){
-//            str = string;
-//        }
-//        std::string const &get() const {
-//            return str;
-//        }
-//    };
-//}

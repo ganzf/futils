@@ -86,6 +86,7 @@ void WindowTest::initWindow()
         auto list = &entityManager->create<fender::entities::ListView>();
 
         auto &myMenu = list->get<fender::components::ListView>();
+        myMenu.name = "myMenu";
         gui.add(*list);
         myMenu.order = futils::Ordering::Vertical;
 
@@ -230,7 +231,7 @@ void WindowTest::initWindow()
             events->send<fender::events::Shutdown>();
         };
 
-        auto *txtBox = &entityManager->create<fender::entities::TextBox>(2, true);
+        auto *txtBox = &entityManager->create<fender::entities::TextBox>(2, false);
         gui.add(*txtBox);
         auto &txtBox_transform = txtBox->get<fender::components::Transform>();
         txtBox_transform.size.w = 5;
@@ -246,12 +247,33 @@ void WindowTest::initWindow()
         txtBox_border.right = true;
         txtBox_border.thickness = 1;
         txtBox_border.color = futils::Cobaltgreen;
-        *txtBox << "MDR0";
-        *txtBox << "LOL1";
-        *txtBox << "LOL2";
-        *txtBox << "Bonjour michael";
-        *txtBox << "Bonjour michael";
-        *txtBox << "Bonjour michael";
+
+        addReaction<futils::Keys>([this, txtBox](futils::IMediatorPacket &){
+            *txtBox << "Msg";
+        });
+
+        auto *txtBoxScroll = &entityManager->create<fender::entities::TextBox>(2, true);
+        gui.add(*txtBoxScroll);
+        auto &txtBoxScroll_transform = txtBoxScroll->get<fender::components::Transform>();
+        txtBoxScroll_transform.size.w = 5;
+        txtBoxScroll_transform.size.h = 5;
+        auto &txtBoxScroll_childInfo = txtBoxScroll->get<fender::components::ChildInfo>();
+        txtBoxScroll_childInfo.offset.x = 2;
+        txtBoxScroll_childInfo.offset.y = 55;
+        auto &txtBoxScroll_border = txtBoxScroll->get<fender::components::Border>();
+        txtBoxScroll_border.visible = false;
+        txtBoxScroll_border.up = true;
+        txtBoxScroll_border.down = true;
+        txtBoxScroll_border.left = true;
+        txtBoxScroll_border.right = true;
+        txtBoxScroll_border.thickness = 1;
+        txtBoxScroll_border.color = futils::Cobaltgreen;
+        *txtBoxScroll << "MDR0";
+//        *txtBoxScroll << "LOL1";
+//        *txtBoxScroll << "LOL2";
+//        *txtBoxScroll << "Bonjour michael";
+//        *txtBoxScroll << "Bonjour michael";
+//        *txtBoxScroll << "Bonjour michael";
     }
 }
 

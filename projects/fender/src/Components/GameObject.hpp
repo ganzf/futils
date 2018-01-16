@@ -8,6 +8,6 @@
 
 namespace fender::components {
     struct GameObject : futils::IComponent {
-        bool visible;
+        bool visible{true};
     };
 }
