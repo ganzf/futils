@@ -18,7 +18,7 @@ namespace fender::systems::SFMLSystems
                 events->send<AssetsLoaded>(assets);
         });
 
-        std::regex patternTexture { ".*.png" };
+        std::regex patternTexture { ".*.[png|jpg|jpeg]" };
         std::regex patternFont { ".*.ttf" };
 
         DIR *dir = opendir("ressources/");
@@ -35,6 +35,7 @@ namespace fender::systems::SFMLSystems
                     //events->send<std::string>("Texture " + file->d_name + " not found.");
                     continue;
                 }
+                std::cout << "Texture " << file->d_name << " loaded." << std::endl;
                 _textures[file->d_name] = texture;
             }
             else if (std::regex_match(file->d_name, patternFont))
@@ -44,6 +45,7 @@ namespace fender::systems::SFMLSystems
                     //events->send<std::string>("\e[31m ☒ \e[00m Font \"" + file->d_name + "\" not found.");
                     continue;
                 }
+                std::cout << "Font " << file->d_name << " loaded." << std::endl;
                 _fonts[file->d_name] = font;
             }
 
