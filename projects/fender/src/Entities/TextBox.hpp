@@ -25,41 +25,42 @@ namespace fender::entities {
             auto &scrollView = _scroll->get<components::ListView>();
             scrollView.name = "ScrollView";
             _Up = &entityManager->create<Button>();
+            auto &upSize = _Up->get<components::Transform>();
+            upSize.size.w = 0.5;
+            upSize.size.h = 0.5;
             auto &upAction = _Up->get<components::Clickable>();
             upAction.func = [this](){
                 if (_list->offset > 0)
                     _list->offset--;
             };
             _Down = &entityManager->create<Button>();
+            auto &downSize = _Down->get<components::Transform>();
+            downSize.size.w = 0.5;
+            downSize.size.h = 0.5;
             auto &downAction = _Down->get<components::Clickable>();
             downAction.func = [this](){
-                if (_list->offset < _list->size)
+                if (_list->offset + _list->size < (int)_list->content.size())
                     _list->offset++;
             };
             scrollView.content.push_back(_Up);
             scrollView.content.push_back(_Down);
+            scrollView.fit = true;
         }
 
         void initStream(int size) {
+            static int i = 0;
+            i++;
             _stream = &entityManager->create<ListView>(size);
             auto &list = _stream->get<components::ListView>();
-            list.name = "TextBoxTextStream";
+            list.name = "TextBoxTextStream" + std::to_string(i);
             list.order = futils::Ordering::Vertical;
-            auto tmp = 0;
-            while (tmp < size)
-            {
-                auto txt = &entityManager->create<entities::Text>("");
-                auto &border = txt->get<components::Border>();
-                border.visible = false;
-                list.content.push_back(txt);
-                tmp++;
-            }
             _list->content.push_back(_stream);
+            list.fit = true;
         }
     public:
         explicit TextBox(int size = 1, bool scrollable = false) {
             afterBuild = [this, size, scrollable](){
-                _list->name = "TextBoxContainer";
+                _list->name = "TextBoxContainer" + std::to_string(size);
                 if (scrollable) {
                     initScroll();
                     initStream(size);

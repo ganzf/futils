@@ -234,8 +234,8 @@ void WindowTest::initWindow()
         auto *txtBox = &entityManager->create<fender::entities::TextBox>(2, false);
         gui.add(*txtBox);
         auto &txtBox_transform = txtBox->get<fender::components::Transform>();
-        txtBox_transform.size.w = 5;
-        txtBox_transform.size.h = 5;
+        txtBox_transform.size.w = 4;
+        txtBox_transform.size.h = 4;
         auto &txtBox_childInfo = txtBox->get<fender::components::ChildInfo>();
         txtBox_childInfo.offset.x = 2;
         txtBox_childInfo.offset.y = 2;
@@ -248,20 +248,14 @@ void WindowTest::initWindow()
         txtBox_border.thickness = 1;
         txtBox_border.color = futils::Cobaltgreen;
 
-        addReaction<futils::Keys>([this, txtBox](futils::IMediatorPacket &pkg){
-            auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
-            if (key == futils::Keys::I)
-                *txtBox << "Msg";
-        });
-
-        auto *txtBoxScroll = &entityManager->create<fender::entities::TextBox>(2, true);
+        auto *txtBoxScroll = &entityManager->create<fender::entities::TextBox>(4, true);
         gui.add(*txtBoxScroll);
         auto &txtBoxScroll_transform = txtBoxScroll->get<fender::components::Transform>();
-        txtBoxScroll_transform.size.w = 5;
-        txtBoxScroll_transform.size.h = 5;
+        txtBoxScroll_transform.size.w = 4;
+        txtBoxScroll_transform.size.h = 2;
         auto &txtBoxScroll_childInfo = txtBoxScroll->get<fender::components::ChildInfo>();
         txtBoxScroll_childInfo.offset.x = 2;
-        txtBoxScroll_childInfo.offset.y = 55;
+        txtBoxScroll_childInfo.offset.y = 30;
         auto &txtBoxScroll_border = txtBoxScroll->get<fender::components::Border>();
         txtBoxScroll_border.visible = false;
         txtBoxScroll_border.up = true;
@@ -270,7 +264,16 @@ void WindowTest::initWindow()
         txtBoxScroll_border.right = true;
         txtBoxScroll_border.thickness = 1;
         txtBoxScroll_border.color = futils::Cobaltgreen;
-        *txtBoxScroll << "MDR0";
+
+        addReaction<futils::Keys>([this, txtBox, txtBoxScroll](futils::IMediatorPacket &pkg){
+            static int ptdr = 0;
+            auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
+            if (key == futils::Keys::I) {
+                *txtBox << "Msg " + std::to_string(ptdr);
+                *txtBoxScroll << "Msg " + std::to_string(ptdr);;
+                ptdr++;
+            }
+        });
 //        *txtBoxScroll << "LOL1";
 //        *txtBoxScroll << "LOL2";
 //        *txtBoxScroll << "Bonjour michael";
