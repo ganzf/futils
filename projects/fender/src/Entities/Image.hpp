@@ -19,7 +19,6 @@ namespace fender::entities {
             attach<components::Image>();
         }
         ~Image() {
-            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<components::Image>();
         }
     };

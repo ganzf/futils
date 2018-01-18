@@ -23,7 +23,6 @@ namespace fender::entities {
             _text->str = placeholder;
         }
         ~InputField(){
-            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<components::Editable>();
             detach<components::Text>();
         }

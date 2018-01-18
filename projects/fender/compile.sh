@@ -6,5 +6,4 @@ cd ../demo/build
 
 make -j4
 cd ..
-./demo
 cd ..

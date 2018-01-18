@@ -17,7 +17,6 @@ namespace fender::entities
         }
         ~Input()
         {
-            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<fender::components::Input>();
         }
     };

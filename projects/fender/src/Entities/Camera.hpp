@@ -19,7 +19,6 @@ namespace fender::entities {
             attach<components::Children>();
         }
         ~Camera() {
-            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<components::Camera>();
             detach<components::Children>();
         }

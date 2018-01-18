@@ -78,9 +78,7 @@ namespace fender::entities {
                 }
             };
         }
-        ~TextBox(){
-            std::cerr << __PRETTY_FUNCTION__ << std::endl;
-        }
+
         TextBox &operator << (int size)
         {
             fontSize = size;

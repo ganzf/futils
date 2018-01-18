@@ -18,7 +18,6 @@ namespace fender::entities {
         }
         virtual ~ListView()
         {
-            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<components::ListView>();
         }
     };
