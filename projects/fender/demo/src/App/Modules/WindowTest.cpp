@@ -187,7 +187,6 @@ void WindowTest::initWindow()
         auto &rigidPos = rigid->get<fender::components::Transform>();
         rigidPos.position.x = 0;
         rigidPos.position.y = 0;
-        rigidPos.position.z = 5;
         rigidPos.size.w = 1;
         rigidPos.size.h = 1;
 
@@ -299,7 +298,7 @@ void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z, bool c
         auto camera = em.get<fender::components::Camera>();
         if (camera.empty())
             return ;
-        std::cout << "Cam found"<< std::endl;
+        std::cout << "Cam found" << std::endl;
         auto &myCam = camera.front()->getEntity();
         auto &gui = myCam.get<fender::components::Children>();
         gui.add(go);
@@ -311,7 +310,7 @@ void createGo(futils::EntityManager &em, bool cam = false)
     static int count = 0;
     for(auto i = 0; i<10; i++) {
         futils::IntegralRange<int> rng(-50, 50);
-        futils::IntegralRange<int> zrng(1, 10);
+        futils::IntegralRange<int> zrng(1, 3);
         testGO(em, rng.getRandom(), rng.getRandom(), 1, 1,
                zrng.getRandom(), cam);
         count++;

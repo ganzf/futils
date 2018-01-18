@@ -116,6 +116,8 @@ namespace fender::systems::SFMLSystems
     {
         for (auto content : list.content)
         {
+            auto &tr = content->get<components::Transform>();
+            tr.position.z = list.getEntity().get<components::Transform>().position.z;
             if (content->has<components::ListView>())
                 updateList(content->get<components::ListView>(), depth + 1);
         }

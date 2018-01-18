@@ -134,7 +134,6 @@ namespace fender::systems::SFMLSystems
         }
         auto &camPos = entity.get<components::Transform>();
         int currentLayer = camPos.position.z - cam.viewDistance;
-
         while (currentLayer < camPos.position.z)
         {
             RenderLayer event;
@@ -142,10 +141,8 @@ namespace fender::systems::SFMLSystems
             event.camData = &cam;
 
             auto range = layout.equal_range(currentLayer);
-            int rangeCount = 0;
             for (auto it = range.first; it != range.second; it++)
             {
-                rangeCount++;
                 auto &obj = it->second->get<components::GameObject>();
                 if (!obj.visible)
                     continue ;
@@ -163,7 +160,7 @@ namespace fender::systems::SFMLSystems
                      && absolute.position.x < (int)windowSize.x && absolute.position.y < (int)windowSize.y)
                     || (absolute.position.x + absolute.size.w > 0 && absolute.position.x + absolute.size.w < (int)windowSize.x)
                     || (absolute.position.y + absolute.size.h > 0 && absolute.position.y + absolute.size.h < (int)windowSize.y))
-                event.objects.push_back(it->second);
+                    event.objects.push_back(it->second);
             }
             event.window = realWindow;
             events->send<RenderLayer>(event);
@@ -182,11 +179,9 @@ namespace fender::systems::SFMLSystems
         if (worlds.empty())
             return ;
         auto &world = worlds.front();
-        // Pour toutes les cameras
         for (auto &cam: cameras)
         {
             auto &entity = cam->getEntity();
-            // Si la cam doit render
             if (cam->activated && cam->window) {
                 renderCam(entity, *cam, *world);
             }
