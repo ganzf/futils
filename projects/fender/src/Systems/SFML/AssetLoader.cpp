@@ -26,11 +26,13 @@ namespace fender::systems::SFMLSystems
         try {
             std::experimental::filesystem::path path{"ressources/"};
             std::string pathFile;
-            for (auto &p : std::experimental::filesystem::directory_iterator(path)) {
-                pathFile = "ressources/";
-                pathFile += p.path().filename();
+            for (auto &p : std::experimental::filesystem::recursive_directory_iterator(path)) {
+                    
+                pathFile = p.path();
 
-                std::string file = p.path().filename();
+                std::string file = p.path();
+                file.erase(0, 11);
+
                 if (std::regex_match(file, patternTexture)) {
                     sf::Texture texture;
                     if (!texture.loadFromFile(pathFile)) {
