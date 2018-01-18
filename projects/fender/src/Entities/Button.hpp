@@ -15,6 +15,7 @@
 
 namespace fender::entities {
     class Button : public GameObject {
+
     public:
         Button() {;
             attach<components::Image>();
