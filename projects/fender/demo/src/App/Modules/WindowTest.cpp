@@ -170,12 +170,12 @@ void WindowTest::initWindow()
         buttTransform.position.y = -2;
         buttTransform.size.x = 4;
         buttTransform.size.y = 1;
-        buttImage.file = "ressources/button.png";
+        buttImage.file = "button.png";
 
         buttText.style.size = 24;
         buttText.style.color = futils::Antiquewhite;
-        buttText.style.font = "ressources/arial.ttf";
-        buttText.str = "SendText";
+        buttText.style.font = "arial.ttf";
+        buttText.str = "Send Text";
         buttClick.waitForRelease = true;
 
         auto &listClick = list->attach<fender::components::Clickable>();
@@ -207,7 +207,7 @@ void WindowTest::initWindow()
         auto &editableText = in->get<fender::components::Text>();
         editableText.style.size = 22;
         editableText.style.color = futils::Palevioletred;
-        editableText.style.font = "ressources/arial.ttf";
+        editableText.style.font = "arial.ttf";
 
         auto &inBorder = in->get<fender::components::Border>();
         inBorder.thickness = 3;
