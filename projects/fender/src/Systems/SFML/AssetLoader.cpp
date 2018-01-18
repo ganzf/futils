@@ -22,16 +22,17 @@ namespace fender::systems::SFMLSystems
 
         std::regex patternTexture { ".*.[png|jpg|jpeg]" };
         std::regex patternFont { ".*.ttf" };
+        std::string assetDir = "ressources/";
 
         try {
-            std::experimental::filesystem::path path{"ressources/"};
+            std::experimental::filesystem::path path{assetDir.c_str()};
             std::string pathFile;
             for (auto &p : std::experimental::filesystem::recursive_directory_iterator(path)) {
                     
                 pathFile = p.path();
 
                 std::string file = p.path();
-                file.erase(0, 11);
+                file.erase(0, assetDir.size());
 
                 if (std::regex_match(file, patternTexture)) {
                     sf::Texture texture;
