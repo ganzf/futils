@@ -78,6 +78,12 @@ void WindowTest::initWindow()
         cam.activated = true;
         cam.debugMode = false;
 
+        entityManager->create<fender::entities::Image>("poulpi.png", futils::Vec2<float>{0, 0}, futils::Vec2<float>{2, 2});
+
+        entityManager->create<fender::entities::Text>("Test", futils::Vec2<float>(2, 3));
+
+/*
+
         auto text = &entityManager->create<fender::entities::Text>(world.name);
 
         auto &gui = camera->get<fender::components::Children>();
@@ -279,6 +285,7 @@ void WindowTest::initWindow()
         auto &debugPos = debug->get<fender::components::ChildInfo>();
         debugPos.offset.x = 5;
         debugPos.offset.y = 10;
+        */
     }
 }
 
