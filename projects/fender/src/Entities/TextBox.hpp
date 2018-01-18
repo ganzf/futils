@@ -30,8 +30,10 @@ namespace fender::entities {
             upSize.size.h = 0.5;
             auto &upAction = _Up->get<components::Clickable>();
             upAction.func = [this](){
-                if (_list->offset > 0)
-                    _list->offset--;
+                auto &stream = _stream->get<components::ListView>();
+                if (stream.offset > 0)
+                    stream.offset--;
+                std::cout << "Going up in " << stream.name << " and offset is " << stream.offset << std::endl;
             };
             _Down = &entityManager->create<Button>();
             auto &downSize = _Down->get<components::Transform>();
@@ -39,8 +41,10 @@ namespace fender::entities {
             downSize.size.h = 0.5;
             auto &downAction = _Down->get<components::Clickable>();
             downAction.func = [this](){
-                if (_list->offset + _list->size < (int)_list->content.size())
-                    _list->offset++;
+                auto &stream = _stream->get<components::ListView>();
+                if (stream.offset + stream.size < (int)stream.content.size())
+                    stream.offset++;
+                std::cout << "Going down in " << stream.name << " and offset is " << stream.offset << std::endl;
             };
             scrollView.content.push_back(_Up);
             scrollView.content.push_back(_Down);

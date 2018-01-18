@@ -22,8 +22,10 @@ namespace fender::entities
         } else {
             tr.size.w = _stream->get<components::Transform>().size.w;
         }
-        if ((int)list.content.size() + 1 > list.size)
+        if ((int)list.content.size() + 1 > list.size) {
             list.offset++;
+            std::cout << "Inserting " << str << " in " << list.name << " and offset is " << list.offset << std::endl;
+        }
         list.content.push_back(txt);
         std::cout << "Inserted another text in " << list.name << " of size " << tr.size << std::endl;
         return *this;
