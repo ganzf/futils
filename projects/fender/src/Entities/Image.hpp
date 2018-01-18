@@ -16,11 +16,7 @@ namespace fender::entities {
     class Image : public GameObject {
         components::Image *image;
     public:
-        Image(std::string const &img) {;
-            image = &attach<components::Image>();
-            image->file = img;
-        }
-        Image(std::string const &img, futils::Vec2<int> size, futils::Vec2<int> pos = {0, 0}) {
+        Image(std::string const &img, futils::Vec2<float> pos = {0, 0}, futils::Vec2<float> size = {1, 1}) {
             image = &attach<components::Image>();
             image->file = img;
             setSize(size);

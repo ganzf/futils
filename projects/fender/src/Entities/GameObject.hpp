@@ -36,27 +36,27 @@ namespace fender::entities {
             detach<components::AbsoluteTransform>();
         }
 
-        void setSize(int width, int height) {
+        void setSize(float width, float height) {
             transform->size.x = width;
             transform->size.y = height;
         }
 
-        void setSize(futils::Vec2<int> const &size) {
+        void setSize(futils::Vec2<float> const &size) {
             transform->size.x = size.w;
             transform->size.y = size.h;
         }
 
-        void setPosition(int x, int y) {
+        void setPosition(float x, float y) {
             transform->position.x = x;
             transform->position.y = y;
         }
 
-        void setPosition(futils::Vec2<int> const &pos) {
+        void setPosition(futils::Vec2<float> const &pos) {
             transform->position.x = pos.x;
             transform->position.y = pos.y;
         }
 
-        void setPosition(int x, int y, int z) {
+        void setPosition(float x, float y, float z) {
             transform->position.x = x;
             transform->position.y = y;
             transform->position.z = z;

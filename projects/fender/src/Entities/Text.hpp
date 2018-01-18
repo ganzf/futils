@@ -14,21 +14,13 @@ namespace fender::entities
         components::Text *text;
 
     public:
-        Text(std::string const &s) {
-            attach<components::Text>();
-            text = &get<components::Text>();
-            text->style.size = 24;
-            text->style.color = futils::White;
-            text->style.font = "arial.ttf";
-            text->str = s;
-        }
 
-        Text(std::string const &s, futils::Vec2<int> pos, futils::Vec2<int> size = {1, 1}) {
+        Text(std::string const &s, futils::Vec2<float> pos = {0, 0}, futils::Vec2<float> size = {1, 1}) {
             attach<components::Text>();
             text = &get<components::Text>();
             setPosition(pos);
             setSize(size);
-            text->style.size = 24;
+            text->style.size = 14;
             text->style.color = futils::White;
             text->style.font = "arial.ttf";
             text->str = s;
@@ -50,6 +42,12 @@ namespace fender::entities
             text->style.size = size;
             text->style.color = color;
             text->style.font = font;
+        }
+
+        void setTextStyle(futils::TextStyle const &style) {
+            text->style.size = style.size;
+            text->style.color = style.color;
+            text->style.font = style.font;
         }
 
         void setText(std::string const &txt) {
