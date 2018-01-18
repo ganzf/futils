@@ -21,10 +21,6 @@ public:
     WindowTest(){
         name = "WindowTest";
     }
-    ~WindowTest() override
-    {
-        delete window;
-    }
     void run(float) override;
 };
 

@@ -22,6 +22,10 @@ namespace fender::entities {
             _text = &attach<components::Text>();
             _text->str = placeholder;
         }
+        ~InputField(){
+            detach<components::Editable>();
+            detach<components::Text>();
+        }
     };
 }
 

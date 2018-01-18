@@ -51,7 +51,8 @@ int fender::Fender::run() {
         if (entityManager->run() != 0 || interrupt)
             break ;
     }
-    events->send<events::Shutdown>();
     events->send<std::string>("Fender shutting down. Ran " + std::to_string(runs) + " times.");
+    events->send<events::Shutdown>();
+    entityManager->cleanSystems();
     return 0;
 }
