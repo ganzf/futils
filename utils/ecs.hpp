@@ -22,59 +22,62 @@ namespace futils
     class   EntityManager;
     class   IEntity;
 
-  class   IComponent
-  {
-  protected:
-      futils::type_index _typeindex;
-      IEntity     *__entity{nullptr};
-  public:
-      virtual ~IComponent() {}
+    class   IComponent
+    {
+    protected:
+        futils::type_index _typeindex;
+        IEntity     *__entity{nullptr};
+    public:
+        virtual ~IComponent() {}
 
-      // Friend of EntityManager
-      void setTypeindex(futils::type_index index) {
-          _typeindex = index;
-      }
-      // END
+        // Friend of EntityManager
+        void setTypeindex(futils::type_index index) {
+            _typeindex = index;
+        }
+        // END
 
-      void                setEntity(IEntity &ent) {
-          __entity = &ent;
-      }
+        void                setEntity(IEntity &ent) {
+            __entity = &ent;
+        }
 
-      IEntity &getEntity() const
-      {
-          return *__entity;
-      }
+        IEntity &getEntity() const
+        {
+            return *__entity;
+        }
 
-      futils::type_index getTypeindex() const {
-          return _typeindex;
-      }
-  };
+        futils::type_index getTypeindex() const {
+            return _typeindex;
+        }
+    };
 
     class   ISystem
-  {
-  protected:
-    std::string name{"Undefined"};
-    EntityManager *entityManager{nullptr};
-    Mediator *events{nullptr};
-    std::function<void(EntityManager *)> afterDeath{[](EntityManager *){}};
+    {
+    protected:
+        std::string name{"Undefined"};
+        EntityManager *entityManager{nullptr};
+        Mediator *events{nullptr};
+        std::function<void(EntityManager *)> afterDeath{[](EntityManager *){}};
 
-    // It will segfault if events is not set. Be careful !
-    template <typename T>
-    void addReaction(std::function<void(IMediatorPacket &pkg)> fun)
-    {
-      events->require<T>(this, fun);
-    }
-  public:
-    virtual ~ISystem() {}
-    virtual void run(float elapsed = 0) = 0;
-    void provideManager(EntityManager &manager) { entityManager = &manager; }
-    void provideMediator(Mediator &mediator) { events = &mediator; }
-    std::string const &getName() const { return name; }
-    std::function<void(EntityManager *)> getAfterDeath()
-    {
-      return afterDeath;
-    }
-  };
+        // It will segfault if events is not set. Be careful !
+        template <typename T>
+        void addReaction(std::function<void(IMediatorPacket &pkg)> fun)
+        {
+            events->require<T>(this, fun);
+        }
+    public:
+        virtual ~ISystem() {
+//            std::cout << "Forgetting " << this->name << " in events" << std::endl;
+//            events->erase(this);
+        }
+        virtual void run(float elapsed = 0) = 0;
+        void provideManager(EntityManager &manager) { entityManager = &manager; }
+        void provideMediator(Mediator &mediator) { events = &mediator; }
+        std::string const &getName() const { return name; }
+        std::function<void(EntityManager *)> getAfterDeath()
+        {
+            return afterDeath;
+        }
+    };
 
     class StateSystem : public ISystem
     {
@@ -205,18 +208,27 @@ namespace futils
         EntityCreated(T const &entity): entity(entity) { verifType(); }
     };
 
-  class   EntityManager
+    class   EntityManager
     {
-        int                                     status{0};
-        std::unordered_map<std::string, ISystem *>   systemsMap;
-        futils::Queue<std::string> systemsMarkedForErase;
-        std::unordered_multimap<futils::type_index, IComponent *> components;
+        using SystemMap = std::unordered_map<std::string, ISystem *>;
+        using SystemQueue = futils::Queue<std::string>;
+        using ComponentContainer = std::unordered_multimap<futils::type_index, IComponent *>;
+
+        int status{0};
+        int orderIndex{0};
+
+        SystemMap systemsMap;
+        SystemQueue systemsMarkedForErase;
+        ComponentContainer components;
+        // Containers for system ordering.
         std::map<int, ISystem *> orderMap;
         std::unordered_map<ISystem *, int> systemOrder;
+
+        // All entities
         std::list<IEntity *> entities;
         futils::Clock<float> timeKeeper;
         futils::Mediator *events{nullptr};
-        int orderIndex{0};
+
     public:
         EntityManager() {
             timeKeeper.start();
@@ -233,20 +245,21 @@ namespace futils
             entities.push_front(entity);
             entity->onExtension = [this](IComponent &compo) {
                 components.insert(std::pair<futils::type_index, IComponent *>
-					(compo.getTypeindex(), &compo));
+                                          (compo.getTypeindex(), &compo));
                 return true;
             };
             entity->onDetach = [this](IComponent &compo) {
                 // How to remove a specific component in the multimap ? :/
+                std::cout << "Start detach" << std::endl;
                 auto range = components.equal_range(futils::type<T>::index);
-                for (auto it = range.first;
-                     it != range.second;
-                     it++) {
+                for (auto it = range.first; it != range.second; it++) {
                     auto &pair = *it;
                     auto tmp = pair.second;
-                    if (tmp == &compo)
+                    if (tmp == &compo) {
                         it = components.erase(it);
+                    }
                 }
+                std::cout << "Detach" << std::endl;
             };
             events->send<EntityCreated<T>>(*entity);
             while (!entity->lateinitComponents.empty()) {
@@ -289,13 +302,10 @@ namespace futils
             std::vector<T *> res;
             try {
                 auto range = components.equal_range(futils::type<T>::index);
-                for (auto it = range.first;
-                     it != range.second;
-                     it++) {
+                for (auto it = range.first; it != range.second; it++)
                     res.push_back(static_cast<T *>(it->second));
-                }
             } catch (std::exception const &e) {
-                LERR(e.what());
+                std::cerr << e.what() << std::endl;
             }
             return res;
         };
@@ -345,6 +355,15 @@ namespace futils
                 throw ;
             }
             return 0;
+        }
+
+        ~EntityManager() {
+            entities.unique();
+            std::cerr << "Still " << entities.size() << " entities." << std::endl;
+            for (auto e : entities) {
+                std::cerr << e << std::endl;
+                delete e;
+            }
         }
     };
 }

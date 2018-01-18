@@ -28,6 +28,10 @@ namespace fender::components {
         std::string name;
         entities::Window *window;
         entities::GameObject *target;
+
+        ~Camera() {
+            std::cout << "YES" << std::endl;
+        }
     };
 }
 

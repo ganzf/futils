@@ -31,6 +31,7 @@ namespace fender::entities {
             };
         }
         ~Button() {
+            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<components::Image>();
             detach<components::Text>();
             detach<components::Clickable>();

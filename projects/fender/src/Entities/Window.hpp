@@ -17,6 +17,7 @@ namespace fender::entities
         }
         ~Window()
         {
+            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<components::Window>();
         }
     };

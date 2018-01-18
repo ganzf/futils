@@ -25,6 +25,7 @@ namespace fender::entities {
             border.visible = true;
         }
         ~GameObject() {
+            std::cerr << __PRETTY_FUNCTION__ << std::endl;
             detach<components::GameObject>();
             detach<components::Transform>();
             detach<components::AbsoluteTransform>();
