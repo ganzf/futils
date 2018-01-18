@@ -10,13 +10,6 @@ namespace fender::systems::SFMLSystems
     void ListView::init()
     {
         __init();
-        addReaction<futils::Keys>([this](futils::IMediatorPacket &pkg){
-           auto key = futils::Mediator::rebuild<futils::Keys>(pkg);
-            if (key == futils::Keys::U)
-            {
-                update();
-            }
-        });
         phase = 1;
     }
 
@@ -83,7 +76,6 @@ namespace fender::systems::SFMLSystems
             auto &obj = elem->get<components::GameObject>();
             if (count < list.offset || (count >= list.offset + list.size && list.size >= 0)) {
                 if (obj.visible) {
-                    std::cout << "Hiding element " << count << std::endl;
                     obj.visible = false;
                 }
                 continue ;
@@ -108,7 +100,6 @@ namespace fender::systems::SFMLSystems
             if (count < list.offset || (count > list.offset + list.size && list.size >= 0)) {
                 auto &obj = elem->get<components::GameObject>();
                 if (obj.visible == true) {
-                    std::cout << "Hiding element " << count << std::endl;
                     obj.visible = false;
                 }
                 continue;
@@ -123,10 +114,6 @@ namespace fender::systems::SFMLSystems
 
     void ListView::updateList(components::ListView &list, int depth)
     {
-//        std::cout << "|";
-//        for (int i = 1; i <= depth; i++)
-//            std::cout << " - ";
-//        std::cout << list.name << "[" << list.offset << "]" << std::endl;
         for (auto content : list.content)
         {
             if (content->has<components::ListView>())
@@ -149,7 +136,7 @@ namespace fender::systems::SFMLSystems
         switch (phase)
         {
             case 0: return init();
-            case 1: return ;
+            case 1: return update();
         }
     }
 }

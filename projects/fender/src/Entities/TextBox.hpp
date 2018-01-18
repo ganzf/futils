@@ -8,7 +8,7 @@
 # include "fender.hpp"
 # include "ListView.hpp"
 # include "Text.hpp"
-#include "Button.hpp"
+# include "Button.hpp"
 
 namespace fender::entities {
     class TextBox : public ListView {
@@ -16,6 +16,8 @@ namespace fender::entities {
         ListView *_stream{nullptr};
         Button *_Up{nullptr};
         Button *_Down{nullptr};
+
+        std::string buffer;
 
         void initScroll()
         {
@@ -33,7 +35,6 @@ namespace fender::entities {
                 auto &stream = _stream->get<components::ListView>();
                 if (stream.offset > 0)
                     stream.offset--;
-                std::cout << "Going up in " << stream.name << " and offset is " << stream.offset << std::endl;
             };
             _Down = &entityManager->create<Button>();
             auto &downSize = _Down->get<components::Transform>();
@@ -44,13 +45,11 @@ namespace fender::entities {
                 auto &stream = _stream->get<components::ListView>();
                 if (stream.offset + stream.size < (int)stream.content.size())
                     stream.offset++;
-                std::cout << "Going down in " << stream.name << " and offset is " << stream.offset << std::endl;
             };
             scrollView.content.push_back(_Up);
             scrollView.content.push_back(_Down);
             scrollView.fit = true;
         }
-
         void initStream(int size) {
             static int i = 0;
             i++;
@@ -73,6 +72,32 @@ namespace fender::entities {
                 }
             };
         }
-        TextBox &operator << (std::string const &str);
+
+        TextBox &operator << (std::string const &str)
+        {
+            if (!_stream)
+                return *this;
+            if (str == futils::endl) {
+                auto &list = _stream->get<components::ListView>();
+                auto txt = &entityManager->create<Text>(buffer);
+                auto &border = txt->get<components::Border>();
+                border.visible = true;
+                border.color = futils::Cadetblue;
+                auto &tr = txt->get<components::Transform>();
+                if (_scroll != nullptr) {
+                    tr.size.w = this->get<components::Transform>().size.w - _scroll->get<components::Transform>().size.w;
+                } else {
+                    tr.size.w = _stream->get<components::Transform>().size.w;
+                }
+                if ((int)list.content.size() + 1 > list.size) {
+                    list.offset++;
+                }
+                list.content.push_back(txt);
+                buffer = "";
+            } else {
+                buffer += str;
+            }
+            return *this;
+        }
     };
 }

@@ -175,7 +175,7 @@ void WindowTest::initWindow()
         buttText.style.size = 24;
         buttText.style.color = futils::Antiquewhite;
         buttText.style.font = "ressources/arial.ttf";
-        buttText.str = "Print and leave";
+        buttText.str = "SendText";
         buttClick.waitForRelease = true;
 
         auto &listClick = list->attach<fender::components::Clickable>();
@@ -225,11 +225,6 @@ void WindowTest::initWindow()
         editable.onFocusLost = [this, &inBorder](){
             inBorder.visible = false;
         };
-        buttClick.func = [this, in]() {
-            auto &itxt = in->get<fender::components::Text>();
-            events->send<std::string>("User said \"" + itxt.str + "\"");
-            events->send<fender::events::Shutdown>();
-        };
 
         auto *txtBox = &entityManager->create<fender::entities::TextBox>(2, false);
         gui.add(*txtBox);
@@ -265,20 +260,10 @@ void WindowTest::initWindow()
         txtBoxScroll_border.thickness = 1;
         txtBoxScroll_border.color = futils::Cobaltgreen;
 
-        addReaction<futils::Keys>([this, txtBox, txtBoxScroll](futils::IMediatorPacket &pkg){
-            static int ptdr = 0;
-            auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
-            if (key == futils::Keys::I) {
-                *txtBox << "Msg " + std::to_string(ptdr);
-                *txtBoxScroll << "Msg " + std::to_string(ptdr);;
-                ptdr++;
-            }
-        });
-//        *txtBoxScroll << "LOL1";
-//        *txtBoxScroll << "LOL2";
-//        *txtBoxScroll << "Bonjour michael";
-//        *txtBoxScroll << "Bonjour michael";
-//        *txtBoxScroll << "Bonjour michael";
+        buttClick.func = [this, in, txtBox, txtBoxScroll, &editableText]() {
+            *txtBox << editableText.str << futils::endl;
+            *txtBoxScroll << editableText.str << futils::endl;
+        };
     }
 }
 
