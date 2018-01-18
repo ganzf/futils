@@ -121,6 +121,7 @@ void WindowTest::initWindow()
             auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
             if (key == futils::Keys::Q) {
                 auto &txt = someText1->get<fender::components::Text>();
+                txt.style.color = futils::Palevioletred;
                 auto &_camPos = camera->get<fender::components::Transform>();
                 txt.str = "Cam (" + std::to_string(_camPos.position.x) + ", "
                         + std::to_string(_camPos.position.y) + ", "

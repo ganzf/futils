@@ -94,6 +94,7 @@ namespace fender::entities {
                 auto txt = &entityManager->create<Text>(buffer);
                 auto &font = txt->get<components::Text>();
                 font.style.size = fontSize;
+                font.style.font = "arial.ttf";
                 auto &border = txt->get<components::Border>();
                 border.visible = false;
                 border.color = futils::Cadetblue;
