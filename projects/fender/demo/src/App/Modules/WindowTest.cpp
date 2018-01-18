@@ -49,8 +49,8 @@ void WindowTest::initWindow()
     {
 
     } else {
-        win.size.w = 800;
-        win.size.h = 600;
+        win.size.w = 1024;
+        win.size.h = 768;
         win.position.x = 0;
         win.position.y = 0;
         win.visible = true;
@@ -261,8 +261,8 @@ void WindowTest::initWindow()
         txtBoxScroll_border.color = futils::Cobaltgreen;
 
         buttClick.func = [this, in, txtBox, txtBoxScroll, &editableText]() {
-            *txtBox << editableText.str << futils::endl;
-            *txtBoxScroll << editableText.str << futils::endl;
+            *txtBox << 12 << "Debug : " << editableText.str << futils::endl;
+            *txtBoxScroll << 10 << "Debug Scroll : " << editableText.str << futils::endl;
         };
 
         auto debug = &entityManager->create<fender::entities::ListView>();

@@ -84,7 +84,7 @@ namespace fender::systems::SFMLSystems
             auto &transform = elem->get<components::Transform>();
             transform.position.y = current;
             transform.position.x = listPos.position.x;
-            current += transform.size.h;
+            current += transform.size.h + list.padding;
             size += transform.size.h;
         }
     }
@@ -107,7 +107,7 @@ namespace fender::systems::SFMLSystems
             auto &transform = elem->get<components::Transform>();
             transform.position.x = current;
             transform.position.y = listPos.position.y;
-            current += transform.size.w;
+            current += transform.size.w + list.padding;
             size += transform.size.w;
         }
     }

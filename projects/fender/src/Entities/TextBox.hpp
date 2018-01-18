@@ -18,12 +18,16 @@ namespace fender::entities {
         Button *_Down{nullptr};
 
         std::string buffer;
+        int fontSize{12};
 
         void initScroll()
         {
             _list->order = futils::Ordering::Horizontal;
+            _list->padding = 0.2;
             _scroll = &entityManager->create<ListView>();
             _list->content.push_back(_scroll);
+            auto &scrollBorder = _scroll->get<components::Border>();
+            scrollBorder.visible = false;
             auto &scrollView = _scroll->get<components::ListView>();
             scrollView.name = "ScrollView";
             _Up = &entityManager->create<Button>();
@@ -54,6 +58,8 @@ namespace fender::entities {
             static int i = 0;
             i++;
             _stream = &entityManager->create<ListView>(size);
+            auto &streamBorder = _stream->get<components::Border>();
+            streamBorder.visible = false;
             auto &list = _stream->get<components::ListView>();
             list.name = "TextBoxTextStream" + std::to_string(i);
             list.order = futils::Ordering::Vertical;
@@ -73,6 +79,12 @@ namespace fender::entities {
             };
         }
 
+        TextBox &operator << (int size)
+        {
+            fontSize = size;
+            return *this;
+        }
+
         TextBox &operator << (std::string const &str)
         {
             if (!_stream)
@@ -80,8 +92,10 @@ namespace fender::entities {
             if (str == futils::endl) {
                 auto &list = _stream->get<components::ListView>();
                 auto txt = &entityManager->create<Text>(buffer);
+                auto &font = txt->get<components::Text>();
+                font.style.size = fontSize;
                 auto &border = txt->get<components::Border>();
-                border.visible = true;
+                border.visible = false;
                 border.color = futils::Cadetblue;
                 auto &tr = txt->get<components::Transform>();
                 if (_scroll != nullptr) {
@@ -97,6 +111,22 @@ namespace fender::entities {
             } else {
                 buffer += str;
             }
+            return *this;
+        }
+
+        TextBox &operator << (Text &txt) {
+
+            auto &list = _stream->get<components::ListView>();
+            auto &tr = txt.get<components::Transform>();
+            if (_scroll != nullptr) {
+                tr.size.w = this->get<components::Transform>().size.w - _scroll->get<components::Transform>().size.w;
+            } else {
+                tr.size.w = _stream->get<components::Transform>().size.w;
+            }
+            if ((int)list.content.size() + 1 > list.size) {
+                list.offset++;
+            }
+            list.content.push_back(&txt);
             return *this;
         }
     };
