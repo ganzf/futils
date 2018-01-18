@@ -79,6 +79,9 @@ void WindowTest::initWindow()
         cam.debugMode = false;
 
         entityManager->create<fender::entities::Image>("poulpi.png", futils::Vec2<int>{2, 2}, futils::Vec2<int>{0, 0});
+
+        entityManager->create<fender::entities::Text>("Test", futils::Vec2<int>(2, 3));
+
 /*
 
         auto text = &entityManager->create<fender::entities::Text>(world.name);
