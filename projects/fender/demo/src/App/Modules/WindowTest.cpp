@@ -227,13 +227,13 @@ void WindowTest::initWindow()
         };
 
         auto *txtBox = &entityManager->create<fender::entities::TextBox>(2, false);
-        gui.add(*txtBox);
+        // gui.add(*txtBox);
         auto &txtBox_transform = txtBox->get<fender::components::Transform>();
         txtBox_transform.size.w = 4;
         txtBox_transform.size.h = 4;
-        auto &txtBox_childInfo = txtBox->get<fender::components::ChildInfo>();
-        txtBox_childInfo.offset.x = 2;
-        txtBox_childInfo.offset.y = 2;
+//        auto &txtBox_childInfo = txtBox->get<fender::components::ChildInfo>();
+//        txtBox_childInfo.offset.x = 2;
+//        txtBox_childInfo.offset.y = 2;
         auto &txtBox_border = txtBox->get<fender::components::Border>();
         txtBox_border.visible = false;
         txtBox_border.up = true;
@@ -244,13 +244,13 @@ void WindowTest::initWindow()
         txtBox_border.color = futils::Cobaltgreen;
 
         auto *txtBoxScroll = &entityManager->create<fender::entities::TextBox>(4, true);
-        gui.add(*txtBoxScroll);
+        // gui.add(*txtBoxScroll);
         auto &txtBoxScroll_transform = txtBoxScroll->get<fender::components::Transform>();
         txtBoxScroll_transform.size.w = 4;
         txtBoxScroll_transform.size.h = 2;
-        auto &txtBoxScroll_childInfo = txtBoxScroll->get<fender::components::ChildInfo>();
-        txtBoxScroll_childInfo.offset.x = 2;
-        txtBoxScroll_childInfo.offset.y = 30;
+//        auto &txtBoxScroll_childInfo = txtBoxScroll->get<fender::components::ChildInfo>();
+//        txtBoxScroll_childInfo.offset.x = 2;
+//        txtBoxScroll_childInfo.offset.y = 30;
         auto &txtBoxScroll_border = txtBoxScroll->get<fender::components::Border>();
         txtBoxScroll_border.visible = false;
         txtBoxScroll_border.up = true;
@@ -264,6 +264,21 @@ void WindowTest::initWindow()
             *txtBox << editableText.str << futils::endl;
             *txtBoxScroll << editableText.str << futils::endl;
         };
+
+        auto debug = &entityManager->create<fender::entities::ListView>();
+        auto &debugTr = debug->get<fender::components::Transform>();
+        debugTr.size.w = 5;
+        debugTr.size.h = 2;
+        auto &debugContent = debug->get<fender::components::ListView>();
+        debugContent.order = futils::Ordering::Vertical;
+        debugContent.name = "Debug";
+        debugContent.content.push_back(txtBox);
+        debugContent.content.push_back(txtBoxScroll);
+        debugContent.fit = true;
+        gui.add(*debug);
+        auto &debugPos = debug->get<fender::components::ChildInfo>();
+        debugPos.offset.x = 5;
+        debugPos.offset.y = 10;
     }
 }
 
