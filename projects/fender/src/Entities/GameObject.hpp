@@ -13,14 +13,14 @@
 
 namespace fender::entities {
     class GameObject : public futils::IEntity {
-
+        components::GameObject *object{nullptr};
         components::AbsoluteTransform *absTransform{nullptr};
         components::Transform *transform;
         components::Border *border;
 
     public:
         GameObject() {
-            attach<components::GameObject>();
+            object = &attach<components::GameObject>();
             transform = &attach<components::Transform>();
             transform->position.z = 1;
             absTransform = &attach<components::AbsoluteTransform>();
@@ -66,7 +66,13 @@ namespace fender::entities {
             border->visible = visible;
         }
 
+        void hide() {
+            object->hide();
+        }
 
+        void show() {
+            object->show();
+        }
 
     };
 }

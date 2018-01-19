@@ -6,10 +6,12 @@
 #pragma once
 
 #include <Components/World.hpp>
+#include <Components/Color.hpp>
 # include "fender.hpp"
 # include "ListView.hpp"
 # include "Text.hpp"
 # include "Button.hpp"
+#include "Image.hpp"
 
 namespace fender::entities {
     class TextBox : public ListView {
@@ -32,6 +34,9 @@ namespace fender::entities {
             auto &scrollView = _scroll->get<components::ListView>();
             scrollView.name = "ScrollView";
             _Up = &entityManager->create<Button>();
+            _Up->setBorderVisible(false);
+            auto &upImage = _Up->get<components::Image>();
+            upImage.file = "uptextbox.png";
             auto &upSize = _Up->get<components::Transform>();
             upSize.size.w = 0.5;
             upSize.size.h = 0.5;
@@ -42,6 +47,9 @@ namespace fender::entities {
                     stream.offset--;
             };
             _Down = &entityManager->create<Button>();
+            _Down->setBorderVisible(false);
+            auto &downImage = _Down->get<components::Image>();
+            downImage.file = "downtextbox.png";
             auto &downSize = _Down->get<components::Transform>();
             downSize.size.w = 0.5;
             downSize.size.h = 0.5;
@@ -55,7 +63,8 @@ namespace fender::entities {
             scrollView.content.push_back(_Down);
             scrollView.fit = true;
         }
-        void initStream(int size) {
+        void initStream(int size)
+        {
             static int i = 0;
             i++;
             _stream = &entityManager->create<ListView>(size);
@@ -68,7 +77,8 @@ namespace fender::entities {
             list.fit = true;
         }
     public:
-        explicit TextBox(int size = 1, bool scrollable = false) {
+        explicit TextBox(int size = 1, bool scrollable = false)
+        {
             afterBuild = [this, size, scrollable](){
                 _list->name = "TextBoxContainer" + std::to_string(size);
                 if (scrollable) {
@@ -89,12 +99,12 @@ namespace fender::entities {
             }
             entityManager->destroy(*_stream);
         }
+
         TextBox &operator << (int size)
         {
             fontSize = size;
             return *this;
         }
-
         TextBox &operator << (std::string const &str)
         {
             if (!_stream)
@@ -120,14 +130,28 @@ namespace fender::entities {
                 if ((int)list.content.size() + 1 > list.size) {
                     list.offset++;
                 }
-                list.content.push_back(txt);
+
+                auto iconTxt = &entityManager->create<ListView>();
+                auto &other_tr = iconTxt->get<components::Transform>();
+                other_tr = tr;
+                iconTxt->setBorderVisible(false);
+                auto &iconTxtList = iconTxt->get<components::ListView>();
+                iconTxtList.padding = 0.1;
+                iconTxtList.order = futils::Ordering::Horizontal;
+                auto icon = &entityManager->create<Image>("eye.png");
+                icon->setSize(tr.size.h, tr.size.h);
+                //auto &iconColor = icon->attach<components::Color>();
+                //iconColor.color = ;
+                icon->setBorderVisible(false);
+                iconTxtList.content.push_back(icon);
+                iconTxtList.content.push_back(txt);
+                list.content.push_back(iconTxt);
                 buffer = "";
             } else {
                 buffer += str;
             }
             return *this;
         }
-
         TextBox &operator << (Text &txt) {
 
             auto &list = _stream->get<components::ListView>();

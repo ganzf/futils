@@ -9,5 +9,11 @@
 namespace fender::components {
     struct GameObject : futils::IComponent {
         bool visible{true};
+        void show() {
+            visible = true;
+        }
+        void hide() {
+            visible = false;
+        }
     };
 }

@@ -112,8 +112,8 @@ void WindowTest::initWindow()
         myMenuBorder.visible = false;
 
         auto &myMenuPos = list->get<fender::components::ChildInfo>();
-        myMenuPos.offset.x = 33;
-        myMenuPos.offset.y = 33;
+        myMenuPos.offset.x = 60;
+        myMenuPos.offset.y = 15;
 
         auto someText1 = &entityManager->smartCreate<fender::entities::Text>("Project Elixia");
         auto &someText1Transform = someText1->get<fender::components::Transform>();
@@ -250,25 +250,30 @@ void WindowTest::initWindow()
         txtBox_border.color = futils::Cobaltgreen;
 
         auto *txtBoxScroll = &entityManager->smartCreate<fender::entities::TextBox>(4, true);
+        txtBoxScroll->get<fender::components::ListView>().fit = true;
+        txtBoxScroll->setSize(4, 2);
+        // txtBoxScroll->setBorderVisible(false);
+
         // gui.add(*txtBoxScroll);
-        auto &txtBoxScroll_transform = txtBoxScroll->get<fender::components::Transform>();
-        txtBoxScroll_transform.size.w = 4;
-        txtBoxScroll_transform.size.h = 2;
+//        auto &txtBoxScroll_transform = txtBoxScroll->get<fender::components::Transform>();
+//        txtBoxScroll_transform.size.w = 4;
+//        txtBoxScroll_transform.size.h = 2;
 //        auto &txtBoxScroll_childInfo = txtBoxScroll->get<fender::components::ChildInfo>();
 //        txtBoxScroll_childInfo.offset.x = 2;
 //        txtBoxScroll_childInfo.offset.y = 30;
-        auto &txtBoxScroll_border = txtBoxScroll->get<fender::components::Border>();
-        txtBoxScroll_border.visible = false;
-        txtBoxScroll_border.up = true;
-        txtBoxScroll_border.down = true;
-        txtBoxScroll_border.left = true;
-        txtBoxScroll_border.right = true;
-        txtBoxScroll_border.thickness = 1;
-        txtBoxScroll_border.color = futils::Cobaltgreen;
+
+//        auto &txtBoxScroll_border = txtBoxScroll->get<fender::components::Border>();
+//        txtBoxScroll_border.visible = false;
+//        txtBoxScroll_border.up = true;
+//        txtBoxScroll_border.down = true;
+//        txtBoxScroll_border.left = true;
+//        txtBoxScroll_border.right = true;
+//        txtBoxScroll_border.thickness = 1;
+//        txtBoxScroll_border.color = futils::Cobaltgreen;
 
         buttClick.func = [this, in, txtBox, txtBoxScroll, &editableText]() {
             *txtBox << 12 << "Debug : " << editableText.str << futils::endl;
-            *txtBoxScroll << 10 << "Debug Scroll : " << editableText.str << futils::endl;
+            *txtBoxScroll << 16 << "Debug Scroll : " << editableText.str << futils::endl;
         };
 
         auto debug = &entityManager->smartCreate<fender::entities::ListView>();

@@ -15,7 +15,7 @@ int demo::App::start() {
     if (engine->start() != 0)
         return -1;
     engine->addSystem<WindowTest>();
-    engine->loadSystem("./extension.so", true);
+    // engine->loadSystem("./extension.so", true);
     return 0;
 }
 

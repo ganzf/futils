@@ -16,6 +16,7 @@
 #include "ListView.hpp"
 #include "Hoverable.hpp"
 #include "Editable.hpp"
+#include "GameObject.hpp"
 
 fender::systems::SFMLRenderer::SFMLRenderer()
 {
@@ -26,6 +27,7 @@ void fender::systems::SFMLRenderer::init() {
     state = NONE;
     entityManager->addSystem<SFMLSystems::Window>();
     entityManager->addSystem<SFMLSystems::Input>();
+    entityManager->addSystem<SFMLSystems::GameObject>();
     entityManager->addSystem<SFMLSystems::Camera>();
     entityManager->addSystem<SFMLSystems::Children>();
     entityManager->addSystem<SFMLSystems::Grid>();

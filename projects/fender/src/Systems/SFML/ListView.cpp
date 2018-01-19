@@ -97,9 +97,9 @@ namespace fender::systems::SFMLSystems
         float size = 0.0;
         for (auto elem: list.content) {
             count++;
-            if (count < list.offset || (count > list.offset + list.size && list.size >= 0)) {
+            if (count < list.offset || (count >= list.offset + list.size && list.size >= 0)) {
                 auto &obj = elem->get<components::GameObject>();
-                if (obj.visible == true) {
+                if (obj.visible) {
                     obj.visible = false;
                 }
                 continue;
