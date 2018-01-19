@@ -40,9 +40,8 @@ namespace futils
 
         template <typename T>
         void send(T &&data = T()) {
-//            if (_requests.empty()) {
-//                return;
-//            }
+            if (_requests.empty())
+                return;
             auto range = _requests.equal_range(futils::type<T>::index);
             auto packet = futils::AMediatorPacket<T>(std::forward<T>(data));
 
@@ -56,6 +55,8 @@ namespace futils
 
         template <typename T>
         void send (T const &data) {
+            if (_requests.empty())
+                return ;
             auto range = _requests.equal_range(futils::type<T>::index);
             auto packet = futils::AMediatorPacket<T>(data);
             for (auto it = range.first; it != range.second; it++) {
