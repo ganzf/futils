@@ -43,7 +43,7 @@ void WindowTest::initWindow()
             }
         }
     });
-    window = &entityManager->create<fender::entities::Window>();
+    window = &entityManager->smartCreate<fender::entities::Window>();
     auto &win = window->get<fender::components::Window>();
     if (win.isOpen)
     {
@@ -72,24 +72,24 @@ void WindowTest::initWindow()
             entityManager->removeSystem(name);
         });
 
-        camera = &entityManager->create<fender::entities::Camera>();
+        camera = &entityManager->smartCreate<fender::entities::Camera>();
         auto &cam = camera->get<fender::components::Camera>();
         cam.window = window;
         cam.activated = true;
         cam.debugMode = false;
 
-        entityManager->create<fender::entities::Image>("poulpi.png", futils::Vec2<float>{0, 0}, futils::Vec2<float>{2, 2});
+        entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>{0, 0}, futils::Vec2<float>{2, 2});
 
-        entityManager->create<fender::entities::Text>("Test", futils::Vec2<float>(2, 3));
+        entityManager->smartCreate<fender::entities::Text>("Test", futils::Vec2<float>(2, 3));
 
-/*
 
-        auto text = &entityManager->create<fender::entities::Text>(world.name);
+
+        auto text = &entityManager->smartCreate<fender::entities::Text>(world.name);
 
         auto &gui = camera->get<fender::components::Children>();
         gui.add(*text);
 
-        auto list = &entityManager->create<fender::entities::ListView>();
+        auto list = &entityManager->smartCreate<fender::entities::ListView>();
 
         auto &myMenu = list->get<fender::components::ListView>();
         myMenu.name = "MainMenu";
@@ -115,14 +115,14 @@ void WindowTest::initWindow()
         myMenuPos.offset.x = 33;
         myMenuPos.offset.y = 33;
 
-        auto someText1 = &entityManager->create<fender::entities::Text>("Project Elixia");
+        auto someText1 = &entityManager->smartCreate<fender::entities::Text>("Project Elixia");
         auto &someText1Transform = someText1->get<fender::components::Transform>();
         someText1Transform.size.w = 8;
         someText1Transform.size.h = 1;
         auto &someText1Border = someText1->get<fender::components::Border>();
         someText1Border.visible = false;
 
-        auto someText2 = &entityManager->create<fender::entities::Text>("v0.1 - Alpha");
+        auto someText2 = &entityManager->smartCreate<fender::entities::Text>("v0.1 - Alpha");
         addReaction<futils::Keys>([this, someText1](futils::IMediatorPacket &pkg){
             auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
             if (key == futils::Keys::Q) {
@@ -147,7 +147,7 @@ void WindowTest::initWindow()
         txtTransform.offset.x = 80;
         txtTransform.offset.y = 90;
 
-//        auto image = &entityManager->create<fender::entities::Image>();
+//        auto image = &entityManager->smartCreate<fender::entities::Image>();
 //        myMenu.content.push_back(image);
 //        auto &imgTransform = image->get<fender::components::Transform>();
 //        auto &imgBorder = image->get<fender::components::Border>();
@@ -161,7 +161,7 @@ void WindowTest::initWindow()
 //        imgTransform.size.y = 1;
 //        img.file = "ressources/poulpi.png";
 
-        auto button = &entityManager->create<fender::entities::Button>();
+        auto button = &entityManager->smartCreate<fender::entities::Button>();
         myMenu.content.push_back(button);
         auto &buttTransform = button->get<fender::components::Transform>();
         auto &buttBorder = button->get<fender::components::Border>();
@@ -186,7 +186,7 @@ void WindowTest::initWindow()
         buttClick.waitForRelease = true;
 
         auto &listClick = list->attach<fender::components::Clickable>();
-        auto rigid = &entityManager->create<fender::entities::GameObject>();
+        auto rigid = &entityManager->smartCreate<fender::entities::GameObject>();
         auto &rigidBorder = rigid->get<fender::components::Border>();
         rigidBorder.visible = true;
         rigidBorder.color = futils::Sandybrown;
@@ -205,7 +205,7 @@ void WindowTest::initWindow()
             body.weight = 1;
         };
 
-        auto in = &entityManager->create<fender::entities::InputField>("placeholder");
+        auto in = &entityManager->smartCreate<fender::entities::InputField>("placeholder");
         auto &inT = in->get<fender::components::Transform>();
         inT.size.w = 3;
         inT.size.h = 0.55;
@@ -232,7 +232,7 @@ void WindowTest::initWindow()
             inBorder.visible = false;
         };
 
-        auto *txtBox = &entityManager->create<fender::entities::TextBox>(2, false);
+        auto *txtBox = &entityManager->smartCreate<fender::entities::TextBox>(2, false);
         // gui.add(*txtBox);
         auto &txtBox_transform = txtBox->get<fender::components::Transform>();
         txtBox_transform.size.w = 4;
@@ -249,7 +249,7 @@ void WindowTest::initWindow()
         txtBox_border.thickness = 1;
         txtBox_border.color = futils::Cobaltgreen;
 
-        auto *txtBoxScroll = &entityManager->create<fender::entities::TextBox>(4, true);
+        auto *txtBoxScroll = &entityManager->smartCreate<fender::entities::TextBox>(4, true);
         // gui.add(*txtBoxScroll);
         auto &txtBoxScroll_transform = txtBoxScroll->get<fender::components::Transform>();
         txtBoxScroll_transform.size.w = 4;
@@ -271,7 +271,7 @@ void WindowTest::initWindow()
             *txtBoxScroll << 10 << "Debug Scroll : " << editableText.str << futils::endl;
         };
 
-        auto debug = &entityManager->create<fender::entities::ListView>();
+        auto debug = &entityManager->smartCreate<fender::entities::ListView>();
         auto &debugTr = debug->get<fender::components::Transform>();
         debugTr.size.w = 5;
         debugTr.size.h = 2;
@@ -285,7 +285,7 @@ void WindowTest::initWindow()
         auto &debugPos = debug->get<fender::components::ChildInfo>();
         debugPos.offset.x = 5;
         debugPos.offset.y = 10;
-        */
+
     }
 }
 
@@ -328,7 +328,7 @@ void createGo(futils::EntityManager &em, bool cam = false)
 
 void WindowTest::initInputs()
 {
-    input = &entityManager->create<fender::entities::Input>();
+    input = &entityManager->smartCreate<fender::entities::Input>();
     auto &component = input->get<fender::components::Input>();
     component.name = "WindowTest";
     component.activated = true;

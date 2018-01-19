@@ -232,6 +232,7 @@ namespace futils
         futils::ISystem *currentSystem{nullptr};
 
         std::unordered_multimap<std::string, IEntity *> temporaryEntities;
+        std::unordered_map<IEntity *, std::string> temporaryEntitiesRecords;
         std::unordered_map<IEntity *, std::string> savedEntities;
 
         template <typename T>
@@ -277,17 +278,19 @@ namespace futils
         }
 
         template    <typename T, typename ...Args>
-        T &create(Args ...args)
+        T &smartCreate(Args ...args)
         {
             verifIsEntity<T>();
             auto entity = new T(args...);
             initEntity(*entity);
-            temporaryEntities.insert(std::pair<std::string, IEntity *>(currentSystem->getName(), entity));
+            const auto &name = currentSystem->getName();
+            temporaryEntities.insert(std::pair<std::string, IEntity *>(name, entity));
+            temporaryEntitiesRecords[entity] = name;
             return *entity;
         }
 
         template <typename T, typename ...Args>
-        T &createAndSave(Args ...args)
+        T &create(Args ...args)
         {
             verifIsEntity<T>();
             auto entity = new T(args...);
@@ -296,14 +299,44 @@ namespace futils
             return *entity;
         };
 
+        bool destroyFromSaved(IEntity &entity)
+        {
+            auto &container = savedEntities;
+            if (container.find(&entity) == container.end())
+                return false;
+            std::cerr << currentSystem->getName() << ": Destroyed saved entity " << entity.getId() << " created by " << container[&entity] << std::endl;
+            container.erase(&entity);
+            delete &entity;
+            counter--;
+            return true;
+        }
+
+        bool destroyFromTemporary(IEntity &entity)
+        {
+            if (temporaryEntitiesRecords.find(&entity) == temporaryEntitiesRecords.end())
+                return false;
+            const auto &system = currentSystem->getName();
+            const auto &creatorSystem = temporaryEntitiesRecords[&entity];
+            auto range = temporaryEntities.equal_range(creatorSystem);
+            for (auto it = range.first; it != range.second; it++) {
+                if (it->second == &entity)
+                {
+                    temporaryEntities.erase(it);
+                    break ;
+                }
+            }
+            std::cerr << system << ": Destroyed temporary entity " << entity.getId() << " created by " << creatorSystem << std::endl;
+            temporaryEntitiesRecords.erase(&entity);
+            delete &entity;
+            counter--;
+            return true;
+        }
+
         bool destroy(IEntity &entity)
         {
-            if (savedEntities.find(&entity) == savedEntities.end())
-                return false;
-            delete &entity;
-            std::cerr << "Destroyed saved entity " << entity.getId() << " created by " << savedEntities[&entity] << std::endl;
-            savedEntities.erase(&entity);
-            counter--;
+            if (!destroyFromSaved(entity))
+                return destroyFromTemporary(entity);
+            return true;
         }
 
         template    <typename System, typename ...Args>
@@ -368,17 +401,21 @@ namespace futils
                 orderMap.erase(systemOrder[system]);
                 systemOrder.erase(system);
                 auto afterDeath = system->getAfterDeath();
-                delete system;
                 // Delete all temporary entities created by this system.
                 auto range = temporaryEntities.equal_range(name);
                 int entitiesDeleted = 0;
                 for (auto it = range.first; it != range.second; it++) {
+                    if (temporaryEntitiesRecords.find(it->second) == temporaryEntitiesRecords.end())
+                        continue ;
                     delete it->second;
+                    temporaryEntitiesRecords.erase(it->second);
                     entitiesDeleted++;
                 }
+                temporaryEntities.erase(name);
                 events->send<std::string>("[" + name + "] shutdown. Killed " + std::to_string(entitiesDeleted) + " entities.");
                 counter -= entitiesDeleted;
                 systemsMarkedForErase.pop();
+                delete system;
                 afterDeath(this);
             }
         }

@@ -179,6 +179,8 @@ GameObject.hpp
 ../../src/Entities/GameObject.hpp
 
 ../../src/Entities/TextBox.hpp
+Components/World.hpp
+-
 fender.hpp
 ../../src/Entities/fender.hpp
 ListView.hpp

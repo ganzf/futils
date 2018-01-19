@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <Components/World.hpp>
 # include "fender.hpp"
 # include "ListView.hpp"
 # include "Text.hpp"
@@ -78,7 +79,16 @@ namespace fender::entities {
                 }
             };
         }
-
+        ~TextBox()
+        {
+            if (_scroll != nullptr)
+            {
+                entityManager->destroy(*_scroll);
+                entityManager->destroy(*_Up);
+                entityManager->destroy(*_Down);
+            }
+            entityManager->destroy(*_stream);
+        }
         TextBox &operator << (int size)
         {
             fontSize = size;
@@ -99,6 +109,9 @@ namespace fender::entities {
                 border.visible = false;
                 border.color = futils::Cadetblue;
                 auto &tr = txt->get<components::Transform>();
+                auto worlds = entityManager->get<components::World>();
+                if (!worlds.empty())
+                    tr.size.h = (float)font.style.size / (float)worlds.front()->unit;
                 if (_scroll != nullptr) {
                     tr.size.w = this->get<components::Transform>().size.w - _scroll->get<components::Transform>().size.w;
                 } else {
@@ -119,6 +132,10 @@ namespace fender::entities {
 
             auto &list = _stream->get<components::ListView>();
             auto &tr = txt.get<components::Transform>();
+            auto &txtInfo = txt.get<components::Text>();
+            auto worlds = entityManager->get<components::World>();
+            if (!worlds.empty())
+                tr.size.h = txtInfo.style.size / worlds.front()->unit;
             if (_scroll != nullptr) {
                 tr.size.w = this->get<components::Transform>().size.w - _scroll->get<components::Transform>().size.w;
             } else {
