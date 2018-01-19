@@ -131,21 +131,22 @@ namespace fender::entities {
                     list.offset++;
                 }
 
-                auto iconTxt = &entityManager->create<ListView>();
-                auto &other_tr = iconTxt->get<components::Transform>();
-                other_tr = tr;
-                iconTxt->setBorderVisible(false);
-                auto &iconTxtList = iconTxt->get<components::ListView>();
-                iconTxtList.padding = 0.1;
-                iconTxtList.order = futils::Ordering::Horizontal;
-                auto icon = &entityManager->create<Image>("eye.png");
-                icon->setSize(tr.size.h, tr.size.h);
-                //auto &iconColor = icon->attach<components::Color>();
-                //iconColor.color = ;
-                icon->setBorderVisible(false);
-                iconTxtList.content.push_back(icon);
-                iconTxtList.content.push_back(txt);
-                list.content.push_back(iconTxt);
+//                auto iconTxt = &entityManager->create<ListView>();
+//                auto &other_tr = iconTxt->get<components::Transform>();
+//                other_tr = tr;
+//                iconTxt->setBorderVisible(false);
+//                auto &iconTxtList = iconTxt->get<components::ListView>();
+//                iconTxtList.padding = 0.1;
+//                iconTxtList.order = futils::Ordering::Horizontal;
+//                auto icon = &entityManager->create<Image>("eye.png");
+//                icon->setSize(tr.size.h, tr.size.h);
+//                //auto &iconColor = icon->attach<components::Color>();
+//                //iconColor.color = ;
+//                icon->setBorderVisible(false);
+//                iconTxtList.content.push_back(icon);
+//                iconTxtList.content.push_back(txt);
+//                list.content.push_back(iconTxt);
+                list.content.push_back(txt);
                 buffer = "";
             } else {
                 buffer += str;

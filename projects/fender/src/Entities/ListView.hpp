@@ -18,6 +18,11 @@ namespace fender::entities {
         }
         virtual ~ListView()
         {
+            // This code is debatable ! Maybe the ownership should not be within ListView ?
+            for (auto elem: _list->content)
+            {
+                entityManager->destroy(*elem);
+            }
             detach<components::ListView>();
         }
     };
