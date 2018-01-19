@@ -12,9 +12,9 @@
 # include <typeinfo>
 # include <functional>
 # include <unordered_map>
+# include "dloader.hpp"
 # include "clock.hpp"
 # include "mediator.hpp"
-# include "ini.hpp"
 # include "queue.hpp"
 
 namespace futils
@@ -212,13 +212,14 @@ namespace futils
         using SystemMap = std::unordered_map<std::string, ISystem *>;
         using SystemQueue = futils::Queue<std::string>;
         using ComponentContainer = std::unordered_multimap<futils::type_index, IComponent *>;
-
+        using DynamicLibaryContainer = std::unordered_map<std::string, futils::UP<futils::Dloader>>;
         int status{0};
         int orderIndex{0};
 
         SystemMap systemsMap;
         SystemQueue systemsMarkedForErase;
         ComponentContainer components;
+
         // Containers for system ordering.
         std::map<int, ISystem *> orderMap;
         std::unordered_map<ISystem *, int> systemOrder;
@@ -226,14 +227,20 @@ namespace futils
         // All entities
         int counter{0};
 
+        // Time
         futils::Clock<float> timeKeeper;
+
+        // Event Mediator
         futils::Mediator *events{nullptr};
+
         // Used for memory Management to track entities created
         futils::ISystem *currentSystem{nullptr};
-
         std::unordered_multimap<std::string, IEntity *> temporaryEntities;
         std::unordered_map<IEntity *, std::string> temporaryEntitiesRecords;
         std::unordered_map<IEntity *, std::string> savedEntities;
+
+        // Extensions (ISystem)
+        DynamicLibaryContainer extensions;
 
         template <typename T>
         void verifIsEntity()
@@ -272,32 +279,6 @@ namespace futils
             entity.afterBuild();
             counter++;
         }
-    public:
-        EntityManager() {
-            timeKeeper.start();
-        }
-
-        template    <typename T, typename ...Args>
-        T &smartCreate(Args ...args)
-        {
-            verifIsEntity<T>();
-            auto entity = new T(args...);
-            initEntity(*entity);
-            const auto &name = currentSystem->getName();
-            temporaryEntities.insert(std::pair<std::string, IEntity *>(name, entity));
-            temporaryEntitiesRecords[entity] = name;
-            return *entity;
-        }
-
-        template <typename T, typename ...Args>
-        T &create(Args ...args)
-        {
-            verifIsEntity<T>();
-            auto entity = new T(args...);
-            initEntity(*entity);
-            savedEntities.insert(std::pair<IEntity *, std::string>(entity, currentSystem->getName()));
-            return *entity;
-        };
 
         bool destroyFromSaved(IEntity &entity)
         {
@@ -332,6 +313,44 @@ namespace futils
             return true;
         }
 
+        void initSystem(ISystem &system)
+        {
+            // TODO : Smart Pointer !!
+            system.provideManager(*this);
+            system.provideMediator(*events);
+            events->send<std::string>("[" + system.getName() + "] loaded.");
+            this->systemsMap.insert(std::pair<std::string, ISystem *>(system.getName(), &system));
+            orderMap[orderIndex] = &system;
+            systemOrder[&system] = orderIndex;
+            orderIndex++;
+        }
+    public:
+        EntityManager() {
+            timeKeeper.start();
+        }
+
+        template    <typename T, typename ...Args>
+        T &smartCreate(Args ...args)
+        {
+            verifIsEntity<T>();
+            auto entity = new T(args...);
+            initEntity(*entity);
+            const auto &name = currentSystem->getName();
+            temporaryEntities.insert(std::pair<std::string, IEntity *>(name, entity));
+            temporaryEntitiesRecords[entity] = name;
+            return *entity;
+        }
+
+        template <typename T, typename ...Args>
+        T &create(Args ...args)
+        {
+            verifIsEntity<T>();
+            auto entity = new T(args...);
+            initEntity(*entity);
+            savedEntities.insert(std::pair<IEntity *, std::string>(entity, currentSystem->getName()));
+            return *entity;
+        };
+
         bool destroy(IEntity &entity)
         {
             if (!destroyFromSaved(entity))
@@ -340,20 +359,34 @@ namespace futils
         }
 
         template    <typename System, typename ...Args>
-        void        addSystem(Args ...args)
+        void addSystem(Args ...args)
         {
             if (!std::is_base_of<ISystem, System>::value)
                 throw std::logic_error(std::string(typeid(System).name()) + " is not a System");
             // TODO : Smart Pointer !!
             auto system = new System(args...);
-            system->provideManager(*this);
-            system->provideMediator(*events);
-            events->send<std::string>("[" + system->getName() + "] loaded.");
-            this->systemsMap.insert(std::pair<std::string, ISystem *>(system->getName(), system));
-            orderMap[orderIndex] = system;
-            systemOrder[system] = orderIndex;
-            orderIndex++;
+//            system->provideManager(*this);
+//            system->provideMediator(*events);
+//            events->send<std::string>("[" + system->getName() + "] loaded.");
+//            this->systemsMap.insert(std::pair<std::string, ISystem *>(system->getName(), system));
+//            orderMap[orderIndex] = system;
+//            systemOrder[system] = orderIndex;
+//            orderIndex++;
+            initSystem(*system);
         }
+
+        template <typename ...Args>
+        bool loadSystem(std::string const &path, Args ...args)
+        {
+            if (extensions.find(path) != extensions.end()) {
+                std::cerr << path << " already loaded." << std::endl;
+                return false;
+            }
+            extensions[path] = std::make_unique<Dloader>(Dloader(path));
+            auto system = extensions[path]->build<ISystem>(args...);
+            initSystem(*system);
+            return true;
+        };
 
         void removeSystem(std::string const &systemName)
         {

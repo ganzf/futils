@@ -42,6 +42,12 @@ namespace fender
 
         void loadSystemDir(std::string const &path);
 
+        template <typename ...Args>
+        bool loadSystem(std::string const &path, Args... args)
+        {
+            return entityManager->loadSystem(path, args...);
+        };
+
         template <typename System, typename ...Args>
         void addSystem(Args ...args) {
             entityManager->addSystem<System>(args...);
