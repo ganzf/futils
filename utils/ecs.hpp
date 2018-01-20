@@ -51,6 +51,7 @@ namespace futils
         std::string name{"Undefined"};
         EntityManager *entityManager{nullptr};
         Mediator *events{nullptr};
+        std::function<void()> afterBuild{[](){}};
         std::function<void(EntityManager *)> afterDeath{[](EntityManager *){}};
 
         // It will segfault if events is not set. Be careful !
@@ -71,6 +72,10 @@ namespace futils
         std::function<void(EntityManager *)> getAfterDeath()
         {
             return afterDeath;
+        }
+        std::function<void()> getAfterBuild()
+        {
+            return afterBuild;
         }
     };
 
@@ -318,6 +323,8 @@ namespace futils
             // TODO : Smart Pointer !!
             system.provideManager(*this);
             system.provideMediator(*events);
+            auto afterBuild = system.getAfterBuild();
+            afterBuild();
             events->send<std::string>("[" + system.getName() + "] loaded.");
             this->systemsMap.insert(std::pair<std::string, ISystem *>(system.getName(), &system));
             orderMap[orderIndex] = &system;
