@@ -7,3 +7,5 @@ projects/fender/.idea/*
 projects/fender/.idea/*.xml
 projects/fender/demo/libfender.a
 docs/_build
+cmake-build-*
+*.swp

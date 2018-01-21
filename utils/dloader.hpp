@@ -7,7 +7,7 @@
 
 #include <string>
 #include <typeinfo>
-#if linux
+#ifdef __unix__
 # include <dlfcn.h>
 #elif _WIN32
 # include <Windows.h>
@@ -19,7 +19,7 @@
 
 namespace futils
 {
-#ifdef unix
+#ifdef __unix__
     class       Dloader
     {
         void            *_handle;

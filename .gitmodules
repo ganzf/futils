@@ -1,0 +1,4 @@
+[submodule "projects/mutils"]
+	path = projects/mutils
+	url = https://github.com/teamfcm/mutils
+	branch = master
