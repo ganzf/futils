@@ -16,25 +16,31 @@
 namespace fender::entities {
     class Button : public GameObject {
 
+        components::Image *image;
+        components::Text * text;
+        components::Clickable *click;
+        components::Hoverable *hover;
+
     public:
-        Button() {;
-            attach<components::Image>();
-            attach<components::Text>();
-            attach<components::Clickable>();
-            auto &hover = attach<components::Hoverable>();
-            hover.onHover = [this](){
-                auto &border = this->get<components::Border>();
-                border.visible = true;
+        Button() {
+            image = &attach<components::Image>();
+            text = &attach<components::Text>();
+            click =  &attach<components::Clickable>();
+            hover = &attach<components::Hoverable>();
+            hover->onHover = [this](){
+                setBorderVisible(true);
             };
-            hover.onLeave = [this](){
-                auto &border = this->get<components::Border>();
-                border.visible = false;
+            hover->onLeave = [this](){
+                setBorderVisible(false);
             };
         }
+
         ~Button() {
             detach<components::Image>();
             detach<components::Text>();
             detach<components::Clickable>();
         }
+
+
     };
 }
