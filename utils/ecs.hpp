@@ -290,7 +290,7 @@ namespace futils
             auto &container = savedEntities;
             if (container.find(&entity) == container.end())
                 return false;
-            std::cerr << currentSystem->getName() << ": Destroyed saved entity " << entity.getId() << " created by " << container[&entity] << std::endl;
+            std::cout << currentSystem->getName() << ": Destroyed saved entity " << entity.getId() << " created by " << container[&entity] << std::endl;
             container.erase(&entity);
             delete &entity;
             counter--;
@@ -370,15 +370,7 @@ namespace futils
         {
             if (!std::is_base_of<ISystem, System>::value)
                 throw std::logic_error(std::string(typeid(System).name()) + " is not a System");
-            // TODO : Smart Pointer !!
             auto system = new System(args...);
-//            system->provideManager(*this);
-//            system->provideMediator(*events);
-//            events->send<std::string>("[" + system->getName() + "] loaded.");
-//            this->systemsMap.insert(std::pair<std::string, ISystem *>(system->getName(), system));
-//            orderMap[orderIndex] = system;
-//            systemOrder[system] = orderIndex;
-//            orderIndex++;
             initSystem(*system);
         }
 

@@ -18,23 +18,7 @@ void WindowTest::initWindow()
 {
     addReaction<futils::Keys>([this](futils::IMediatorPacket &pkg){
         auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
-        if (key == futils::Keys::F)
-        {
-            auto worlds = entityManager->get<fender::components::World>();
-            if (worlds.empty())
-                return ;
-            auto &world = worlds.front();
-            world->unit += 16;
-        }
-        else if (key == futils::Keys::G)
-        {
-            auto worlds = entityManager->get<fender::components::World>();
-            if (worlds.empty())
-                return ;
-            auto &world = worlds.front();
-            world->unit -= 16;
-        }
-        else if (key == futils::Keys::D)
+        if (key == futils::Keys::D)
         {
             auto cameras = entityManager->get<fender::components::Camera>();
             for (auto &cam: cameras)
@@ -43,292 +27,32 @@ void WindowTest::initWindow()
             }
         }
     });
+
     window = &entityManager->smartCreate<fender::entities::Window>();
     auto &win = window->get<fender::components::Window>();
-    if (win.isOpen)
-    {
+    win.size.w = 1920;
+    win.size.h = 1080;
+    win.position.x = 0;
+    win.position.y = 0;
+    win.visible = true;
+    win.style = futils::WStyle::Fullscreen;
+    auto &world = window->attach<fender::components::World>();
+    world.unit = 64;
+    world.name = "Demo Fender v. Alpha";
+    win.title = world.name;
+    world.size = fender::vec3f(100, 100, 100);
+    auto &color = window->attach<fender::components::Color>();
 
-    } else {
-        win.size.w = 1024;
-        win.size.h = 768;
-        win.position.x = 0;
-        win.position.y = 0;
-        win.visible = true;
-        win.style = futils::WStyle::Default;
-        auto &world = window->attach<fender::components::World>();
-        world.unit = 64;
-        world.name = "Project Elixia";
-        win.title = world.name;
-        world.size = fender::vec3f(100, 100, 100);
-        auto &color = window->attach<fender::components::Color>();
+    color.color = futils::Granite;
+    addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &){
+        entityManager->removeSystem(name);
+    });
 
-        color.color = futils::Granite;
-//        addReaction<futils::Keys>([this](futils::IMediatorPacket &pkg){
-//           auto &key =  futils::Mediator::rebuild<futils::Keys>(pkg);
-//            if (key == futils::Keys::Escape || key == futils::Keys::K)
-//                events->send<fender::events::Shutdown>();
-//        });
-        addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &){
-            entityManager->removeSystem(name);
-        });
-
-        camera = &entityManager->smartCreate<fender::entities::Camera>();
-        auto &cam = camera->get<fender::components::Camera>();
-        cam.window = window;
-        cam.activated = true;
-        cam.debugMode = false;
-
-        entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>{0, 0}, futils::Vec2<float>{2, 2});
-
-        entityManager->smartCreate<fender::entities::Text>("Test", futils::Vec2<float>(2, 3));
-
-
-
-        auto text = &entityManager->smartCreate<fender::entities::Text>(world.name);
-
-        auto &gui = camera->get<fender::components::Children>();
-        gui.add(*text);
-
-        auto list = &entityManager->smartCreate<fender::entities::ListView>();
-
-        auto &myMenu = list->get<fender::components::ListView>();
-        myMenu.name = "MainMenu";
-        gui.add(*list);
-        myMenu.order = futils::Ordering::Vertical;
-
-//        auto &listHover = list->attach<fender::components::Hoverable>();
-//        listHover.onEnter = [list](){
-//            auto &listBorder = list->get<fender::components::Border>();
-//            listBorder.visible = true;
-//            listBorder.color = futils::White;
-//        };
-//        listHover.onLeave = [list](){
-//            auto &listBorder = list->get<fender::components::Border>();
-//            listBorder.visible = false;
-//            listBorder.color = futils::White;
-//        };
-
-        auto &myMenuBorder = list->get<fender::components::Border>();
-        myMenuBorder.visible = false;
-
-        auto &myMenuPos = list->get<fender::components::ChildInfo>();
-        myMenuPos.offset.x = 60;
-        myMenuPos.offset.y = 15;
-
-        auto someText1 = &entityManager->smartCreate<fender::entities::Text>("Project Elixia");
-        auto &someText1Transform = someText1->get<fender::components::Transform>();
-        someText1Transform.size.w = 8;
-        someText1Transform.size.h = 1;
-        auto &someText1Border = someText1->get<fender::components::Border>();
-        someText1Border.visible = false;
-
-        auto someText2 = &entityManager->smartCreate<fender::entities::Text>("v0.1 - Alpha");
-        addReaction<futils::Keys>([this, someText1](futils::IMediatorPacket &pkg){
-            auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
-            if (key == futils::Keys::Q) {
-                auto &txt = someText1->get<fender::components::Text>();
-                txt.style.color = futils::Palevioletred;
-                auto &_camPos = camera->get<fender::components::Transform>();
-                txt.str = "Cam (" + std::to_string(_camPos.position.x) + ", "
-                        + std::to_string(_camPos.position.y) + ", "
-                        + std::to_string(_camPos.position.z) + ")";
-            }
-        });
-        auto &someText2Transform = someText2->get<fender::components::Transform>();
-        someText2Transform.size.w = 4;
-        someText2Transform.size.h = 1;
-        auto &someText2Border = someText2->get<fender::components::Border>();
-        someText2Border.visible = false;
-
-        myMenu.content.push_back(someText1);
-        myMenu.content.push_back(someText2);
-
-        auto &txtTransform = text->get<fender::components::ChildInfo>();
-        txtTransform.offset.x = 80;
-        txtTransform.offset.y = 90;
-
-//        auto image = &entityManager->smartCreate<fender::entities::Image>();
-//        myMenu.content.push_back(image);
-//        auto &imgTransform = image->get<fender::components::Transform>();
-//        auto &imgBorder = image->get<fender::components::Border>();
-//        auto &img = image->get<fender::components::Image>();
-//
-//        imgBorder.visible = false;
-//        imgBorder.color = futils::Darkslateblue;
-//        imgTransform.position.x = 0;
-//        imgTransform.position.y = 0;
-//        imgTransform.size.x = 1;
-//        imgTransform.size.y = 1;
-//        img.file = "ressources/poulpi.png";
-
-        auto button = &entityManager->smartCreate<fender::entities::Button>();
-        myMenu.content.push_back(button);
-        auto &buttTransform = button->get<fender::components::Transform>();
-        auto &buttBorder = button->get<fender::components::Border>();
-        auto &buttImage = button->get<fender::components::Image>();
-        auto &buttText = button->get<fender::components::Text>();
-        auto &buttClick = button->get<fender::components::Clickable>();
-
-        auto &buttColor = button->attach<fender::components::Color>();
-        buttColor.color = futils::Violetred;
-
-        buttBorder.visible = false;
-        buttTransform.position.x = -2;
-        buttTransform.position.y = -2;
-        buttTransform.size.x = 4;
-        buttTransform.size.y = 1;
-        buttImage.file = "button.png";
-
-        buttText.style.size = 24;
-        buttText.style.color = futils::Antiquewhite;
-        buttText.style.font = "arial.ttf";
-        buttText.str = "Send Text";
-        buttClick.waitForRelease = true;
-
-        auto &listClick = list->attach<fender::components::Clickable>();
-        auto rigid = &entityManager->smartCreate<fender::entities::GameObject>();
-        auto &rigidBorder = rigid->get<fender::components::Border>();
-        rigidBorder.visible = true;
-        rigidBorder.color = futils::Sandybrown;
-        rigidBorder.thickness = 3;
-        auto &rigidPos = rigid->get<fender::components::Transform>();
-        rigidPos.position.x = 0;
-        rigidPos.position.y = 0;
-        rigidPos.size.w = 1;
-        rigidPos.size.h = 1;
-
-        rigid->attach<fender::components::rigidBody>();
-        listClick.func = [this, rigid](){
-            auto &body = rigid->get<fender::components::rigidBody>();
-            body.force.y = -1;
-            body.force.x = 0;
-            body.weight = 1;
-        };
-
-        auto in = &entityManager->smartCreate<fender::entities::InputField>("placeholder");
-        auto &inT = in->get<fender::components::Transform>();
-        inT.size.w = 3;
-        inT.size.h = 0.55;
-        auto &editable = in->get<fender::components::Editable>();
-
-        auto &editableText = in->get<fender::components::Text>();
-        editableText.style.size = 22;
-        editableText.style.color = futils::Palevioletred;
-        editableText.style.font = "arial.ttf";
-
-        auto &inBorder = in->get<fender::components::Border>();
-        inBorder.thickness = 3;
-        inBorder.color = futils::Lightskyblue;
-        inBorder.visible = false;
-        inBorder.up = false;
-        inBorder.left = false;
-        inBorder.right = false;
-        myMenu.content.push_back(in);
-
-        editable.onFocus = [this, &inBorder](){
-            inBorder.visible = true;
-        };
-        editable.onFocusLost = [this, &inBorder](){
-            inBorder.visible = false;
-        };
-
-        auto *txtBox = &entityManager->smartCreate<fender::entities::TextBox>(2, false);
-        // gui.add(*txtBox);
-        auto &txtBox_transform = txtBox->get<fender::components::Transform>();
-        txtBox_transform.size.w = 4;
-        txtBox_transform.size.h = 4;
-//        auto &txtBox_childInfo = txtBox->get<fender::components::ChildInfo>();
-//        txtBox_childInfo.offset.x = 2;
-//        txtBox_childInfo.offset.y = 2;
-        auto &txtBox_border = txtBox->get<fender::components::Border>();
-        txtBox_border.visible = false;
-        txtBox_border.up = true;
-        txtBox_border.down = true;
-        txtBox_border.left = true;
-        txtBox_border.right = true;
-        txtBox_border.thickness = 1;
-        txtBox_border.color = futils::Cobaltgreen;
-
-        auto *txtBoxScroll = &entityManager->smartCreate<fender::entities::TextBox>(4, true);
-        txtBoxScroll->get<fender::components::ListView>().fit = true;
-        txtBoxScroll->setSize(4, 2);
-        // txtBoxScroll->setBorderVisible(false);
-
-        // gui.add(*txtBoxScroll);
-//        auto &txtBoxScroll_transform = txtBoxScroll->get<fender::components::Transform>();
-//        txtBoxScroll_transform.size.w = 4;
-//        txtBoxScroll_transform.size.h = 2;
-//        auto &txtBoxScroll_childInfo = txtBoxScroll->get<fender::components::ChildInfo>();
-//        txtBoxScroll_childInfo.offset.x = 2;
-//        txtBoxScroll_childInfo.offset.y = 30;
-
-//        auto &txtBoxScroll_border = txtBoxScroll->get<fender::components::Border>();
-//        txtBoxScroll_border.visible = false;
-//        txtBoxScroll_border.up = true;
-//        txtBoxScroll_border.down = true;
-//        txtBoxScroll_border.left = true;
-//        txtBoxScroll_border.right = true;
-//        txtBoxScroll_border.thickness = 1;
-//        txtBoxScroll_border.color = futils::Cobaltgreen;
-
-        buttClick.func = [this, in, txtBox, txtBoxScroll, &editableText]() {
-            *txtBox << 12 << "Debug : " << editableText.str << futils::endl;
-            *txtBoxScroll << 16 << "Debug Scroll : " << editableText.str << futils::endl;
-        };
-
-        auto debug = &entityManager->smartCreate<fender::entities::ListView>();
-        auto &debugTr = debug->get<fender::components::Transform>();
-        debugTr.size.w = 5;
-        debugTr.size.h = 2;
-        auto &debugContent = debug->get<fender::components::ListView>();
-        debugContent.order = futils::Ordering::Vertical;
-        debugContent.name = "Debug";
-        debugContent.content.push_back(txtBox);
-        debugContent.content.push_back(txtBoxScroll);
-        debugContent.fit = true;
-        gui.add(*debug);
-        auto &debugPos = debug->get<fender::components::ChildInfo>();
-        debugPos.offset.x = 5;
-        debugPos.offset.y = 10;
-
-    }
-}
-
-void testGO(futils::EntityManager &em, int x, int y, int w, int h, int z, bool cam)
-{
-    auto &go = em.create<fender::entities::GameObject>();
-    auto &border = go.get<fender::components::Border>();
-    futils::IntegralRange<int> rng(0, futils::allColors.size());
-    border.color = futils::allColors[rng.getRandom()];
-    auto &pos = go.get<fender::components::Transform>();
-    pos.position.x = x;
-    pos.position.y = y;
-    pos.position.z = z;
-    pos.size.w = w;
-    pos.size.h = h;
-    if (cam)
-    {
-        auto camera = em.get<fender::components::Camera>();
-        if (camera.empty())
-            return ;
-        std::cout << "Cam found" << std::endl;
-        auto &myCam = camera.front()->getEntity();
-        auto &gui = myCam.get<fender::components::Children>();
-        gui.add(go);
-    }
-}
-
-void createGo(futils::EntityManager &em, bool cam = false)
-{
-    static int count = 0;
-    for(auto i = 0; i<10; i++) {
-        futils::IntegralRange<int> rng(-50, 50);
-        futils::IntegralRange<int> zrng(1, 3);
-        testGO(em, rng.getRandom(), rng.getRandom(), 1, 1,
-               zrng.getRandom(), cam);
-        count++;
-        std::cout << count << std::endl;
-    }
+    camera = &entityManager->smartCreate<fender::entities::Camera>();
+    auto &cam = camera->get<fender::components::Camera>();
+    cam.window = window;
+    cam.activated = true;
+    cam.debugMode = false;
 }
 
 void WindowTest::initInputs()
@@ -348,23 +72,98 @@ void WindowTest::initInputs()
         events->send<fender::events::Shutdown>();
     };
     component.map[generate] = [this](){
-        createGo(*entityManager);
+
+    };
+}
+
+void WindowTest::initGui() {
+    auto *hud = &entityManager->smartCreate<fender::entities::ListView>(4);
+    auto *debug = &entityManager->smartCreate<fender::entities::TextBox>(10, true);
+    auto &cam = camera->get<fender::components::Children>();
+    cam.add(*hud);
+    cam.add(*debug);
+    debug->setBorderVisible(true);
+    hud->setBorderVisible(true);
+    hud->setSize(10, 3);
+
+    auto &hudBorder = hud->get<fender::components::Border>();
+    hudBorder.color = futils::Greenyellow;
+    hudBorder.thickness = 4;
+
+    auto &hudOffset = hud->get<fender::components::ChildInfo>();
+    hudOffset.offset.x = 3.4;
+    // Bug 1 : La bordure commence pas en haut de l'ecran
+    hudOffset.offset.y = 3.5;
+
+    auto &hudContent = hud->get<fender::components::ListView>();
+    // hudContent.fit = true;
+
+    auto *hudCell = &entityManager->smartCreate<fender::entities::ListView>();
+    hudCell->setBorderVisible(true);
+    auto &hudCellContent = hudCell->get<fender::components::ListView>();
+    hudCellContent.padding = 0.25;
+    hudCellContent.order = futils::Ordering::Horizontal;
+    auto *cellImg = &entityManager->smartCreate<fender::entities::Image>("cells.png", futils::Vec2<float>(0, 0), futils::Vec2<float>(0.5, 0.5));
+    // Bug 2 : Le contenu ne semble pas s'adapter a la taille du bouton, ni l'inverse...
+    hudCellContent.fit = true;
+    hudCellContent.content.push_back(cellImg);
+    auto *cellCount = &entityManager->smartCreate<fender::entities::Text>("0");
+    cellCount->setFontSize(16);
+    cellCount->setColor(futils::Lightskyblue);
+    hudCellContent.content.push_back(cellCount);
+    hudContent.content.push_back(hudCell);
+
+    auto *hudGold = &entityManager->smartCreate<fender::entities::ListView>();
+    hudGold->setBorderVisible(true);
+    auto &hudGoldContent = hudGold->get<fender::components::ListView>();
+    hudGoldContent.padding = 0.25;
+    hudGoldContent.order = futils::Ordering::Horizontal;
+    auto *goldImg = &entityManager->smartCreate<fender::entities::Image>("golds.png", futils::Vec2<float>(0, 0), futils::Vec2<float>(0.5, 0.5));
+    // Bug 3 : hud ne met pas bien les boutons les uns apres les autres
+    hudGoldContent.fit = true;
+    hudGoldContent.content.push_back(goldImg);
+    auto *goldCount = &entityManager->smartCreate<fender::entities::Text>("729");
+    goldCount->setFontSize(16);
+    goldCount->setColor(futils::Goldenrod);
+    hudGoldContent.content.push_back(goldCount);
+    hudContent.content.push_back(hudGold);
+
+    auto *hudInventory = &entityManager->smartCreate<fender::entities::ListView>();
+    hudInventory->setBorderVisible(true);
+    hudContent.content.push_back(hudInventory);
+    auto &hudInventoryContent = hudInventory->get<fender::components::ListView>();
+    hudInventoryContent.padding = 0.1;
+    hudInventoryContent.order = futils::Ordering::Horizontal;
+    auto *collar = &entityManager->smartCreate<fender::entities::Button>();
+    auto &collarAction = collar->get<fender::components::Clickable>();
+    collarAction.waitForRelease = true;
+
+    auto &collarImg = collar->get<fender::components::Image>();
+    collarImg.file = "collar.png";
+    auto *collarLabel = &entityManager->smartCreate<fender::entities::Text>("Collar");
+    collarLabel->setFontSize(16);
+    collarLabel->setColor(futils::Mediumpurple);
+    hudInventoryContent.content.push_back(collarLabel);
+    hudInventoryContent.content.push_back(collar);
+
+    // Debug Context
+    auto &debugOffset = debug->get<fender::components::ChildInfo>();
+    auto &debugList = debug->get<fender::components::ListView>();
+    // Attention, on ne peut pas acceder au padding de _stream...
+    debugList.padding = 0.1;
+    debugOffset.offset.x = 66.5;
+    debugOffset.offset.y = 3.5;
+    auto &debugTr = debug->get<fender::components::Transform>();
+    debugTr.size.w = 8;
+    *debug << 18 << "Starting debug..." << futils::endl;
+    auto h = hud->get<fender::components::Transform>().size.h;
+    *debug << "Hud is " << std::to_string(h) << " units high." << futils::endl;
+
+    collarAction.func = [this, debug](){
+        *debug << "You clicked the collar !" << futils::endl;
     };
 }
 
 void WindowTest::run(float) {
-    if (window == nullptr) {
-        initWindow();
-        initInputs();
-    } else
-    {
-        static int i = 1;
-        if (i == 0)
-        {
-            while (i < 10) {
-                i++;
-                createGo(*entityManager, true);
-            }
-        }
-    }
+
 }

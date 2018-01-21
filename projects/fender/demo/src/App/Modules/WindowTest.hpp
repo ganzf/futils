@@ -17,9 +17,15 @@ class WindowTest : public futils::ISystem {
 
     void initWindow();
     void initInputs();
+    void initGui();
 public:
     WindowTest(){
         name = "WindowTest";
+        afterBuild = [this](){
+            initWindow();
+            initInputs();
+            initGui();
+        };
     }
     void run(float) override;
 };

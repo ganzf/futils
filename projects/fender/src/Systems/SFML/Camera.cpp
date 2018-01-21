@@ -25,58 +25,6 @@ namespace fender::systems::SFMLSystems
             transform.size.w = packet.window->getSize().x / unit;
             transform.size.h = packet.window->getSize().y / unit;
         });
-        addReaction<futils::Keys>([this](futils::IMediatorPacket &pkg){
-            auto &key = futils::Mediator::rebuild<futils::Keys>(pkg);
-            int step = 500;
-            if (key == futils::Keys::ArrowRight)
-            {
-                auto cams = entityManager->get<components::Camera>();
-                for (auto &cam : cams)
-                {
-                    if (cam->activated)
-                    {
-                        auto &pos = cam->getEntity().get<components::Transform>();
-                        pos.position.x += step / 1000.0;
-                    }
-                }
-            }
-            else if (key == futils::Keys::ArrowLeft)
-            {
-                auto cams = entityManager->get<components::Camera>();
-                for (auto &cam : cams)
-                {
-                    if (cam->activated)
-                    {
-                        auto &pos = cam->getEntity().get<components::Transform>();
-                        pos.position.x -= step / 1000.0;
-                    }
-                }
-            }
-            else if (key == futils::Keys::ArrowUp)
-            {
-                auto cams = entityManager->get<components::Camera>();
-                for (auto &cam : cams)
-                {
-                    if (cam->activated)
-                    {
-                        auto &pos = cam->getEntity().get<components::Transform>();
-                        pos.position.y -= step / 1000.0;
-                    }
-                }
-            }
-            else if (key == futils::Keys::ArrowDown)
-            {
-                auto cams = entityManager->get<components::Camera>();
-                for (auto &cam : cams)
-                {
-                    if (cam->activated)
-                    {
-                        auto &pos = cam->getEntity().get<components::Transform>();
-                        pos.position.y += step / 1000.0;
-                    }
-                }
-            }
-        });
         phase = Run;
     }
 
