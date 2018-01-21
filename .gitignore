@@ -9,3 +9,4 @@ projects/fender/demo/libfender.a
 docs/_build
 cmake-build-*
 *.swp
+build/
