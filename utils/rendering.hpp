@@ -33,6 +33,7 @@ namespace futils
     }
 
     enum { // See http://cloford.com/resources/colours/500col.htm for details
+        Transparent = 0xff000000,
         Crimson = 0xffdc143c,
         Lightpink = 0xffffb6c1,
         Pink = 0xffffc0cb,

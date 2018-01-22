@@ -19,6 +19,7 @@ namespace fender::entities
         Bar(futils::Color color = futils::Transparent) {
             _bar = &attach<components::Bar>();
             _color = &attach<components::Color>();
+            _color->color = color;
             setBorderVisible(true);
         }
     };

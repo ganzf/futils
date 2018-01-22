@@ -55,9 +55,8 @@ namespace futils
                 std::cerr << __FUNCTION__ << ": failed. Cannot find symbol "
                                              + symbol + " in " + _path << std::endl;
                 throw std::runtime_error("Dynamic execution of " + symbol + " failed.");
-            } else {
-                return func(args...);
             }
+            return func(args...);
         };
     };
 #elif _WIN32
