@@ -78,7 +78,7 @@ void WindowTest::initWindow()
         cam.activated = true;
         cam.debugMode = false;
 
-        entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>{0, 0}, futils::Vec2<float>{2, 2});
+        /*entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>{0, 0}, futils::Vec2<float>{2, 2});
 
         entityManager->smartCreate<fender::entities::Text>("Test", futils::Vec2<float>(2, 3));
 
@@ -94,7 +94,7 @@ void WindowTest::initWindow()
         auto &myMenu = list->get<fender::components::ListView>();
         myMenu.name = "MainMenu";
         gui.add(*list);
-        myMenu.order = futils::Ordering::Vertical;
+        myMenu.order = futils::Ordering::Vertical;*/
 
 //        auto &listHover = list->attach<fender::components::Hoverable>();
 //        listHover.onEnter = [list](){
@@ -108,7 +108,7 @@ void WindowTest::initWindow()
 //            listBorder.color = futils::White;
 //        };
 
-        auto &myMenuBorder = list->get<fender::components::Border>();
+        /*auto &myMenuBorder = list->get<fender::components::Border>();
         myMenuBorder.visible = false;
 
         auto &myMenuPos = list->get<fender::components::ChildInfo>();
@@ -290,7 +290,7 @@ void WindowTest::initWindow()
         auto &debugPos = debug->get<fender::components::ChildInfo>();
         debugPos.offset.x = 5;
         debugPos.offset.y = 10;
-
+    */
     }
 }
 
@@ -340,6 +340,15 @@ void WindowTest::initInputs()
     futils::InputSequence escape;
     futils::InputAction action(futils::Keys::Escape, futils::InputState::Down);
     escape.actions.push_back(action);
+
+    futils::InputSequence altf4;
+    futils::InputAction alt_action(futils::Keys::Alt, futils::InputState::Down);
+    futils::InputAction alt_action2(futils::Keys::F4, futils::InputState::Down);
+    altf4.actions.push_back(alt_action);
+    altf4.actions.push_back(alt_action2);
+    component.map[altf4] = [this]() {
+        events->send<fender::events::Shutdown>();
+    };
 
     futils::InputSequence generate;
     futils::InputAction gen_action(futils::Keys::Space, futils::InputState::Down);

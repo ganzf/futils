@@ -155,8 +155,8 @@ namespace fender::systems::SFMLSystems
             key = sfJoystickToFutilsKeys[event.joystickButton.button];
             state = futils::InputState::Joystick;
         }*/
-        state = sfToFutilsState.at(event.type);
-        if (event.type == sf::Event::MouseButtonPressed) {
+        //state = sfToFutilsState.at(event.type);
+        /*if (event.type == sf::Event::MouseButtonPressed) {
             key = sfMouseToFutilsKeys.at(event.mouseButton.button);
             if (key == futils::Keys::LButton) {
                 futils::MouseClicked eventMouseClicked;
@@ -166,7 +166,6 @@ namespace fender::systems::SFMLSystems
                 events->send<futils::MouseClicked>(eventMouseClicked);
             }
         }
-
         if (event.type == sf::Event::MouseButtonReleased) {
             key = sfMouseToFutilsKeys.at(event.mouseButton.button);
             if (key == futils::Keys::LButton) {
@@ -177,8 +176,6 @@ namespace fender::systems::SFMLSystems
                 events->send<futils::MouseReleased>(eventMouseReleased);
             }
         }
-
-
         if (event.type == sf::Event::MouseMoved)
         {
             futils::MouseMoved mm;
@@ -187,10 +184,14 @@ namespace fender::systems::SFMLSystems
             mm.current.y = event.mouseMove.y;
             events->send<futils::MouseMoved>(mm);
             return ;
-        }
+        }*/
 
         key = sfToFutilsKeys.at(event.key.code);
         state = sfToFutilsState.at(event.type);
+
+
+        _keyState[key] = state;
+
 
         // frameInputs[futils::InputAction(key, state)] = true;
         for (auto &input: entityManager->get<fender::components::Input>())
@@ -207,7 +208,8 @@ namespace fender::systems::SFMLSystems
                         continue;
                     for (auto &action: sequence.actions)
                     {
-                        if (action.key == key && action.state == state)
+                        if (_keyState[action.key] == action.state)
+                                //action.key == key && action.state == state)
                             count++;
                     }
                     if (count == size)
