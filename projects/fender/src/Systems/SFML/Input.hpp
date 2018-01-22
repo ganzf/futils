@@ -92,6 +92,10 @@ namespace fender::systems::SFMLSystems
                 {futils::Keys::LButton, futils::InputState::Up},
                 {futils::Keys::RButton, futils::InputState::Up},
                 {futils::Keys::MouseWheelButton, futils::InputState::Up},
+                {futils::Keys::JoystickA, futils::InputState::Up},
+                {futils::Keys::JoystickB, futils::InputState::Up},
+                {futils::Keys::JoystickX, futils::InputState::Up},
+                {futils::Keys::JoystickY, futils::InputState::Up},
         };
 
         enum States

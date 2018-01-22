@@ -337,9 +337,14 @@ void WindowTest::initInputs()
     auto &component = input->get<fender::components::Input>();
     component.name = "WindowTest";
     component.activated = true;
+
     futils::InputSequence escape;
     futils::InputAction action(futils::Keys::Escape, futils::InputState::Down);
     escape.actions.push_back(action);
+
+    futils::InputSequence joystick;
+    futils::InputAction actionJoystick(futils::Keys::JoystickA, futils::InputState::Down);
+    joystick.actions.push_back(actionJoystick);
 
     futils::InputSequence altf4;
     futils::InputAction alt_action(futils::Keys::Alt, futils::InputState::Down);
@@ -358,6 +363,9 @@ void WindowTest::initInputs()
     };
     component.map[generate] = [this](){
         createGo(*entityManager);
+    };
+    component.map[joystick] = [this](){
+        events->send<fender::events::Shutdown>();
     };
 }
 

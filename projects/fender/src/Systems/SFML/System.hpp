@@ -20,7 +20,7 @@ namespace fender::systems::SFMLSystems
             addReaction<events::Shutdown>([this](futils::IMediatorPacket &){
                 shutdown();
             });
-        }
+            }
 
         System(std::string const &systemName)
         {
