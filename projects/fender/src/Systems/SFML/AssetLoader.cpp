@@ -7,6 +7,7 @@
 #endif
 #include <experimental/filesystem>
 #include <regex>
+#include <string>
 #include "AssetLoader.hpp"
 
 namespace fender::systems::SFMLSystems
@@ -29,9 +30,9 @@ namespace fender::systems::SFMLSystems
             std::string pathFile;
             for (auto &p : std::experimental::filesystem::recursive_directory_iterator(path)) {
                     
-                pathFile = p.path();
+                pathFile = p.path().string();
 
-                std::string file = p.path();
+                std::string file = p.path().string();
                 file.erase(0, assetDir.size());
 
                 if (std::regex_match(file, patternTexture)) {

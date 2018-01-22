@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.7)
-project(fender)
 set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB INCLUDE
 		"include/*.hpp"
 		)
 file(GLOB UTILS
-		"utils/*.hpp")
+  "${PROJECT_SOURCE_DIR}/utils/*.hpp")
 file(GLOB SYSTEMS
 		"src/Systems/*.cpp"
 		"src/Systems/*.hpp"
@@ -45,4 +44,4 @@ if (WIN32)
 	target_link_libraries(fender libraries/SFML/lib/sfml-system libraries/SFML/lib/sfml-window libraries/SFML/lib/sfml-audio libraries/SFML/lib/sfml-graphics)
 endif(WIN32)
 target_link_libraries(fender -lstdc++fs)
-include_directories(release include utils src libraries/SFML/include)
+include_directories(release include ${PROJECT_SOURCE_DIR}/utils src libraries/SFML/include)
