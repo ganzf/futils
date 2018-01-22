@@ -4,13 +4,12 @@
 #
 
 cmake_minimum_required(VERSION 3.9)
-project(tests)
 set(CMAKE_CXX_STANDARD 17)
 
 # utils/Header.hpp TestFile.cpp
 set(SOURCES
-        utils/callback.hpp Callback.cpp
-        )
+  ${PROJECT_SOURCE_DIR}/utils/callback.hpp Callback.cpp
+  )
 add_executable(tests ${SOURCES})
-include_directories(utils)
+include_directories(${PROJECT_SOURCE_DIR}/utils)
 target_link_libraries(tests criterion pthread dl)
