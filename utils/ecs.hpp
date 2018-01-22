@@ -62,8 +62,8 @@ namespace futils
         }
     public:
         virtual ~ISystem() {
-//            std::cout << "Forgetting " << this->name << " in events" << std::endl;
-//            events->erase(this);
+            //std::cout << "Forgetting " << this->name << " in events" << std::endl;
+            //events->erase(this);
         }
         virtual void run(float elapsed = 0) = 0;
         void provideManager(EntityManager &manager) { entityManager = &manager; }
@@ -265,13 +265,20 @@ namespace futils
                 return true;
             };
             entity.onDetach = [this](IComponent &compo) {
-                auto range = components.equal_range(futils::type<T>::index);
+                auto range = components.equal_range(compo.getTypeindex());
+                std::vector<std::pair<futils::type_index, IComponent *>> save;
+                int count = 0;
                 for (auto it = range.first; it != range.second; it++) {
+                    count++;
                     auto &pair = *it;
                     auto tmp = pair.second;
-                    if (tmp == &compo) {
-                        it = components.erase(it);
-                    }
+                    if (tmp != &compo)
+                        save.push_back(pair);
+                }
+                components.erase(compo.getTypeindex());
+                for (auto savedPair: save)
+                {
+                    components.insert(savedPair);
                 }
             };
             events->send<EntityCreated<T>>(entity);
@@ -324,7 +331,10 @@ namespace futils
             system.provideManager(*this);
             system.provideMediator(*events);
             auto afterBuild = system.getAfterBuild();
+            auto *save = currentSystem;
+            currentSystem = &system;
             afterBuild();
+            currentSystem = save;
             events->send<std::string>("[" + system.getName() + "] loaded.");
             this->systemsMap.insert(std::pair<std::string, ISystem *>(system.getName(), &system));
             orderMap[orderIndex] = &system;
@@ -345,6 +355,7 @@ namespace futils
             const auto &name = currentSystem->getName();
             temporaryEntities.insert(std::pair<std::string, IEntity *>(name, entity));
             temporaryEntitiesRecords[entity] = name;
+            std::cout << "[" << name << "] created " << typeid(T).name() << std::endl;
             return *entity;
         }
 
@@ -401,8 +412,12 @@ namespace futils
             std::vector<T *> res;
             try {
                 auto range = components.equal_range(futils::type<T>::index);
-                for (auto it = range.first; it != range.second; it++)
+                if (range.first == range.second) {
+                    return {};
+                }
+                for (auto it = range.first; it != range.second; it++) {
                     res.push_back(static_cast<T *>(it->second));
+                }
             } catch (std::exception const &e) {
                 std::cerr << e.what() << std::endl;
             }

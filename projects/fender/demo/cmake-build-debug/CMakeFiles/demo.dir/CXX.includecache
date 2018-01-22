@@ -127,6 +127,8 @@ Components/AbsoluteTransform.hpp
 -
 Components/Border.hpp
 -
+Components/ChildInfo.hpp
+-
 fender.hpp
 ../../src/Entities/fender.hpp
 Components/GameObject.hpp
@@ -285,12 +287,12 @@ functional
 -
 unordered_map
 -
+dloader.hpp
+../utils/dloader.hpp
 clock.hpp
 ../utils/clock.hpp
 mediator.hpp
 ../utils/mediator.hpp
-ini.hpp
-../utils/ini.hpp
 queue.hpp
 ../utils/queue.hpp
 
@@ -324,28 +326,6 @@ unistd.h
 iostream
 -
 
-../utils/ini.hpp
-iostream
--
-fstream
--
-algorithm
--
-string
--
-unordered_map
--
-list
--
-vector
--
-iomanip
--
-map
--
-log.hpp
-../utils/log.hpp
-
 ../utils/inputKeys.hpp
 vector
 -
@@ -357,18 +337,6 @@ unordered_map
 -
 math.hpp
 ../utils/math.hpp
-
-../utils/log.hpp
-iostream
--
-fstream
--
-chrono
--
-iomanip
--
-futils.hpp
-../utils/futils.hpp
 
 ../utils/math.hpp
 utility

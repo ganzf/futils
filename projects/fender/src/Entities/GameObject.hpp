@@ -7,6 +7,7 @@
 
 #include <Components/AbsoluteTransform.hpp>
 #include <Components/Border.hpp>
+#include <Components/ChildInfo.hpp>
 # include "fender.hpp"
 # include "Components/GameObject.hpp"
 # include "Components/Transform.hpp"
@@ -34,6 +35,9 @@ namespace fender::entities {
             detach<components::GameObject>();
             detach<components::Transform>();
             detach<components::AbsoluteTransform>();
+            detach<components::Border>();
+            if (has<components::ChildInfo>())
+                detach<components::ChildInfo>();
         }
 
         void setSize(float width, float height) {

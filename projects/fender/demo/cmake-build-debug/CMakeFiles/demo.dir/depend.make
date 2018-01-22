@@ -25,9 +25,7 @@ CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/ecs.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/fstring.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/futils.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/goToBinDir.hpp
-CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/ini.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/inputKeys.hpp
-CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/log.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/math.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/mediator.hpp
 CMakeFiles/demo.dir/src/App/App.cpp.o: ../utils/position.hpp
@@ -75,9 +73,7 @@ CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/dloader.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/ecs.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/fstring.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/futils.hpp
-CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/ini.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/inputKeys.hpp
-CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/log.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/math.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/mediator.hpp
 CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o: ../utils/position.hpp
@@ -99,8 +95,6 @@ CMakeFiles/demo.dir/src/main.cpp.o: ../utils/ecs.hpp
 CMakeFiles/demo.dir/src/main.cpp.o: ../utils/fstring.hpp
 CMakeFiles/demo.dir/src/main.cpp.o: ../utils/futils.hpp
 CMakeFiles/demo.dir/src/main.cpp.o: ../utils/goToBinDir.hpp
-CMakeFiles/demo.dir/src/main.cpp.o: ../utils/ini.hpp
-CMakeFiles/demo.dir/src/main.cpp.o: ../utils/log.hpp
 CMakeFiles/demo.dir/src/main.cpp.o: ../utils/math.hpp
 CMakeFiles/demo.dir/src/main.cpp.o: ../utils/mediator.hpp
 CMakeFiles/demo.dir/src/main.cpp.o: ../utils/queue.hpp

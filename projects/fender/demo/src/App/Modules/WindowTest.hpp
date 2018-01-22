@@ -5,6 +5,7 @@
 #ifndef DEMO_WINDOWTEST_HPP
 #define DEMO_WINDOWTEST_HPP
 
+#include <Components/World.hpp>
 # include "fender.hpp"
 # include "Entities/Window.hpp"
 # include "Entities/Input.hpp"
@@ -26,6 +27,13 @@ public:
             initInputs();
             initGui();
         };
+        afterDeath = [](futils::EntityManager *em){
+            em->addSystem<WindowTest>();
+        };
+    }
+    ~WindowTest()
+    {
+        window->detach<fender::components::World>();
     }
     void run(float) override;
 };

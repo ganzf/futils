@@ -35,7 +35,7 @@ void WindowTest::initWindow()
     win.position.x = 0;
     win.position.y = 0;
     win.visible = true;
-    win.style = futils::WStyle::Fullscreen;
+    win.style = futils::WStyle::None;
     auto &world = window->attach<fender::components::World>();
     world.unit = 64;
     world.name = "Demo Fender v. Alpha";
@@ -46,6 +46,7 @@ void WindowTest::initWindow()
     color.color = futils::Granite;
     addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &){
         entityManager->removeSystem(name);
+        afterDeath = [](futils::EntityManager *) {};
     });
 
     camera = &entityManager->smartCreate<fender::entities::Camera>();
@@ -160,7 +161,7 @@ void WindowTest::initGui() {
     *debug << "Hud is " << std::to_string(h) << " units high." << futils::endl;
 
     collarAction.func = [this, debug](){
-        *debug << "You clicked the collar !" << futils::endl;
+        entityManager->removeSystem(name);
     };
 }
 

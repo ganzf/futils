@@ -26,9 +26,7 @@ CMakeFiles/demo.dir/src/App/App.cpp.o
  ../utils/fstring.hpp
  ../utils/futils.hpp
  ../utils/goToBinDir.hpp
- ../utils/ini.hpp
  ../utils/inputKeys.hpp
- ../utils/log.hpp
  ../utils/math.hpp
  ../utils/mediator.hpp
  ../utils/position.hpp
@@ -76,9 +74,7 @@ CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o
  ../utils/ecs.hpp
  ../utils/fstring.hpp
  ../utils/futils.hpp
- ../utils/ini.hpp
  ../utils/inputKeys.hpp
- ../utils/log.hpp
  ../utils/math.hpp
  ../utils/mediator.hpp
  ../utils/position.hpp
@@ -100,8 +96,6 @@ CMakeFiles/demo.dir/src/main.cpp.o
  ../utils/fstring.hpp
  ../utils/futils.hpp
  ../utils/goToBinDir.hpp
- ../utils/ini.hpp
- ../utils/log.hpp
  ../utils/math.hpp
  ../utils/mediator.hpp
  ../utils/queue.hpp
