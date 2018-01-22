@@ -27,8 +27,8 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="demo">
-				<Option output="/home/arroganz/cpp/futils/projects/fender/demo/demo" prefix_auto="0" extension_auto="0"/>
+			<Target title="demoExe">
+				<Option output="/home/arroganz/cpp/futils/projects/fender/demo/demoExe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -46,14 +46,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 demo"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 demoExe"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="demo/fast">
-				<Option output="/home/arroganz/cpp/futils/projects/fender/demo/demo" prefix_auto="0" extension_auto="0"/>
+			<Target title="demoExe/fast">
+				<Option output="/home/arroganz/cpp/futils/projects/fender/demo/demoExe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -71,7 +71,7 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 demo/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 demoExe/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/arroganz/cpp/futils/projects/fender/demo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -89,16 +89,22 @@
 			</Target>
 		</Build>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/App.cpp">
-			<Option target="demo"/>
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/OtherSystem.cpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/OtherSystem.hpp">
+			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/WindowTest.cpp">
-			<Option target="demo"/>
+			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/WindowTest.hpp">
-			<Option target="demo"/>
+			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/main.cpp">
-			<Option target="demo"/>
+			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

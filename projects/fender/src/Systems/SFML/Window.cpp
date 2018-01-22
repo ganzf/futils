@@ -57,11 +57,17 @@ namespace fender::systems::SFMLSystems
         addReaction<futils::ComponentDeleted<Component>>([this](futils::IMediatorPacket &pkg){
             auto components = entityManager->get<Component>();
             auto &packet = futils::Mediator::rebuild<futils::ComponentDeleted<Component>>(pkg);
-            for (auto &win: components)
+            Component *toRemove = nullptr;
+            for (auto pair: _windows)
             {
-                if (win->title == packet.compo.title)
+                auto win = pair.first;
+                if (win->title == packet.compo.title) {
                     onWindowDestroyed(*win);
+                    toRemove = win;
+                }
             }
+            _windows.erase(toRemove);
+            std::cout << "Notification complete." << std::endl;
         });
     }
 
@@ -71,6 +77,7 @@ namespace fender::systems::SFMLSystems
             return ;
         auto &real = _windows.at(&win);
         close(real);
+        std::cout << " Closed window " << real.data->title << std::endl;
     }
 
     void Window::onNewWindow(Component &win)

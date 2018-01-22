@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named demo
+# Target rules for targets named demoExe
 
 # Build rule for target.
-demo: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 demo
-.PHONY : demo
+demoExe: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demoExe
+.PHONY : demoExe
 
 # fast build rule for target.
-demo/fast:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/build
-.PHONY : demo/fast
+demoExe/fast:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/build
+.PHONY : demoExe/fast
 
 src/App/App.o: src/App/App.cpp.o
 
@@ -129,7 +129,7 @@ src/App/App.o: src/App/App.cpp.o
 
 # target to build an object file
 src/App/App.cpp.o:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/App/App.cpp.o
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/App.cpp.o
 .PHONY : src/App/App.cpp.o
 
 src/App/App.i: src/App/App.cpp.i
@@ -138,7 +138,7 @@ src/App/App.i: src/App/App.cpp.i
 
 # target to preprocess a source file
 src/App/App.cpp.i:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/App/App.cpp.i
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/App.cpp.i
 .PHONY : src/App/App.cpp.i
 
 src/App/App.s: src/App/App.cpp.s
@@ -147,8 +147,35 @@ src/App/App.s: src/App/App.cpp.s
 
 # target to generate assembly for a file
 src/App/App.cpp.s:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/App/App.cpp.s
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/App.cpp.s
 .PHONY : src/App/App.cpp.s
+
+src/App/Modules/OtherSystem.o: src/App/Modules/OtherSystem.cpp.o
+
+.PHONY : src/App/Modules/OtherSystem.o
+
+# target to build an object file
+src/App/Modules/OtherSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/OtherSystem.cpp.o
+.PHONY : src/App/Modules/OtherSystem.cpp.o
+
+src/App/Modules/OtherSystem.i: src/App/Modules/OtherSystem.cpp.i
+
+.PHONY : src/App/Modules/OtherSystem.i
+
+# target to preprocess a source file
+src/App/Modules/OtherSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/OtherSystem.cpp.i
+.PHONY : src/App/Modules/OtherSystem.cpp.i
+
+src/App/Modules/OtherSystem.s: src/App/Modules/OtherSystem.cpp.s
+
+.PHONY : src/App/Modules/OtherSystem.s
+
+# target to generate assembly for a file
+src/App/Modules/OtherSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/OtherSystem.cpp.s
+.PHONY : src/App/Modules/OtherSystem.cpp.s
 
 src/App/Modules/WindowTest.o: src/App/Modules/WindowTest.cpp.o
 
@@ -156,7 +183,7 @@ src/App/Modules/WindowTest.o: src/App/Modules/WindowTest.cpp.o
 
 # target to build an object file
 src/App/Modules/WindowTest.cpp.o:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.o
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/WindowTest.cpp.o
 .PHONY : src/App/Modules/WindowTest.cpp.o
 
 src/App/Modules/WindowTest.i: src/App/Modules/WindowTest.cpp.i
@@ -165,7 +192,7 @@ src/App/Modules/WindowTest.i: src/App/Modules/WindowTest.cpp.i
 
 # target to preprocess a source file
 src/App/Modules/WindowTest.cpp.i:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.i
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/WindowTest.cpp.i
 .PHONY : src/App/Modules/WindowTest.cpp.i
 
 src/App/Modules/WindowTest.s: src/App/Modules/WindowTest.cpp.s
@@ -174,7 +201,7 @@ src/App/Modules/WindowTest.s: src/App/Modules/WindowTest.cpp.s
 
 # target to generate assembly for a file
 src/App/Modules/WindowTest.cpp.s:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/App/Modules/WindowTest.cpp.s
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/WindowTest.cpp.s
 .PHONY : src/App/Modules/WindowTest.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -183,7 +210,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -192,7 +219,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -201,7 +228,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -211,11 +238,14 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... demo"
+	@echo "... demoExe"
 	@echo "... edit_cache"
 	@echo "... src/App/App.o"
 	@echo "... src/App/App.i"
 	@echo "... src/App/App.s"
+	@echo "... src/App/Modules/OtherSystem.o"
+	@echo "... src/App/Modules/OtherSystem.i"
+	@echo "... src/App/Modules/OtherSystem.s"
 	@echo "... src/App/Modules/WindowTest.o"
 	@echo "... src/App/Modules/WindowTest.i"
 	@echo "... src/App/Modules/WindowTest.s"

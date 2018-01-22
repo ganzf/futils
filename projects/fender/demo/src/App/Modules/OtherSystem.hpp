@@ -1,19 +1,17 @@
 //
-// Created by arroganz on 1/1/18.
+// Created by arroganz on 1/22/18.
 //
 
-#ifndef DEMO_WINDOWTEST_HPP
-#define DEMO_WINDOWTEST_HPP
+#ifndef DEMO_OtherSystem_HPP
+#define DEMO_OtherSystem_HPP
 
 #include <Components/World.hpp>
 # include "fender.hpp"
 # include "Entities/Window.hpp"
 # include "Entities/Input.hpp"
 # include "Entities/Camera.hpp"
-# include "OtherSystem.hpp"
 
-class WindowTest : public futils::ISystem {
-    fender::entities::Window *window{nullptr};
+class OtherSystem : public futils::ISystem {
     fender::entities::Input *input{nullptr};
     fender::entities::Camera *camera{nullptr};
 
@@ -21,18 +19,15 @@ class WindowTest : public futils::ISystem {
     void initInputs();
     void initGui();
 public:
-    WindowTest(){
-        name = "WindowTest";
+    OtherSystem(){
+        name = "OtherSystem";
         afterBuild = [this](){
-            initWindow();
             initInputs();
             initGui();
         };
-        afterDeath = [](futils::EntityManager *em){
-            em->addSystem<OtherSystem>();
-        };
+        afterDeath = [](futils::EntityManager *){};
     }
-    ~WindowTest()
+    ~OtherSystem()
     {
         // window->detach<fender::components::World>();
     }
@@ -40,4 +35,6 @@ public:
 };
 
 
-#endif //DEMO_WINDOWTEST_HPP
+#endif //DEMO_OtherSystem_HPP
+
+

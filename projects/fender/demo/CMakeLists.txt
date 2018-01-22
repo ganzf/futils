@@ -23,7 +23,8 @@ project(demo)
 set(SOURCE_FILES
 		src/main.cpp
 		src/App/App.cpp
-		src/App/Modules/WindowTest.cpp)
+		src/App/Modules/WindowTest.cpp
+		src/App/Modules/OtherSystem.cpp)
 
 add_executable(demoExe ${SOURCE_FILES})
 include_directories(include utils ../src)

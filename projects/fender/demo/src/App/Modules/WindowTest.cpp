@@ -28,14 +28,14 @@ void WindowTest::initWindow()
         }
     });
 
-    window = &entityManager->smartCreate<fender::entities::Window>();
+    window = &entityManager->create<fender::entities::Window>();
     auto &win = window->get<fender::components::Window>();
-    win.size.w = 1920;
-    win.size.h = 1080;
+    win.size.w = 800;
+    win.size.h = 600;
     win.position.x = 0;
     win.position.y = 0;
     win.visible = true;
-    win.style = futils::WStyle::None;
+    win.style = futils::WStyle::Default;
     auto &world = window->attach<fender::components::World>();
     world.unit = 64;
     world.name = "Demo Fender v. Alpha";
@@ -49,7 +49,7 @@ void WindowTest::initWindow()
         afterDeath = [](futils::EntityManager *) {};
     });
 
-    camera = &entityManager->smartCreate<fender::entities::Camera>();
+    camera = &entityManager->create<fender::entities::Camera>();
     auto &cam = camera->get<fender::components::Camera>();
     cam.window = window;
     cam.activated = true;

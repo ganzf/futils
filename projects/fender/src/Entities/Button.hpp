@@ -35,6 +35,7 @@ namespace fender::entities {
             detach<components::Image>();
             detach<components::Text>();
             detach<components::Clickable>();
+            detach<components::Hoverable>();
         }
     };
 }

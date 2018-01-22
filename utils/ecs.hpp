@@ -62,8 +62,8 @@ namespace futils
         }
     public:
         virtual ~ISystem() {
-            //std::cout << "Forgetting " << this->name << " in events" << std::endl;
-            //events->erase(this);
+            std::cout << "Forgetting " << this->name << " in events" << std::endl;
+            events->erase(this);
         }
         virtual void run(float elapsed = 0) = 0;
         void provideManager(EntityManager &manager) { entityManager = &manager; }
