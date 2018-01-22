@@ -33,7 +33,9 @@ set(SOURCE_FILES
 
 if (UNIX)
 	add_compile_options(-Wall -Wextra -Werror)
-endif(UNIX)
+elseif(WIN32)
+    add_compile_options(/std:c++latest)
+endif()
 
 add_library(fender STATIC ${SOURCE_FILES})
 
