@@ -191,6 +191,12 @@ namespace fender::systems::SFMLSystems
             }
         }
 
+        /*for (std::unordered_map<futils::Keys, futils::InputState >::iterator k = _keyState.begin();
+             k != _keyState.end() ; ++k) {
+            if (k->second == futils::InputState::GoingUp)
+                k->second = futils::InputState::Up;
+        }*/
+
         _keyState[key] = state;
         // frameInputs[futils::InputAction(key, state)] = true;
         for (auto &input: entityManager->get<fender::components::Input>())

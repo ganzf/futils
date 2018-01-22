@@ -352,7 +352,16 @@ void WindowTest::initInputs()
     altf4.actions.push_back(alt_action);
     altf4.actions.push_back(alt_action2);
     component.map[altf4] = [this]() {
-        events->send<fender::events::Shutdown>();
+        std::cout << "alt f4 "<< std::endl;
+    };
+
+    futils::InputSequence test;
+    futils::InputAction test1(futils::Keys::Alt, futils::InputState::Down);
+    futils::InputAction test2(futils::Keys::F4, futils::InputState::Up);
+    test.actions.push_back(test1);
+    test.actions.push_back(test2);
+    component.map[test] = [this]() {
+        std::cout << "Test"<< std::endl;
     };
 
     futils::InputSequence generate;
@@ -365,7 +374,7 @@ void WindowTest::initInputs()
         createGo(*entityManager);
     };
     component.map[joystick] = [this](){
-        events->send<fender::events::Shutdown>();
+
     };
 }
 
