@@ -191,11 +191,16 @@ namespace fender::systems::SFMLSystems
             }
         }
 
-        /*for (std::unordered_map<futils::Keys, futils::InputState >::iterator k = _keyState.begin();
-             k != _keyState.end() ; ++k) {
-            if (k->second == futils::InputState::GoingUp)
-                k->second = futils::InputState::Up;
-        }*/
+        if (event.type == sf::Event::JoystickButtonPressed ||
+            event.type == sf::Event::MouseButtonPressed ||
+            event.type == sf::Event::KeyPressed) {
+            for (std::unordered_map<futils::Keys, futils::InputState >::iterator k = _keyState.begin();
+                 k != _keyState.end() ; ++k) {
+                if (k->second == futils::InputState::GoingUp)
+                    k->second = futils::InputState::Up;
+            }
+        }
+
 
         _keyState[key] = state;
         // frameInputs[futils::InputAction(key, state)] = true;
