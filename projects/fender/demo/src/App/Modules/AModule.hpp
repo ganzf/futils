@@ -27,7 +27,7 @@ namespace demo
 
         void _init()
         {
-            addReaction<fender::events::Shutdown>([this](){
+            addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &){
                 entityManager->removeSystem(name);
             });
         }
