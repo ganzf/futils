@@ -55,6 +55,18 @@ namespace fender::entities {
             transform->position.y = y;
         }
 
+        Position const &getPosition() const {
+            return (transform->position);
+        }
+
+        int getPositionX() const {
+            return (transform->position.x);
+        }
+
+        int getPositionY() const {
+            return (transform->position.y);
+        }
+
         void setPosition(futils::Vec2<float> const &pos) {
             transform->position.x = pos.x;
             transform->position.y = pos.y;
