@@ -15,6 +15,7 @@ namespace fender::systems::SFMLSystems
         using Sequence = futils::InputSequence;
 
         std::unordered_map<futils::Keys, futils::InputState>  _keyState = {
+                {futils::Keys::Undefined, futils::InputState::Undefined},
                 {futils::Keys::A, futils::InputState::Up},
                 {futils::Keys::B, futils::InputState::Up},
                 {futils::Keys::C, futils::InputState::Up},

@@ -8,6 +8,9 @@
 # include "Entities/Window.hpp"
 # include "Entities/Camera.hpp"
 # include "Entities/World.hpp"
+# include "Entities/Image.hpp"
+# include "Entities/Input.hpp"
+# include "Components/Color.hpp"
 # include "AModule.hpp"
 
 namespace demo
@@ -24,13 +27,17 @@ namespace demo
         using Window = fender::entities::Window;
         using Camera = fender::entities::Camera;
         using World = fender::entities::World;
+        using Input = fender::entities::Input;
 
-        Window *_win;
-        Camera *_cam;
-        World *_world;
+        Window *_win {nullptr};
+        Camera *_cam {nullptr};
+        World *_world {nullptr};
+        Input *_input {nullptr};
 
         // Simple init function
         void init();
+        void initInputs();
+        void initInputsCam();
     public:
         Loader() : AModule("Loader") {}
         void run(float) override;

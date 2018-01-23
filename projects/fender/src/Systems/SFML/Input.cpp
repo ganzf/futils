@@ -140,18 +140,19 @@ namespace fender::systems::SFMLSystems
 
     void Input::process(sf::Event const &event)
     {
-        if (event.type == sf::Event::KeyPressed)
-            events->send<futils::Keys>(sfToFutilsKeys[event.key.code]);
+        /*if (event.type == sf::Event::KeyPressed)
+            events->send<futils::Keys>(sfToFutilsKeys[event.key.code]);*/
         if (event.type != sf::Event::KeyPressed && event.type != sf::Event::KeyReleased
             && event.type != sf::Event::MouseButtonPressed && event.type != sf::Event::MouseWheelMoved
             && event.type != sf::Event::JoystickButtonPressed && event.type != sf::Event::MouseMoved
             &&event.type != sf::Event::MouseButtonReleased)
         return ;
 
-        futils::Keys key;
-        futils::InputState state;
+        futils::Keys key = futils::Keys::Undefined;
+        futils::InputState state = futils::InputState::Undefined;
 
-        state = sfToFutilsState.at(event.type);
+        if (sfToFutilsState.find(event.type) != sfToFutilsState.end())
+            state = sfToFutilsState.at(event.type);
 
         switch (event.type) {
             case sf::Event::MouseWheelMoved : {
@@ -162,11 +163,13 @@ namespace fender::systems::SFMLSystems
                 break ;
             }
             case sf::Event::JoystickButtonPressed : {
-                key = sfJoystickToFutilsKeys[event.joystickButton.button];
+                if (event.joystickButton.button < sfJoystickToFutilsKeys.size())
+                    key = sfJoystickToFutilsKeys[event.joystickButton.button];
                 break ;
             }
             case sf::Event::MouseButtonPressed : {
-                key = sfMouseToFutilsKeys.at(event.mouseButton.button);
+                if (sfMouseToFutilsKeys.find(event.mouseButton.button) != sfMouseToFutilsKeys.end())
+                    key = sfMouseToFutilsKeys.at(event.mouseButton.button);
                 if (key == futils::Keys::LButton) {
                     futils::MouseClicked eventMouseClicked;
 
@@ -187,7 +190,8 @@ namespace fender::systems::SFMLSystems
             }
             default:
             {
-                key = sfToFutilsKeys.at(event.key.code);
+                if (sfToFutilsKeys.find(event.key.code) != sfToFutilsKeys.end())
+                    key = sfToFutilsKeys.at(event.key.code);
             }
         }
 
