@@ -90,6 +90,10 @@ namespace fender::entities {
             object->show();
         }
 
+        void borderColor(futils::Color c) {
+            border->color = c;
+        }
+
     };
 }
 

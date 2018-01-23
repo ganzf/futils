@@ -6,7 +6,6 @@
 
 namespace demo
 {
-
     void Loader::initInputsCam() {
         auto &input = _input->get<fender::components::Input>();
 
@@ -39,7 +38,6 @@ namespace demo
             _cam->setPosition(_cam->getPositionX() + 1, _cam->getPositionY());
         };
     }
-
     void Loader::initInputs() {
         _input = &entityManager->smartCreate<fender::entities::Input>();
         auto &input = _input->get<fender::components::Input>();
@@ -54,7 +52,6 @@ namespace demo
 
         input.activated = true;
     }
-
     void Loader::init() {
         // We create the window and bind it to this system.
         //_win = &entityManager->smartCreate<Window>(1024, 768, futils::WStyle::None);
@@ -75,16 +72,15 @@ namespace demo
         _cam = &entityManager->smartCreate<Camera>();
         auto &cam = _cam->get<fender::components::Camera>();
         cam.window = _win;
-        cam.debugMode = true;
+        cam.debugMode = false;
         cam.activated = true;
         _cam->setPosition(0, 0);
-
         // And finally we create a world that will hold basic informations
         //_world = &entityManager->smartCreate<World>("LoaderWorld", 32);
 
         _world = &entityManager->smartCreate<World>();
         auto &world = _world->get<fender::components::World>();
-        world.name = "LoaderWorld";
+        world.name = "Loader";
         world.unit = 32;
         world.size.w = 100;
         world.size.h = 100;
@@ -92,9 +88,37 @@ namespace demo
         initInputs();
         initInputsCam();
 
-        entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float >{0, 0}, futils::Vec2<float>{50, 50});
-    }
+        // entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float >{0, 0}, futils::Vec2<float>{10, 10});
+        auto &gui = _cam->get<fender::components::Children>();
+        _mainFrame = &entityManager->smartCreate<ListView>();
+        _mainFrame->setBorderVisible(true);
+        _mainFrame->borderColor(futils::Crimson);
+        gui.add(*_mainFrame);
+        auto &mainSize = _mainFrame->get<fender::components::ChildInfo>();
+        mainSize.offset.x = 2;
+        mainSize.offset.y = 2;
+        mainSize.relSize.w = 96;
+        mainSize.relSize.h = 96;
+        auto &mainContent = _mainFrame->get<fender::components::ListView>();
+        mainContent.order = futils::Ordering::Horizontal;
 
+        // Add content ...
+        _rightFrame = &entityManager->smartCreate<ListView>();
+        _rightFrame->setBorderVisible(true);
+        _rightFrame->borderColor(futils::Greenyellow);
+        auto &rightSize = _rightFrame->get<fender::components::Transform>();
+        rightSize.size.w = 4;
+        rightSize.size.h = 4;
+        // Ajouter relative size ou modifier le systeme avec des booleans ? :/
+        _leftFrame = &entityManager->smartCreate<ListView>();
+        _leftFrame->setBorderVisible(true);
+        _leftFrame->borderColor(futils::White);
+        auto &leftSize = _leftFrame->get<fender::components::Transform>();
+        leftSize.size.w = 4;
+        leftSize.size.h = 4;
+        mainContent.content.push_back(_leftFrame);
+        mainContent.content.push_back(_rightFrame);
+    }
     void Loader::run(float) {
         if (!_win) return init();
     }
