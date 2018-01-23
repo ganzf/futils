@@ -22,15 +22,15 @@ namespace fender::systems::SFMLSystems
         for (auto elem: list.content) {
             count++;
             auto &transform = elem->get<components::Transform>();
-            transform.size.w = transform.size.w < listPos.size.w ? listPos.size.w : transform.size.w;
-            transform.size.h = transform.size.h == 0 ? 0.5 : transform.size.h;
+            //transform.size.w = transform.size.w < listPos.size.w ? listPos.size.w : transform.size.w;
+            //transform.size.h = transform.size.h == 0 ? 1 : transform.size.h;
             if (count >= list.offset && count < list.offset + list.size) {
-                if (list.fit)
-                    listPos.size.w = transform.size.w > listPos.size.w ? transform.size.w : listPos.size.w;
+                //if (list.fit)
+                listPos.size.w = transform.size.w > listPos.size.w ? transform.size.w : listPos.size.w;
                 current += transform.size.h;
                 size += transform.size.h;
-                if (list.fit)
-                    listPos.size.h = size;
+                //if (list.fit)
+                listPos.size.h = size;
             }
         }
     }
@@ -44,15 +44,15 @@ namespace fender::systems::SFMLSystems
         for (auto elem: list.content) {
             count++;
             auto &transform = elem->get<components::Transform>();
-            transform.size.h = transform.size.h < listPos.size.h ? listPos.size.h : transform.size.h;
-            transform.size.w = transform.size.w == 0 ? 0.5 : transform.size.w;
+            //transform.size.h = transform.size.h < listPos.size.h ? listPos.size.h : transform.size.h;
+            //transform.size.w = transform.size.w == 0 ? 0.5 : transform.size.w;
             if (count >= list.offset && count < list.offset + list.size) {
-                if (list.fit)
-                    listPos.size.h = transform.size.h > listPos.size.h ? transform.size.h : listPos.size.h;
+                //if (list.fit)
+                listPos.size.h = transform.size.h > listPos.size.h ? transform.size.h : listPos.size.h;
                 current += transform.size.w;
                 size += transform.size.w;
-                if (list.fit)
-                    listPos.size.h = size;
+                //if (list.fit)
+                listPos.size.h = size;
             }
         }
     }

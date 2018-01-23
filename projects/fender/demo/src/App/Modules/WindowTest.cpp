@@ -30,12 +30,12 @@ void WindowTest::initWindow()
 
     window = &entityManager->create<fender::entities::Window>();
     auto &win = window->get<fender::components::Window>();
-    win.size.w = 800;
-    win.size.h = 600;
+    win.size.w = 1920;
+    win.size.h = 1080;
     win.position.x = 0;
     win.position.y = 0;
     win.visible = true;
-    win.style = futils::WStyle::Default;
+    win.style = futils::WStyle::None;
     auto &world = window->attach<fender::components::World>();
     world.unit = 64;
     world.name = "Demo Fender v. Alpha";
@@ -105,6 +105,7 @@ void WindowTest::initGui() {
     hudCellContent.padding = 0.25;
     hudCellContent.order = futils::Ordering::Horizontal;
     auto *cellImg = &entityManager->smartCreate<fender::entities::Image>("cells.png", futils::Vec2<float>(0, 0), futils::Vec2<float>(0.5, 0.5));
+    cellImg->setSize(2, 2);
     // Bug 2 : Le contenu ne semble pas s'adapter a la taille du bouton, ni l'inverse...
     hudCellContent.fit = true;
     hudCellContent.content.push_back(cellImg);
@@ -121,6 +122,7 @@ void WindowTest::initGui() {
     hudGoldContent.order = futils::Ordering::Horizontal;
     auto *goldImg = &entityManager->smartCreate<fender::entities::Image>("golds.png", futils::Vec2<float>(0, 0), futils::Vec2<float>(0.5, 0.5));
     // Bug 3 : hud ne met pas bien les boutons les uns apres les autres
+    goldImg->setSize(2, 2);
     hudGoldContent.fit = true;
     hudGoldContent.content.push_back(goldImg);
     auto *goldCount = &entityManager->smartCreate<fender::entities::Text>("729");
@@ -139,6 +141,7 @@ void WindowTest::initGui() {
     auto &collarAction = collar->get<fender::components::Clickable>();
     collarAction.waitForRelease = true;
 
+    collar->setSize(1, 1);
     auto &collarImg = collar->get<fender::components::Image>();
     collarImg.file = "collar.png";
     auto *collarLabel = &entityManager->smartCreate<fender::entities::Text>("Collar");

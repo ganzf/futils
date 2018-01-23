@@ -15,6 +15,8 @@ namespace fender::components {
         int size{0};
         bool reversed;
         bool fit{false};
+        bool expand{false};
+        bool shrink{false};
         float padding;
         futils::Align align;
         futils::VAlign valign;
