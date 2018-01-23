@@ -198,8 +198,7 @@ namespace fender::systems::SFMLSystems
                  k != _keyState.end() ; ++k) {
                 if (k->second == futils::InputState::GoingUp)
                     k->second = futils::InputState::Up;
-
-                if (k->second == futils::InputState::GoingDown)
+                else if (k->second == futils::InputState::GoingDown)
                     k->second = futils::InputState::Down;
             }
         }
