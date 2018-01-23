@@ -91,16 +91,13 @@
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/App.cpp">
 			<Option target="demoExe"/>
 		</Unit>
-		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/OtherSystem.cpp">
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/AModule.hpp">
 			<Option target="demoExe"/>
 		</Unit>
-		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/OtherSystem.hpp">
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Loader.cpp">
 			<Option target="demoExe"/>
 		</Unit>
-		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/WindowTest.cpp">
-			<Option target="demoExe"/>
-		</Unit>
-		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/WindowTest.hpp">
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Loader.hpp">
 			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/main.cpp">

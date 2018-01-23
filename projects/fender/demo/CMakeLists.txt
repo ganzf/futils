@@ -2,29 +2,13 @@ cmake_minimum_required(VERSION 3.7)
 set(CMAKE_CXX_STANDARD 17)
 project(demo)
 
-#function(find_static_library LIB_NAME OUT)
-#	if (WIN32 OR MSVC)
-#		set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib")
-#	elseif (UNIX)
-#		set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-#	endif()
-#	find_library(
-#			FOUND_${LIB_NAME}_STATIC
-#			${LIB_NAME}
-#	)
-#	if (FOUND_${LIB_NAME}_STATIC)
-#		get_filename_component(ABS_FILE ${FOUND_${LIB_NAME}_STATIC} ABSOLUTE)
-#	else()
-#		message(SEND_ERROR "Unable to find library ${LIB_NAME}")
-#	endif()
-#	set(${OUT} ${ABS_FILE} PARENT_SCOPE)
-#endfunction()
-
 set(SOURCE_FILES
 		src/main.cpp
 		src/App/App.cpp
-		src/App/Modules/WindowTest.cpp
-		src/App/Modules/OtherSystem.cpp)
+		src/App/Modules/AModule.hpp
+		src/App/Modules/Loader.cpp
+		src/App/Modules/Loader.hpp
+		)
 
 add_executable(demoExe ${SOURCE_FILES})
 include_directories(include utils ../src)

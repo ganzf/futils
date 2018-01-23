@@ -150,59 +150,32 @@ src/App/App.cpp.s:
 	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/App.cpp.s
 .PHONY : src/App/App.cpp.s
 
-src/App/Modules/OtherSystem.o: src/App/Modules/OtherSystem.cpp.o
+src/App/Modules/Loader.o: src/App/Modules/Loader.cpp.o
 
-.PHONY : src/App/Modules/OtherSystem.o
-
-# target to build an object file
-src/App/Modules/OtherSystem.cpp.o:
-	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/OtherSystem.cpp.o
-.PHONY : src/App/Modules/OtherSystem.cpp.o
-
-src/App/Modules/OtherSystem.i: src/App/Modules/OtherSystem.cpp.i
-
-.PHONY : src/App/Modules/OtherSystem.i
-
-# target to preprocess a source file
-src/App/Modules/OtherSystem.cpp.i:
-	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/OtherSystem.cpp.i
-.PHONY : src/App/Modules/OtherSystem.cpp.i
-
-src/App/Modules/OtherSystem.s: src/App/Modules/OtherSystem.cpp.s
-
-.PHONY : src/App/Modules/OtherSystem.s
-
-# target to generate assembly for a file
-src/App/Modules/OtherSystem.cpp.s:
-	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/OtherSystem.cpp.s
-.PHONY : src/App/Modules/OtherSystem.cpp.s
-
-src/App/Modules/WindowTest.o: src/App/Modules/WindowTest.cpp.o
-
-.PHONY : src/App/Modules/WindowTest.o
+.PHONY : src/App/Modules/Loader.o
 
 # target to build an object file
-src/App/Modules/WindowTest.cpp.o:
-	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/WindowTest.cpp.o
-.PHONY : src/App/Modules/WindowTest.cpp.o
+src/App/Modules/Loader.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Loader.cpp.o
+.PHONY : src/App/Modules/Loader.cpp.o
 
-src/App/Modules/WindowTest.i: src/App/Modules/WindowTest.cpp.i
+src/App/Modules/Loader.i: src/App/Modules/Loader.cpp.i
 
-.PHONY : src/App/Modules/WindowTest.i
+.PHONY : src/App/Modules/Loader.i
 
 # target to preprocess a source file
-src/App/Modules/WindowTest.cpp.i:
-	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/WindowTest.cpp.i
-.PHONY : src/App/Modules/WindowTest.cpp.i
+src/App/Modules/Loader.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Loader.cpp.i
+.PHONY : src/App/Modules/Loader.cpp.i
 
-src/App/Modules/WindowTest.s: src/App/Modules/WindowTest.cpp.s
+src/App/Modules/Loader.s: src/App/Modules/Loader.cpp.s
 
-.PHONY : src/App/Modules/WindowTest.s
+.PHONY : src/App/Modules/Loader.s
 
 # target to generate assembly for a file
-src/App/Modules/WindowTest.cpp.s:
-	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/WindowTest.cpp.s
-.PHONY : src/App/Modules/WindowTest.cpp.s
+src/App/Modules/Loader.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Loader.cpp.s
+.PHONY : src/App/Modules/Loader.cpp.s
 
 src/main.o: src/main.cpp.o
 
@@ -243,12 +216,9 @@ help:
 	@echo "... src/App/App.o"
 	@echo "... src/App/App.i"
 	@echo "... src/App/App.s"
-	@echo "... src/App/Modules/OtherSystem.o"
-	@echo "... src/App/Modules/OtherSystem.i"
-	@echo "... src/App/Modules/OtherSystem.s"
-	@echo "... src/App/Modules/WindowTest.o"
-	@echo "... src/App/Modules/WindowTest.i"
-	@echo "... src/App/Modules/WindowTest.s"
+	@echo "... src/App/Modules/Loader.o"
+	@echo "... src/App/Modules/Loader.i"
+	@echo "... src/App/Modules/Loader.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
