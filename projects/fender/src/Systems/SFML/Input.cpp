@@ -114,11 +114,11 @@ namespace
 
     std::unordered_map<sf::Event::EventType, futils::InputState> sfToFutilsState =
             {
-                    {sf::Event::EventType::KeyPressed, futils::InputState::Down},
+                    {sf::Event::EventType::KeyPressed, futils::InputState::GoingDown},
                     {sf::Event::EventType::KeyReleased, futils::InputState::GoingUp},
-                    {sf::Event::EventType::JoystickButtonPressed, futils::InputState::Down},
+                    {sf::Event::EventType::JoystickButtonPressed, futils::InputState::GoingDown},
                     {sf::Event::EventType::JoystickButtonReleased, futils::InputState::GoingUp},
-                    {sf::Event::EventType::MouseButtonPressed, futils::InputState::Down},
+                    {sf::Event::EventType::MouseButtonPressed, futils::InputState::GoingDown},
                     {sf::Event::EventType::MouseButtonReleased, futils::InputState::GoingUp},
                     {sf::Event::EventType::MouseMoved, futils::InputState::Mouse},
                     {sf::Event::EventType::MouseWheelMoved, futils::InputState::Wheel},
@@ -198,11 +198,14 @@ namespace fender::systems::SFMLSystems
                  k != _keyState.end() ; ++k) {
                 if (k->second == futils::InputState::GoingUp)
                     k->second = futils::InputState::Up;
+
+                if (k->second == futils::InputState::GoingDown)
+                    k->second = futils::InputState::Down;
             }
         }
 
-
-        _keyState[key] = state;
+        if (!(_keyState[key] == futils::InputState::Down && state == futils::InputState::GoingDown))
+            _keyState[key] = state;
         // frameInputs[futils::InputAction(key, state)] = true;
         for (auto &input: entityManager->get<fender::components::Input>())
         {

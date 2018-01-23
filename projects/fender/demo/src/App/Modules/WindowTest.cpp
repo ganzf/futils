@@ -339,24 +339,24 @@ void WindowTest::initInputs()
     component.activated = true;
 
     futils::InputSequence escape;
-    futils::InputAction action(futils::Keys::Escape, futils::InputState::Down);
+    futils::InputAction action(futils::Keys::Escape, futils::InputState::GoingDown);
     escape.actions.push_back(action);
 
     futils::InputSequence joystick;
-    futils::InputAction actionJoystick(futils::Keys::JoystickA, futils::InputState::Down);
+    futils::InputAction actionJoystick(futils::Keys::JoystickA, futils::InputState::GoingDown);
     joystick.actions.push_back(actionJoystick);
 
     futils::InputSequence altf4;
     futils::InputAction alt_action(futils::Keys::Alt, futils::InputState::Down);
-    futils::InputAction alt_action2(futils::Keys::F4, futils::InputState::Down);
+    futils::InputAction alt_action2(futils::Keys::F4, futils::InputState::GoingDown);
     altf4.actions.push_back(alt_action);
     altf4.actions.push_back(alt_action2);
     component.map[altf4] = [this]() {
-        std::cout << "alt f4 "<< std::endl;
+        events->send<fender::events::Shutdown>();
     };
 
     futils::InputSequence test;
-    futils::InputAction test1(futils::Keys::Alt, futils::InputState::Down);
+    futils::InputAction test1(futils::Keys::Alt, futils::InputState::GoingDown);
     futils::InputAction test2(futils::Keys::F4, futils::InputState::Up);
     test.actions.push_back(test1);
     test.actions.push_back(test2);
@@ -374,7 +374,7 @@ void WindowTest::initInputs()
         createGo(*entityManager);
     };
     component.map[joystick] = [this](){
-
+        events->send<fender::events::Shutdown>();
     };
 }
 
