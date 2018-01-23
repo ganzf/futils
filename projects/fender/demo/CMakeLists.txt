@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
 set(CMAKE_CXX_STANDARD 17)
-project(demo)
 
 #function(find_static_library LIB_NAME OUT)
 #	if (WIN32 OR MSVC)
@@ -26,8 +25,16 @@ set(SOURCE_FILES
 		src/App/Modules/WindowTest.cpp)
 
 add_executable(demoExe ${SOURCE_FILES})
-include_directories(include utils ../src)
-set_target_properties(demoExe PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+
+include_directories(
+  ${FENDER_ROOT}/include
+  ${FENDER_ROOT}/src
+  ${PROJECT_SOURCE_DIR}/utils
+  include
+  src)
+
+set_target_properties(demoExe
+  PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${DEMO_ROOT})
 if (UNIX)
 target_compile_options(demoExe PUBLIC -W -Wall -Werror -Wextra -g3)
 target_link_libraries(demoExe fender dl)
@@ -35,12 +42,13 @@ target_link_libraries(demoExe sfml-system sfml-window sfml-audio sfml-graphics)
 endif (UNIX)
 if (WIN32)
 #find_library(FENDER fender HINTS ./lib)
-find_library(SFMLSYSTEM sfml-system HINTS ./lib)
-find_library(SFMLWINDOW sfml-window HINTS ./lib)
-find_library(SFMLAUDIO sfml-audio HINTS ./lib)
-find_library(SFMLGRAPHICS sfml-graphics HINTS ./lib)
-target_link_libraries(demo fender)
 #message("Found ${FENDER}")
+#find_library(SFMLSYSTEM sfml-system HINTS ./lib)
+#find_library(SFMLWINDOW sfml-window HINTS ./lib)
+#find_library(SFMLAUDIO sfml-audio HINTS ./lib)
+#find_library(SFMLGRAPHICS sfml-graphics HINTS ./lib)
+message("TEST: " ${SFMLSYSTEM})
+target_link_libraries(demo fender)
 target_link_libraries(demoExe ${SFMLSYSTEM} ${SFMLAUDIO} ${SFMLGRAPHICS} ${SFMLWINDOW})
 endif (WIN32)
 target_link_libraries(demoExe -lstdc++fs)
