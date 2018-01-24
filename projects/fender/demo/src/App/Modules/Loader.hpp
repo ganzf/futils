@@ -12,6 +12,7 @@
 # include "Entities/Input.hpp"
 # include "Entities/ListView.hpp"
 # include "Entities/TextBox.hpp"
+# include "Entities/InputField.hpp"
 # include "Components/Color.hpp"
 # include "Components/ViewInfo.hpp"
 # include "AModule.hpp"
@@ -52,6 +53,9 @@ namespace demo
         void init();
         void initInputs();
         void initInputsCam();
+        void initMainFrame();
+        void loadExtensions();
+        void loadDefaults();
     public:
         Loader() : AModule("Loader") {}
         void run(float) override;
