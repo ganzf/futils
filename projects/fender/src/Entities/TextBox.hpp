@@ -7,6 +7,7 @@
 
 #include <Components/World.hpp>
 #include <Components/Color.hpp>
+#include <Components/ViewInfo.hpp>
 # include "fender.hpp"
 # include "ListView.hpp"
 # include "Text.hpp"
@@ -19,7 +20,7 @@ namespace fender::entities {
         ListView *_stream{nullptr};
         Button *_Up{nullptr};
         Button *_Down{nullptr};
-
+        int size;
         std::string buffer;
         int fontSize{12};
 
@@ -62,6 +63,13 @@ namespace fender::entities {
             scrollView.content.push_back(_Up);
             scrollView.content.push_back(_Down);
             scrollView.fit = true;
+
+            auto &scrollInfo = _scroll->attach<components::ViewInfo>();
+            scrollInfo.w = 5;
+            scrollInfo.h = 100;
+
+            _scroll->setBorderVisible(true);
+            _scroll->borderColor(futils::Darkorange);
         }
         void initStream(int size)
         {
@@ -70,14 +78,21 @@ namespace fender::entities {
             _stream = &entityManager->create<ListView>(size);
             auto &streamBorder = _stream->get<components::Border>();
             streamBorder.visible = false;
+            _stream->setBorderVisible(true);
+            _stream->borderColor(futils::Sandybrown);
             auto &list = _stream->get<components::ListView>();
             list.name = "TextBoxTextStream" + std::to_string(i);
             list.order = futils::Ordering::Vertical;
             _list->content.push_back(_stream);
             list.fit = true;
+
+            auto &view = _stream->attach<components::ViewInfo>();
+            view.w = 100;
+            if (_scroll)
+                view.w -= _scroll->get<components::ViewInfo>().w;
         }
     public:
-        explicit TextBox(int size = 1, bool scrollable = false)
+        explicit TextBox(int size = 1, bool scrollable = false): size(size)
         {
             afterBuild = [this, size, scrollable](){
                 _list->name = "TextBoxContainer" + std::to_string(size);
@@ -117,7 +132,7 @@ namespace fender::entities {
                 font.style.font = "arial.ttf";
                 auto &border = txt->get<components::Border>();
                 border.visible = false;
-                border.color = futils::Cadetblue;
+                border.color = futils::Lightgoldenrodyellow;
                 auto &tr = txt->get<components::Transform>();
                 auto worlds = entityManager->get<components::World>();
                 if (!worlds.empty())
@@ -131,21 +146,6 @@ namespace fender::entities {
                     list.offset++;
                 }
 
-//                auto iconTxt = &entityManager->create<ListView>();
-//                auto &other_tr = iconTxt->get<components::Transform>();
-//                other_tr = tr;
-//                iconTxt->setBorderVisible(false);
-//                auto &iconTxtList = iconTxt->get<components::ListView>();
-//                iconTxtList.padding = 0.1;
-//                iconTxtList.order = futils::Ordering::Horizontal;
-//                auto icon = &entityManager->create<Image>("eye.png");
-//                icon->setSize(tr.size.h, tr.size.h);
-//                //auto &iconColor = icon->attach<components::Color>();
-//                //iconColor.color = ;
-//                icon->setBorderVisible(false);
-//                iconTxtList.content.push_back(icon);
-//                iconTxtList.content.push_back(txt);
-//                list.content.push_back(iconTxt);
                 list.content.push_back(txt);
                 buffer = "";
             } else {

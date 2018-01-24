@@ -3,6 +3,7 @@
 //
 
 #include <inputKeys.hpp>
+#include <Components/ViewInfo.hpp>
 #include "ListView.hpp"
 
 namespace fender::systems::SFMLSystems
@@ -22,8 +23,14 @@ namespace fender::systems::SFMLSystems
         for (auto elem: list.content) {
             count++;
             auto &transform = elem->get<components::Transform>();
-            //transform.size.w = transform.size.w < listPos.size.w ? listPos.size.w : transform.size.w;
-            //transform.size.h = transform.size.h == 0 ? 1 : transform.size.h;
+            if (elem->has<components::ViewInfo>()) {
+                auto &viewInfo = elem->get<components::ViewInfo>();
+                transform.size.w = viewInfo.w * 100 / listPos.size.w;
+                transform.size.h = viewInfo.h * 100 / listPos.size.h;
+            } else {
+                if (transform.size.w == 0 && !list.shrink)
+                    transform.size.w = listPos.size.w;
+            }
             if (count >= list.offset && count < list.offset + list.size) {
                 //if (list.fit)
                 listPos.size.w = transform.size.w > listPos.size.w ? transform.size.w : listPos.size.w;
@@ -44,8 +51,14 @@ namespace fender::systems::SFMLSystems
         for (auto elem: list.content) {
             count++;
             auto &transform = elem->get<components::Transform>();
-            //transform.size.h = transform.size.h < listPos.size.h ? listPos.size.h : transform.size.h;
-            //transform.size.w = transform.size.w == 0 ? 0.5 : transform.size.w;
+            if (elem->has<components::ViewInfo>()) {
+                auto &viewInfo = elem->get<components::ViewInfo>();
+                transform.size.w = viewInfo.w / 100.0 * listPos.size.w;
+                transform.size.h = viewInfo.h / 100.0 * listPos.size.h;
+            } else {
+                if (transform.size.h == 0 && !list.shrink)
+                    transform.size.h = listPos.size.h;
+            }
             if (count >= list.offset && count < list.offset + list.size) {
                 //if (list.fit)
                 listPos.size.h = transform.size.h > listPos.size.h ? transform.size.h : listPos.size.h;

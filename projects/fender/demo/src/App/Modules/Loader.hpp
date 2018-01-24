@@ -11,7 +11,9 @@
 # include "Entities/Image.hpp"
 # include "Entities/Input.hpp"
 # include "Entities/ListView.hpp"
+# include "Entities/TextBox.hpp"
 # include "Components/Color.hpp"
+# include "Components/ViewInfo.hpp"
 # include "AModule.hpp"
 
 namespace demo
@@ -30,6 +32,7 @@ namespace demo
         using World = fender::entities::World;
         using Input = fender::entities::Input;
         using ListView = fender::entities::ListView;
+        using TextBox = fender::entities::TextBox;
 
         Window *_win {nullptr};
         Camera *_cam {nullptr};

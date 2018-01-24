@@ -3,6 +3,7 @@
 //
 
 #include "Loader.hpp"
+#include "Dir.hpp"
 
 namespace demo
 {
@@ -61,8 +62,8 @@ namespace demo
 
         bg.color = futils::Granite;
 
-        win.size.x = 1024;
-        win.size.y = 768;
+        win.size.x = 800;
+        win.size.y = 600;
         win.style = futils::WStyle::Default;
         win.visible = true;
 
@@ -103,22 +104,93 @@ namespace demo
         mainContent.order = futils::Ordering::Horizontal;
 
         // Add content ...
-        _rightFrame = &entityManager->smartCreate<ListView>();
-        _rightFrame->setBorderVisible(true);
-        _rightFrame->borderColor(futils::Greenyellow);
-        auto &rightSize = _rightFrame->get<fender::components::Transform>();
-        rightSize.size.w = 4;
-        rightSize.size.h = 4;
         // Ajouter relative size ou modifier le systeme avec des booleans ? :/
         _leftFrame = &entityManager->smartCreate<ListView>();
         _leftFrame->setBorderVisible(true);
         _leftFrame->borderColor(futils::White);
-        auto &leftSize = _leftFrame->get<fender::components::Transform>();
-        leftSize.size.w = 4;
-        leftSize.size.h = 4;
+        auto &leftRelSize = _leftFrame->attach<fender::components::ViewInfo>();
+        leftRelSize.w = 60;
+        leftRelSize.h = 100;
+
+        _rightFrame = &entityManager->smartCreate<ListView>();
+//        *_rightFrame << 16 << "test 1" << futils::endl;
+//        *_rightFrame << "test 2" << futils::endl;
+//        *_rightFrame << "test 3" << futils::endl;
+//        *_rightFrame << "test 4" << futils::endl;
+//        *_rightFrame << "test 5" << futils::endl;
+        _rightFrame->setBorderVisible(true);
+        _rightFrame->borderColor(futils::Greenyellow);
+        auto &rightRelSize = _rightFrame->attach<fender::components::ViewInfo>();
+        rightRelSize.w = 100 - leftRelSize.w;
+        rightRelSize.h = 100;
+
         mainContent.content.push_back(_leftFrame);
         mainContent.content.push_back(_rightFrame);
+
+        auto &leftContent = _leftFrame->get<fender::components::ListView>();
+        leftContent.order = futils::Ordering::Vertical;
+        futils::Dir modules("./src/App/Extensions");
+        int found = 0;
+        for (auto &file: modules.getContent()) {
+            auto systemName = futils::split(file, '/').back();
+            if ((file.find(".so") == std::string::npos
+                 && file.find(".dll") == std::string::npos)
+                || systemName == "Loader.cpp")
+                continue ;
+            auto *b = &entityManager->smartCreate<fender::entities::Button>();
+            b->borderColor(futils::Gray);
+            b->setBorderVisible(true);
+            auto &bText = b->get<fender::components::Text>();
+            bText.str = systemName;
+            if (bText.str == "Loader.cpp")
+                continue ;
+            bText.style.size = 18;
+            bText.style.font = "earthorbiter.ttf";
+            bText.style.color = futils::Crimson;
+            bText.style.align = futils::Align::Center;
+            bText.style.valign = futils::VAlign::Middle;
+            bText.style.mod = futils::TextModifier::Bold;
+
+            auto &bImg = b->get<fender::components::Image>();
+            bImg.file = "button.png";
+            auto &alterColor = b->attach<fender::components::Color>();
+            alterColor.color = futils::Peacock;
+
+            auto &bTr = b->get<fender::components::Transform>();
+            bTr.size.w = _leftFrame->get<fender::components::Transform>().size.w;
+            bTr.size.h = 1.33;
+
+            auto &bAction = b->get<fender::components::Clickable>();
+            bAction.waitForRelease = true;
+            bAction.func = [this, file](){
+                this->entityManager->loadSystem(file);
+            };
+            leftContent.content.push_back(b);
+            found++;
+        }
+        if (found == 0)
+        {
+            auto *NoData = &entityManager->smartCreate<fender::entities::Button>();
+            NoData->setSize(_leftFrame->get<fender::components::Transform>().size.w, 3);
+            NoData->borderColor(futils::Cadmiumyellow);
+            NoData->setBorderVisible(true);
+            auto &noDataTxt = NoData->get<fender::components::Text>();
+            noDataTxt.str = "No extensions in src/App/Extensions.";
+            noDataTxt.style.size = noDataTxt.str.size() / 2;
+            noDataTxt.style.font = "earthorbiter.ttf";
+            noDataTxt.style.mod = futils::TextModifier::Bold;
+            noDataTxt.style.valign = futils::VAlign::Middle;
+            noDataTxt.style.align = futils::Align::Center;
+            noDataTxt.style.color = futils::White;
+
+            NoData->detach<fender::components::Image>();
+
+            NoData->detach<fender::components::Hoverable>();
+            NoData->detach<fender::components::Clickable>();
+            leftContent.content.push_back(NoData);
+        }
     }
+
     void Loader::run(float) {
         if (!_win) return init();
     }
