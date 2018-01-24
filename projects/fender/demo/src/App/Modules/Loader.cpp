@@ -144,12 +144,17 @@ namespace demo
         bTr.size.h = 1.33;
 
         auto &bAction = b->get<fender::components::Clickable>();
-        bAction.waitForRelease = true;
+        // bAction.waitForRelease = true;
         bAction.func = [this, &leftContent](){
-            auto *field = &entityManager->smartCreate<fender::entities::InputField>();
+            auto *field = &entityManager->smartCreate<fender::entities::InputField>("InputField");
+            auto &fieldStyle = field->get<fender::components::Text>();
+            fieldStyle.style.font = "earthorbiter.ttf";
+            fieldStyle.style.size = 18;
+            fieldStyle.style.color = futils::White;
+            fieldStyle.style.valign = futils::VAlign::Middle;
             auto &tr = field->get<fender::components::Transform>();
             tr.size.w = _leftFrame->get<fender::components::Transform>().size.w;
-            tr.size.h = 2;
+            tr.size.h = 1.5;
             leftContent.content.push_back(field);
         };
         leftContent.content.push_back(b);
@@ -193,7 +198,7 @@ namespace demo
     }
 
     void Loader::init() {
-        _win = &entityManager->smartCreate<Window>(800, 600, "Demo Test", futils::WStyle::Default);
+        _win = &entityManager->smartCreate<Window>(800, 600, "Demo Test", futils::WStyle::Default, futils::Granite);
         _win->setVisible(true);
 
         _cam = &entityManager->smartCreate<Camera>(_win);

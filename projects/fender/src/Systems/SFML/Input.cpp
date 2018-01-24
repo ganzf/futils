@@ -105,7 +105,7 @@ namespace
             // {sf::Keyboard::Key::QuestionMark, futils::Keys::QuestionMark},
             // {sf::Keyboard::Key::ExclamationMark, futils::Keys::ExclamationMark},
             {sf::Keyboard::Key::Comma, futils::Keys::Comma},
-            // {sf::Keyboard::Key::Dot, futils::Keys::Dot},
+            {sf::Keyboard::Key::Period, futils::Keys::Dot},
             // {sf::Keyboard::Key::Percent, futils::Keys::Percent},
             // {sf::Keyboard::Key::Asterisk, futils::Keys::Asterisk},
             {sf::Keyboard::Key::Slash, futils::Keys::Slash},
@@ -167,6 +167,18 @@ namespace fender::systems::SFMLSystems
                     key = sfJoystickToFutilsKeys[event.joystickButton.button];
                 break ;
             }
+            case sf::Event::MouseButtonReleased : {
+                if (sfMouseToFutilsKeys.find(event.mouseButton.button) != sfMouseToFutilsKeys.end())
+                    key = sfMouseToFutilsKeys.at(event.mouseButton.button);
+                if (key == futils::Keys::LButton) {
+                    futils::MouseReleased eventMouseReleased;
+
+                    eventMouseReleased.pos.x = event.mouseButton.x;
+                    eventMouseReleased.pos.y = event.mouseButton.y;
+                    events->send<futils::MouseReleased>(eventMouseReleased);
+                }
+                break ;
+            }
             case sf::Event::MouseButtonPressed : {
                 if (sfMouseToFutilsKeys.find(event.mouseButton.button) != sfMouseToFutilsKeys.end())
                     key = sfMouseToFutilsKeys.at(event.mouseButton.button);
@@ -202,12 +214,14 @@ namespace fender::systems::SFMLSystems
                  k != _keyState.end() ; ++k) {
                 if (k->second == futils::InputState::GoingUp)
                     k->second = futils::InputState::Up;
-                else if (k->second == futils::InputState::GoingDown)
+                if (k->second == futils::InputState::GoingDown)
                     k->second = futils::InputState::Down;
             }
         }
 
-        if (!(_keyState[key] == futils::InputState::Down && state == futils::InputState::GoingDown))
+        if ((_keyState[key] == futils::InputState::Down && state == futils::InputState::GoingDown));
+        else
+
             _keyState[key] = state;
         // frameInputs[futils::InputAction(key, state)] = true;
         for (auto &input: entityManager->get<fender::components::Input>())

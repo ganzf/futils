@@ -126,6 +126,13 @@ namespace futils {
 
     struct InputSequence
     {
+        InputSequence() = default;
+        InputSequence(futils::Keys key) {
+            actions.push_back(InputAction(key, futils::InputState::GoingDown));
+        }
+        InputSequence(futils::Keys key, futils::InputState state) {
+            actions.push_back(InputAction(key, state));
+        }
         std::vector<InputAction> actions;
 
         bool operator==(const InputSequence &other) const

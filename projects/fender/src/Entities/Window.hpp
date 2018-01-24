@@ -6,6 +6,7 @@
 
 # include "fender.hpp"
 # include "Components/Window.hpp"
+# include "Components/Color.hpp"
 
 namespace fender::entities
 {
@@ -14,14 +15,19 @@ namespace fender::entities
     public:
         Window() {
             attach<components::Window>();
+            auto &bg = attach<components::Color>();
+            bg.color = futils::Black;
         }
 
-        Window(int width, int height, std::string const &title = "", futils::WStyle const &style = futils::WStyle::Default) {
+        Window(int width, int height, std::string const &title = "Untitled", futils::WStyle const &style = futils::WStyle::Default, futils::Color color = futils::Granite) {
             auto &win = attach<components::Window>();
             win.size.w = width;
             win.size.h = height;
             win.style = style;
             win.title = title;
+
+            auto &colorCompo = attach<components::Color>();
+            colorCompo.color = color;
         }
 
         ~Window()
