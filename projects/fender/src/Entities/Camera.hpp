@@ -18,9 +18,23 @@ namespace fender::entities {
             attach<components::Camera>();
             attach<components::Children>();
         }
+
+        Camera(fender::entities::Window *win) {
+            auto &transform = get<components::Transform>();
+            transform.position.z = 10;
+            auto &cam = attach<components::Camera>();
+            attach<components::Children>();
+            cam.window = win;
+        }
+
         ~Camera() {
             detach<components::Camera>();
             detach<components::Children>();
+        }
+
+        void setActivated(bool activated) {
+            auto &cam = get<components::Camera>();
+            cam.activated = activated;
         }
     };
 }

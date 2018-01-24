@@ -14,11 +14,10 @@
 
 namespace fender::entities {
     class Image : public GameObject {
-        components::Image *image;
     public:
         Image(std::string const &img, futils::Vec2<float> pos = {0, 0}, futils::Vec2<float> size = {1, 1}) {
-            image = &attach<components::Image>();
-            image->file = img;
+            auto &image = attach<components::Image>();
+            image.file = img;
             setSize(size);
             setPosition(pos);
         }
@@ -27,7 +26,8 @@ namespace fender::entities {
         }
 
         void setImageFile(std::string const &file) {
-            image->file = file;
+            auto &image = get<components::Image>();
+            image.file = file;
         }
     };
 }

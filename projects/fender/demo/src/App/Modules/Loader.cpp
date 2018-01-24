@@ -50,7 +50,6 @@ namespace demo
         input.map[escape] = [this]() {
             events->send<fender::events::Shutdown>();
         };
-
         input.activated = true;
     }
 
@@ -194,37 +193,13 @@ namespace demo
     }
 
     void Loader::init() {
-        // We create the window and bind it to this system.
-        //_win = &entityManager->smartCreate<Window>(1024, 768, futils::WStyle::None);
-        _win = &entityManager->smartCreate<Window>();
-        auto &win = _win->get<fender::components::Window>();
-        auto &bg = _win->attach<fender::components::Color>();
+        _win = &entityManager->smartCreate<Window>(800, 600, "Demo Test", futils::WStyle::Default);
+        _win->setVisible(true);
 
-        bg.color = futils::Granite;
+        _cam = &entityManager->smartCreate<Camera>(_win);
+        _cam->setActivated(true);
 
-        win.size.x = 800;
-        win.size.y = 600;
-        win.style = futils::WStyle::Default;
-        win.visible = true;
-
-        // The camera is told which window to use for rendering.
-        //_cam = &entityManager->smartCreate<Camera>(_win);
-
-        _cam = &entityManager->smartCreate<Camera>();
-        auto &cam = _cam->get<fender::components::Camera>();
-        cam.window = _win;
-        cam.debugMode = false;
-        cam.activated = true;
-        _cam->setPosition(0, 0);
-        // And finally we create a world that will hold basic informations
-        //_world = &entityManager->smartCreate<World>("LoaderWorld", 32);
-
-        _world = &entityManager->smartCreate<World>();
-        auto &world = _world->get<fender::components::World>();
-        world.name = "Loader";
-        world.unit = 32;
-        world.size.w = 100;
-        world.size.h = 100;
+        _world = &entityManager->smartCreate<World>("Loader");
 
         initInputs();
         initInputsCam();

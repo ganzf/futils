@@ -6,4 +6,4 @@ execute_process(
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
 add_subdirectory(projects)
-add_subdirectory(tests)
+#add_subdirectory(tests)
