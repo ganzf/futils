@@ -14,13 +14,11 @@
 
 namespace fender::entities {
     class InputField : public GameObject {
-        components::Editable *_editable{nullptr};
-        components::Text *_text{nullptr};
     public:
         InputField(std::string const &placeholder = "") {
-            _editable = &attach<components::Editable>();
-            _text = &attach<components::Text>();
-            _text->str = placeholder;
+            attach<components::Editable>();
+            auto &text = attach<components::Text>();
+            text.str = placeholder;
         }
         ~InputField(){
             detach<components::Editable>();
