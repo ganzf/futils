@@ -4,6 +4,7 @@
 
 #include "Fysics.hpp"
 #include "RigidBody.hpp"
+#include "Collision.hpp"
 
 namespace fender::systems
 {
@@ -13,6 +14,7 @@ namespace fender::systems
             entityManager->removeSystem(name);
         });
         entityManager->addSystem<FysicsSystems::RigidBody>();
+        entityManager->addSystem<FysicsSystems::Collision>();
         state = Run;
     }
 
