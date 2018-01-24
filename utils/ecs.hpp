@@ -212,6 +212,11 @@ namespace futils
         EntityCreated(T const &entity): entity(entity) { verifType(); }
     };
 
+    struct SystemDestroyed
+    {
+        std::string name;
+    };
+
     class   EntityManager
     {
         using SystemMap = std::unordered_map<std::string, ISystem *>;
@@ -382,7 +387,10 @@ namespace futils
             if (!std::is_base_of<ISystem, System>::value)
                 throw std::logic_error(std::string(typeid(System).name()) + " is not a System");
             auto system = new System(args...);
-            initSystem(*system);
+            if (systemsMap.find(system->getName()) == systemsMap.end())
+                initSystem(*system);
+            else
+                events->send<std::string>("[" + system->getName() + "] already loaded.");
         }
 
         template <typename ...Args>
@@ -459,6 +467,9 @@ namespace futils
                     entitiesDeleted++;
                 }
                 temporaryEntities.erase(name);
+                SystemDestroyed sd;
+                sd.name = name;
+                events->send<SystemDestroyed>(sd);
                 events->send<std::string>("[" + name + "] shutdown. Killed " + std::to_string(entitiesDeleted) + " entities.");
                 counter -= entitiesDeleted;
                 systemsMarkedForErase.pop();

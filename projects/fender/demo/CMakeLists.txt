@@ -2,15 +2,14 @@ cmake_minimum_required(VERSION 3.7)
 set(CMAKE_CXX_STANDARD 17)
 project(demo)
 
+file(GLOB MODULES_SRC ${PROJECT_SOURCE_DIR}/src/App/Modules/*.cpp)
+file(GLOB MODULES_HPP ${PROJECT_SOURCE_DIR}/src/App/Modules/*.hpp)
+
 set(SOURCE_FILES
 		src/main.cpp
-		src/App/App.cpp
-		src/App/Modules/AModule.hpp
-		src/App/Modules/Loader.cpp
-		src/App/Modules/Loader.hpp
-		)
+		src/App/App.cpp)
 
-add_executable(demoExe ${SOURCE_FILES})
+add_executable(demoExe ${SOURCE_FILES} ${MODULES_SRC} ${MODULES_HPP})
 include_directories(include utils ../src)
 set_target_properties(demoExe PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 if (UNIX)

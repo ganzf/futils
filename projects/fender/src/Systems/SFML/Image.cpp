@@ -14,6 +14,7 @@ namespace fender::systems::SFMLSystems
         auto &absolute = entity.get<components::AbsoluteTransform>();
 
         sf::Texture texture = (*_textures)[image.file];
+        texture.setSmooth(true);
         sf::RectangleShape sprite;
         sprite.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
         sprite.setTexture(&texture);

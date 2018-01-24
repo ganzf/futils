@@ -177,6 +177,33 @@ src/App/Modules/Loader.cpp.s:
 	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Loader.cpp.s
 .PHONY : src/App/Modules/Loader.cpp.s
 
+src/App/Modules/SimpleGrid.o: src/App/Modules/SimpleGrid.cpp.o
+
+.PHONY : src/App/Modules/SimpleGrid.o
+
+# target to build an object file
+src/App/Modules/SimpleGrid.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/SimpleGrid.cpp.o
+.PHONY : src/App/Modules/SimpleGrid.cpp.o
+
+src/App/Modules/SimpleGrid.i: src/App/Modules/SimpleGrid.cpp.i
+
+.PHONY : src/App/Modules/SimpleGrid.i
+
+# target to preprocess a source file
+src/App/Modules/SimpleGrid.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/SimpleGrid.cpp.i
+.PHONY : src/App/Modules/SimpleGrid.cpp.i
+
+src/App/Modules/SimpleGrid.s: src/App/Modules/SimpleGrid.cpp.s
+
+.PHONY : src/App/Modules/SimpleGrid.s
+
+# target to generate assembly for a file
+src/App/Modules/SimpleGrid.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/SimpleGrid.cpp.s
+.PHONY : src/App/Modules/SimpleGrid.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -219,6 +246,9 @@ help:
 	@echo "... src/App/Modules/Loader.o"
 	@echo "... src/App/Modules/Loader.i"
 	@echo "... src/App/Modules/Loader.s"
+	@echo "... src/App/Modules/SimpleGrid.o"
+	@echo "... src/App/Modules/SimpleGrid.i"
+	@echo "... src/App/Modules/SimpleGrid.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

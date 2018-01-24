@@ -5,11 +5,29 @@
 #ifndef DEMO_AMODULE_HPP
 #define DEMO_AMODULE_HPP
 
-#include <events.hpp>
+# include "rendering.hpp"
+# include "events.hpp"
 # include "ecs.hpp"
+
+# include "Entities/Window.hpp"
+# include "Entities/Camera.hpp"
+# include "Entities/World.hpp"
+# include "Entities/Image.hpp"
+# include "Entities/Input.hpp"
+# include "Entities/ListView.hpp"
+# include "Entities/TextBox.hpp"
+# include "Entities/InputField.hpp"
 
 namespace demo
 {
+    using Window = fender::entities::Window;
+    using Camera = fender::entities::Camera;
+    using World = fender::entities::World;
+    using Input = fender::entities::Input;
+    using ListView = fender::entities::ListView;
+    using TextBox = fender::entities::TextBox;
+    using Text = fender::entities::Text;
+
     /*
      * AModule is a abstract intermediate class between concrete demo::Modules
      * and futils::ISystem

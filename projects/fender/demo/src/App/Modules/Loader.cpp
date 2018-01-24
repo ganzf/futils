@@ -4,6 +4,7 @@
 
 #include "Components/rigidBody.hpp"
 #include "Loader.hpp"
+#include "SimpleGrid.hpp"
 #include "Dir.hpp"
 
 namespace demo
@@ -41,6 +42,15 @@ namespace demo
         };
     }
     void Loader::initInputs() {
+        addReaction<futils::SystemDestroyed>([this](futils::IMediatorPacket &pkg){
+           auto &packet = futils::Mediator::rebuild<futils::SystemDestroyed>(pkg);
+            if (packet.name == currentDemo)
+            {
+                auto &inputC = _input->get<fender::components::Input>();
+                inputC.activated = true;
+            }
+        });
+
         _input = &entityManager->smartCreate<fender::entities::Input>();
         auto &input = _input->get<fender::components::Input>();
 
@@ -53,7 +63,6 @@ namespace demo
         };
         input.activated = true;
     }
-
     void Loader::loadExtensions()
     {
         auto &rightContent = _rightFrame->get<fender::components::ListView>();
@@ -123,49 +132,33 @@ namespace demo
     void Loader::loadDefaults()
     {
         auto &leftContent = _leftFrame->get<fender::components::ListView>();
-        auto *b = &entityManager->smartCreate<fender::entities::Button>();
-        b->borderColor(futils::Gray);
-        b->setBorderVisible(true);
-        auto &bText = b->get<fender::components::Text>();
-        bText.str = "test";
-        bText.style.size = 18;
-        bText.style.font = "earthorbiter.ttf";
-        bText.style.color = futils::Crimson;
-        bText.style.align = futils::Align::Center;
-        bText.style.valign = futils::VAlign::Middle;
-        bText.style.mod = futils::TextModifier::Bold;
+        auto *Header = &entityManager->smartCreate<fender::entities::Text>("Available Demos");
+        Header->setBorderVisible(true);
+        Header->borderColor(futils::White);
+        auto &headerTxt = Header->get<fender::components::Text>();
+        headerTxt.style.font = "earthorbiter.ttf";
+        headerTxt.style.color = futils::White;
+        headerTxt.style.size = 18;
+        headerTxt.style.valign = futils::VAlign::Middle;
+        headerTxt.style.align = futils::Align::Center;
+        auto &headerTr = Header->get<fender::components::Transform>();
+        headerTr.size.w = _leftFrame->get<fender::components::Transform>().size.w;
+        headerTr.size.h = 1;
+        leftContent.content.push_back(Header);
 
-        auto &bImg = b->get<fender::components::Image>();
-        bImg.file = "button.png";
-        auto &alterColor = b->attach<fender::components::Color>();
-        alterColor.color = futils::Peacock;
-
-        auto &bTr = b->get<fender::components::Transform>();
-        bTr.size.w = _leftFrame->get<fender::components::Transform>().size.w;
-        bTr.size.h = 1.33;
-
-        auto &bAction = b->get<fender::components::Clickable>();
-        // bAction.waitForRelease = true;
-        bAction.func = [this, &leftContent](){
-            auto *field = &entityManager->smartCreate<fender::entities::InputField>("InputField");
-            auto &fieldStyle = field->get<fender::components::Text>();
-            fieldStyle.style.font = "earthorbiter.ttf";
-            fieldStyle.style.size = 18;
-            fieldStyle.style.color = futils::White;
-            fieldStyle.style.valign = futils::VAlign::Middle;
-            auto &tr = field->get<fender::components::Transform>();
-            tr.size.w = _leftFrame->get<fender::components::Transform>().size.w;
-            tr.size.h = 1.5;
-            leftContent.content.push_back(field);
-        };
-        leftContent.content.push_back(b);
+        add("SimpleGrid", [this](){
+            auto &inputC = _input->get<fender::components::Input>();
+            inputC.activated = false;
+            currentDemo = "SimpleGrid";
+            entityManager->addSystem<SimpleGrid>();
+        });
     }
 
     void Loader::initMainFrame() {
         // entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float >{0, 0}, futils::Vec2<float>{10, 10});
         auto &gui = _cam->get<fender::components::Children>();
         _mainFrame = &entityManager->smartCreate<ListView>();
-        _mainFrame->setBorderVisible(true);
+        _mainFrame->setBorderVisible(false);
         _mainFrame->borderColor(futils::Crimson);
         gui.add(*_mainFrame);
         auto &mainSize = _mainFrame->get<fender::components::ChildInfo>();
@@ -174,22 +167,23 @@ namespace demo
         mainSize.relSize.w = 96;
         mainSize.relSize.h = 96;
         auto &mainContent = _mainFrame->get<fender::components::ListView>();
+        mainContent.padding = 0.5;
         mainContent.order = futils::Ordering::Horizontal;
 
         // Add content ...
         // Ajouter relative size ou modifier le systeme avec des booleans ? :/
         _leftFrame = &entityManager->smartCreate<ListView>();
-        _leftFrame->setBorderVisible(true);
+        _leftFrame->setBorderVisible(false);
         _leftFrame->borderColor(futils::White);
         auto &leftRelSize = _leftFrame->attach<fender::components::ViewInfo>();
         leftRelSize.w = 33.333;
         leftRelSize.h = 100;
 
         _rightFrame = &entityManager->smartCreate<ListView>();
-        _rightFrame->setBorderVisible(true);
+        _rightFrame->setBorderVisible(false);
         _rightFrame->borderColor(futils::Greenyellow);
         auto &rightRelSize = _rightFrame->attach<fender::components::ViewInfo>();
-        rightRelSize.w = 100 - leftRelSize.w;
+        rightRelSize.w = 100 - leftRelSize.w - 2;
         rightRelSize.h = 100;
 
         mainContent.content.push_back(_leftFrame);
@@ -197,7 +191,6 @@ namespace demo
         loadExtensions();
         loadDefaults();
     }
-
     void Loader::init() {
         _win = &entityManager->smartCreate<Window>(800, 600, "Demo Test", futils::WStyle::Default, futils::Granite);
         _win->setVisible(true);
@@ -209,22 +202,8 @@ namespace demo
 
         initInputs();
         initInputsCam();
-
-
-
-        /*auto &img = entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>(0, 0),futils::Vec2<float>(3, 3));
-        img.attach<fender::components::rigidBody>();
-
-        auto &img2 = entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>(2, 2),futils::Vec2<float>(2, 2));
-        img2.attach<fender::components::rigidBody>();
-
-        auto &img3 = entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>(-2, -2),futils::Vec2<float>(1, 1));
-        img3.attach<fender::components::rigidBody>();*/
-
-
         initMainFrame();
     }
-
     void Loader::run(float) {
         if (!_win) return init();
     }

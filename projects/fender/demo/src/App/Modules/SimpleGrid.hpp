@@ -5,8 +5,21 @@
 
 #pragma once
 
-class SimpleGrid {
+# include "AModule.hpp"
 
-};
+namespace demo {
+    class SimpleGrid : public AModule {
+        Window *win{nullptr};
+        Camera *camera{nullptr};
+        World *world{nullptr};
+        Input *input{nullptr};
+
+        void init();
+        void update();
+    public:
+        SimpleGrid(): AModule("SimpleGrid") {}
+        void run(float) override;
+    };
+}
 
 
