@@ -195,10 +195,22 @@ namespace futils
         }
     };
 
+    enum TextModifier
+    {
+        None = 0,
+        Italic = 1,
+        Bold = 2,
+        StrikeThrough = 4,
+        Underline = 8
+    };
+
     struct TextStyle {
         std::string font;
         int         size;
         Color       color;
+        Align       align;
+        VAlign      valign;
+        TextModifier mod{TextModifier::None};
     };
 
     static const std::vector<Color> allColors =

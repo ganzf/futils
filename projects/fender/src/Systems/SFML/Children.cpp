@@ -33,6 +33,8 @@ namespace fender::systems::SFMLSystems
                 self.position.y = info.offset.y / 100 * parent.size.h + parent.position.y;
                 self.position.z = parent.position.z;
             }
+            self.size.w = info.relSize.w / 100 * parent.size.w;
+            self.size.h = info.relSize.h / 100 * parent.size.h;
             // TODO : Use info.isGridRelative !
         }
     }

@@ -29,7 +29,7 @@ namespace fender::systems::SFMLSystems
             std::experimental::filesystem::path path{assetDir.c_str()};
             std::string pathFile;
             for (auto &p : std::experimental::filesystem::recursive_directory_iterator(path)) {
-                    
+
                 pathFile = p.path().string();
 
                 std::string file = p.path().string();

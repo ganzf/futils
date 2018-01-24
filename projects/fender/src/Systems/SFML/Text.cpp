@@ -8,6 +8,17 @@
 #include "Camera.hpp"
 #include "AssetLoader.hpp"
 
+namespace
+{
+    std::unordered_map<futils::TextModifier, sf::Text::Style> textModifierToSfStyle = {
+            {futils::TextModifier::None, sf::Text::Style::Regular},
+            {futils::TextModifier::Italic, sf::Text::Style::Italic},
+            {futils::TextModifier::Bold, sf::Text::Style::Bold},
+            {futils::TextModifier::StrikeThrough, sf::Text::Style::StrikeThrough},
+            {futils::TextModifier::Underline, sf::Text::Style::Underlined}
+    };
+}
+
 namespace fender::systems::SFMLSystems
 {
     void Text::renderText(components::Text const &txt, sf::RenderWindow &window)
@@ -20,6 +31,7 @@ namespace fender::systems::SFMLSystems
 
         color << txt.style.color;
         text.setFont((*_fonts)[txt.style.font]);
+        text.setStyle(textModifierToSfStyle[txt.style.mod]);
         if (txt.getEntity().has<components::Editable>())
         {
             auto &edit = txt.getEntity().get<components::Editable>();
@@ -36,8 +48,18 @@ namespace fender::systems::SFMLSystems
             text.setCharacterSize((absolute.size.h / absolute.size.w) / absolute.size.w);
 
         text.setFillColor(color);
-        text.setPosition(sf::Vector2f(absolute.position.x, absolute.position.y));
-
+        float w_pos = absolute.position.x;
+        if (txt.style.align == futils::Align::Center) {
+            w_pos = absolute.position.x + absolute.size.w / 2 - text.getGlobalBounds().width / 2;
+        } else if (txt.style.align == futils::Align::Right) {
+            w_pos = absolute.position.w + absolute.size.w - text.getGlobalBounds().width;
+        }
+        float h_pos = absolute.position.y;
+        if (txt.style.valign == futils::VAlign::Middle)
+            h_pos = absolute.position.y + absolute.size.h / 2 - text.getGlobalBounds().height / 2;
+        else if (txt.style.valign == futils::VAlign::Bottom)
+            h_pos = absolute.position.y + absolute.size.h - text.getGlobalBounds().height / 2;
+        text.setPosition(w_pos, h_pos);
         window.draw(text);
     }
 

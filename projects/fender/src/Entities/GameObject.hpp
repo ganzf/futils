@@ -14,21 +14,17 @@
 
 namespace fender::entities {
     class GameObject : public futils::IEntity {
-        components::GameObject *object{nullptr};
-        components::AbsoluteTransform *absTransform{nullptr};
-        components::Transform *transform;
-        components::Border *border;
 
     public:
         GameObject() {
-            object = &attach<components::GameObject>();
-            transform = &attach<components::Transform>();
-            transform->position.z = 1;
-            absTransform = &attach<components::AbsoluteTransform>();
-            border = &attach<components::Border>();
-            border->color = futils::Indianred;
-            border->thickness = 2;
-            border->visible = true;
+            attach<components::GameObject>();
+            auto &transform = attach<components::Transform>();
+            transform.position.z = 1;
+            attach<components::AbsoluteTransform>();
+            auto &border = attach<components::Border>();
+            border.color = futils::Indianred;
+            border.thickness = 2;
+            border.visible = true;
         }
 
         ~GameObject() {
@@ -41,53 +37,91 @@ namespace fender::entities {
         }
 
         void setSize(float width, float height) {
-            transform->size.x = width;
-            transform->size.y = height;
+            auto &transform = get<components::Transform>();
+            transform.size.w = width;
+            transform.size.h = height;
         }
 
         void setSize(futils::Vec2<float> const &size) {
-            transform->size.x = size.w;
-            transform->size.y = size.h;
+            auto &transform = get<components::Transform>();
+            transform.size.w = size.w;
+            transform.size.h = size.h;
+        }
+
+        futils::Vec2<float> const &getSize() const {
+            auto &transform = get<components::Transform>();
+            return (transform.size);
+        }
+
+        int getWidth() const {
+            auto &transform = get<components::Transform>();
+            return (transform.size.w);
+        }
+
+        int getHeight() const {
+            auto &transform = get<components::Transform>();
+            return (transform.size.h);
         }
 
         void setPosition(float x, float y) {
-            transform->position.x = x;
-            transform->position.y = y;
+            auto &transform = get<components::Transform>();
+            transform.position.x = x;
+            transform.position.y = y;
         }
 
-        Position const &getPosition() const {
-            return (transform->position);
-        }
-
-        int getPositionX() const {
-            return (transform->position.x);
-        }
-
-        int getPositionY() const {
-            return (transform->position.y);
-        }
 
         void setPosition(futils::Vec2<float> const &pos) {
-            transform->position.x = pos.x;
-            transform->position.y = pos.y;
+            auto &transform = get<components::Transform>();
+            transform.position.x = pos.x;
+            transform.position.y = pos.y;
         }
 
         void setPosition(float x, float y, float z) {
-            transform->position.x = x;
-            transform->position.y = y;
-            transform->position.z = z;
+            auto &transform = get<components::Transform>();
+            transform.position.x = x;
+            transform.position.y = y;
+            transform.position.z = z;
         }
 
+        Position const &getPosition() const {
+            auto &transform = get<components::Transform>();
+            return (transform.position);
+        }
+
+        int getPositionX() const {
+            auto &transform = get<components::Transform>();
+            return (transform.position.x);
+        }
+
+        int getPositionY() const {
+            auto &transform = get<components::Transform>();
+            return (transform.position.y);
+        }
+
+        int getPositionZ() const {
+            auto &transform = get<components::Transform>();
+            return (transform.position.z);
+        }
+
+
         void setBorderVisible(bool visible) {
-            border->visible = visible;
+            auto &border = get<components::Border>();
+            border.visible = visible;
         }
 
         void hide() {
-            object->hide();
+            auto &object = get<components::GameObject>();
+            object.hide();
         }
 
         void show() {
-            object->show();
+            auto &object = get<components::GameObject>();
+            object.show();
+        }
+
+        void borderColor(futils::Color c) {
+            auto &border = get<components::Border>();
+            border.color = c;
         }
 
     };

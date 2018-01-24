@@ -16,6 +16,7 @@ namespace fender::entities
 namespace fender::components {
     struct ChildInfo : futils::IComponent {
         vec3f offset;
+        vec3f relSize;
         bool isGridRelative{false};
         futils::IEntity *parent{nullptr};
     };

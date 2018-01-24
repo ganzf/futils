@@ -5,9 +5,13 @@
 
 #pragma once
 
-namespace fender::components {
-    struct ViewInfo {
+#include "ecs.hpp"
 
+namespace fender::components {
+    struct ViewInfo : futils::IComponent {
+        // Ajouter valign, align, etc...
+        float h;
+        float w;
     };
 }
 

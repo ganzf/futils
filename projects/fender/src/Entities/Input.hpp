@@ -19,5 +19,10 @@ namespace fender::entities
         {
             detach<fender::components::Input>();
         }
+
+        void setActivated(bool activated) {
+            auto &input = get<components::Input>();
+            input.activated = activated;
+        }
     };
 }

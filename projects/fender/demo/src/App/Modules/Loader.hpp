@@ -10,7 +10,11 @@
 # include "Entities/World.hpp"
 # include "Entities/Image.hpp"
 # include "Entities/Input.hpp"
+# include "Entities/ListView.hpp"
+# include "Entities/TextBox.hpp"
+# include "Entities/InputField.hpp"
 # include "Components/Color.hpp"
+# include "Components/ViewInfo.hpp"
 # include "AModule.hpp"
 
 namespace demo
@@ -28,16 +32,30 @@ namespace demo
         using Camera = fender::entities::Camera;
         using World = fender::entities::World;
         using Input = fender::entities::Input;
+        using ListView = fender::entities::ListView;
+        using TextBox = fender::entities::TextBox;
 
         Window *_win {nullptr};
         Camera *_cam {nullptr};
         World *_world {nullptr};
         Input *_input {nullptr};
+        // Main container
+        ListView *_mainFrame{nullptr};
+        ListView *_leftFrame{nullptr};
+        // Right side of demo with vertical ordering
+        ListView *_rightFrame{nullptr};
+        // Debug Container
+        ListView *_debug{nullptr};
+        // Demo Selector
+        ListView *_selector{nullptr};
 
         // Simple init function
         void init();
         void initInputs();
         void initInputsCam();
+        void initMainFrame();
+        void loadExtensions();
+        void loadDefaults();
     public:
         Loader() : AModule("Loader") {}
         void run(float) override;
