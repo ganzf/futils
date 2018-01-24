@@ -2,6 +2,7 @@
 // Created by arroganz on 1/23/18.
 //
 
+#include "Components/rigidBody.hpp"
 #include "Loader.hpp"
 #include "Dir.hpp"
 
@@ -208,6 +209,19 @@ namespace demo
 
         initInputs();
         initInputsCam();
+
+
+
+        /*auto &img = entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>(0, 0),futils::Vec2<float>(3, 3));
+        img.attach<fender::components::rigidBody>();
+
+        auto &img2 = entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>(2, 2),futils::Vec2<float>(2, 2));
+        img2.attach<fender::components::rigidBody>();
+
+        auto &img3 = entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>(-2, -2),futils::Vec2<float>(1, 1));
+        img3.attach<fender::components::rigidBody>();*/
+
+
         initMainFrame();
     }
 

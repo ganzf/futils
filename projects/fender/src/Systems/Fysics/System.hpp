@@ -19,6 +19,9 @@ namespace fender::systems::FysicsSystems {
     public:
         System(std::string const &systemName) {
             name = "Fysics/" + systemName;
+            afterBuild = [this]() {
+                __init();
+            };
         }
 
         void run(float) override = 0;
