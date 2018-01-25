@@ -15,6 +15,11 @@ namespace fender::entities
 }
 
 namespace fender::events {
+    struct Alert
+    {
+        std::string what;
+    };
+
     struct Shutdown // A simple message to shutdown every system in the engine.
     {
 

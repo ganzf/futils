@@ -27,13 +27,15 @@ namespace fender::entities {
             border.visible = true;
         }
 
-        ~GameObject() {
+        ~GameObject() override {
             detach<components::GameObject>();
             detach<components::Transform>();
             detach<components::AbsoluteTransform>();
             detach<components::Border>();
-            if (has<components::ChildInfo>())
+            if (has<components::ChildInfo>()) {
                 detach<components::ChildInfo>();
+                std::cout << "Detached childinfo from " << this->getId() << std::endl;
+            }
         }
 
         void setSize(float width, float height) {

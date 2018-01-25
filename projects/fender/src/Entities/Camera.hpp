@@ -30,6 +30,10 @@ namespace fender::entities {
         ~Camera() {
             detach<components::Camera>();
             detach<components::Children>();
+            if (has<components::ChildInfo>()) {
+                std::cout << "Detached childInfo from camera" << std::endl;
+                detach<components::ChildInfo>();
+            }
         }
 
         void setActivated(bool activated) {

@@ -4,7 +4,7 @@
 
 #include "Components/rigidBody.hpp"
 #include "Loader.hpp"
-#include "SimpleGrid.hpp"
+#include "Grid.hpp"
 #include "Dir.hpp"
 
 namespace demo
@@ -63,8 +63,7 @@ namespace demo
         };
         input.activated = true;
     }
-    void Loader::loadExtensions()
-    {
+    void Loader::loadExtensions() {
         auto &rightContent = _rightFrame->get<fender::components::ListView>();
         rightContent.order = futils::Ordering::Vertical;
         futils::Dir modules("./src/App/Extensions");
@@ -103,11 +102,33 @@ namespace demo
             bAction.waitForRelease = true;
             auto *label = &entityManager->smartCreate<fender::entities::Text>(systemName);
             label->setBorderVisible(false);
-            bAction.func = [this, file, &bText, label](){
-                this->entityManager->loadSystem(file);
-                bText.str = "ok";
-                auto &labelColor = label->get<fender::components::Text>();
-                labelColor.style.color = futils::Green;
+            bAction.func = [this, file, &bText, label, systemName](){
+                static auto bState = 0;
+                static std::string sysName = "";
+                auto &labelC = label->get<fender::components::Text>();
+                if (bState == 0) {
+                    futils::LoadStatus status = this->entityManager->loadSystem(file);
+                    if (!status.loaded) {
+                        fender::events::Alert alert;
+                        alert.what = "Failed to load extension in " + file;
+                        events->send<fender::events::Alert>(alert);
+                        labelC.style.color = futils::Crimson;
+                        return ;
+                    } else {
+                        sysName = status.sysName;
+                        bText.str = "X";
+                        bText.style.color = futils::Crimson;
+                        labelC.style.color = futils::Green;
+                        labelC.str = systemName + " : [" + sysName + "]";
+                        bState = 1;
+                    }
+                } else {
+                    this->entityManager->removeSystem(sysName);
+                    bText.str = "load";
+                    bText.style.color = futils::White;
+                    labelC.style.color = futils::White;
+                    bState = 0;
+                }
             };
 
             auto *list = &entityManager->smartCreate<fender::entities::ListView>();
@@ -115,7 +136,7 @@ namespace demo
             listC.order = futils::Ordering::Horizontal;
 
             auto &labelTr = label->get<fender::components::Transform>();
-            labelTr.size.w = 6;
+            labelTr.size.w = 12;
             labelTr.size.h = 1.33;
             listC.content.push_back(label);
             listC.content.push_back(b);
@@ -148,9 +169,7 @@ namespace demo
             rightContent.content.push_back(NoData);
         }
     }
-
-    void Loader::loadDefaults()
-    {
+    void Loader::loadDefaults() {
         auto &leftContent = _leftFrame->get<fender::components::ListView>();
         auto *Header = &entityManager->smartCreate<fender::entities::Text>("Available Demos");
         Header->setBorderVisible(true);
@@ -166,14 +185,13 @@ namespace demo
         headerTr.size.h = 1;
         leftContent.content.push_back(Header);
 
-        add("SimpleGrid", [this](){
+        add("Grid", [this](){
             auto &inputC = _input->get<fender::components::Input>();
             inputC.activated = false;
-            currentDemo = "SimpleGrid";
-            entityManager->addSystem<SimpleGrid>();
+            currentDemo = "Grid";
+            entityManager->addSystem<Grid>();
         });
     }
-
     void Loader::initMainFrame() {
         // entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float >{0, 0}, futils::Vec2<float>{10, 10});
         auto &gui = _cam->get<fender::components::Children>();

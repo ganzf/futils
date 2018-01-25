@@ -62,7 +62,6 @@ namespace futils
         }
     public:
         virtual ~ISystem() {
-            std::cout << "Forgetting " << this->name << " in events" << std::endl;
             events->erase(this);
         }
         virtual void run(float elapsed = 0) = 0;
@@ -134,6 +133,10 @@ namespace futils
         std::queue<std::pair<IComponent *, std::function<void()>>> lateinitComponents;
         futils::Mediator *events{nullptr};
         EntityManager *entityManager{nullptr};
+
+        void setId(int id) {
+            _id = id;
+        }
         // END.
         IEntity() {
             this->_id = futils::UID::get();
@@ -216,9 +219,15 @@ namespace futils
     {
         std::string name;
     };
+    struct LoadStatus
+    {
+        bool loaded{false};
+        std::string sysName{""};
+    };
 
     class   EntityManager
     {
+        unsigned int idCount{0};
         using SystemMap = std::unordered_map<std::string, ISystem *>;
         using SystemQueue = futils::Queue<std::string>;
         using ComponentContainer = std::unordered_multimap<futils::type_index, IComponent *>;
@@ -251,6 +260,8 @@ namespace futils
 
         // Extensions (ISystem)
         DynamicLibaryContainer extensions;
+        // Extension SystemNames
+        std::unordered_map<std::string, std::string> extensionFiles;
 
         template <typename T>
         void verifIsEntity()
@@ -262,6 +273,7 @@ namespace futils
         template <typename T>
         void initEntity(T &entity)
         {
+            entity.setId(idCount++);
             entity.events = events;
             entity.entityManager = this;
             entity.onExtension = [this](IComponent &compo) {
@@ -295,6 +307,7 @@ namespace futils
             }
             entity.afterBuild();
             counter++;
+            std::cout << this << ": Created " << typeid(T).name() << " with id " << entity.getId() << std::endl;
         }
 
         bool destroyFromSaved(IEntity &entity)
@@ -360,7 +373,7 @@ namespace futils
             const auto &name = currentSystem->getName();
             temporaryEntities.insert(std::pair<std::string, IEntity *>(name, entity));
             temporaryEntitiesRecords[entity] = name;
-            std::cout << "[" << name << "] created " << typeid(T).name() << std::endl;
+            std::cout << "[" << name << "] created " << typeid(T).name() << " with id " << entity->getId() << std::endl;
             return *entity;
         }
 
@@ -394,16 +407,20 @@ namespace futils
         }
 
         template <typename ...Args>
-        bool loadSystem(std::string const &path, Args ...args)
+        LoadStatus loadSystem(std::string const &path, Args ...args)
         {
+            LoadStatus ret;
             if (extensions.find(path) != extensions.end()) {
                 std::cerr << path << " already loaded." << std::endl;
-                return false;
+                return ret;
             }
             extensions[path] = std::make_unique<Dloader>(Dloader(path));
             auto system = extensions[path]->build<ISystem>(args...);
             initSystem(*system);
-            return true;
+            ret.loaded = true;
+            ret.sysName = system->getName();
+            extensionFiles[ret.sysName] = path;
+            return ret;
         };
 
         void removeSystem(std::string const &systemName)
@@ -462,6 +479,7 @@ namespace futils
                 for (auto it = range.first; it != range.second; it++) {
                     if (temporaryEntitiesRecords.find(it->second) == temporaryEntitiesRecords.end())
                         continue ;
+                    std::cout << "Destructor of " << it->second->getId() << ":" << std::endl;
                     delete it->second;
                     temporaryEntitiesRecords.erase(it->second);
                     entitiesDeleted++;
@@ -475,6 +493,10 @@ namespace futils
                 systemsMarkedForErase.pop();
                 delete system;
                 afterDeath(this);
+                if (extensionFiles.find(name) != extensionFiles.end()) {
+                    extensions.erase(extensionFiles[name]);
+                    extensionFiles.erase(name);
+                }
             }
         }
 

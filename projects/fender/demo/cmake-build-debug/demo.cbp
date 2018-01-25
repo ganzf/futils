@@ -94,16 +94,16 @@
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/AModule.hpp">
 			<Option target="demoExe"/>
 		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Grid.cpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Grid.hpp">
+			<Option target="demoExe"/>
+		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Loader.cpp">
 			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Loader.hpp">
-			<Option target="demoExe"/>
-		</Unit>
-		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/SimpleGrid.cpp">
-			<Option target="demoExe"/>
-		</Unit>
-		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/SimpleGrid.hpp">
 			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/main.cpp">

@@ -8,6 +8,7 @@
 # include "Components/Color.hpp"
 # include "Components/ViewInfo.hpp"
 # include "AModule.hpp"
+# include "ecs.hpp"
 
 namespace demo
 {

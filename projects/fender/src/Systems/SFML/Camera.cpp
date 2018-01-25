@@ -157,6 +157,8 @@ namespace fender::systems::SFMLSystems
         for (auto &go: gameObjects)
         {
             auto &entity = go->getEntity();
+            if (!entity.has<components::Transform>())
+                throw std::logic_error("Game object missing transform component in [Camera].");
             auto &transform = entity.get<components::Transform>();
             layout.insert(std::pair<int, futils::IEntity *>(transform.position.z, &entity));
         }
