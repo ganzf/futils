@@ -36,9 +36,8 @@ if (UNIX)
 elseif(WIN32)
     add_compile_options(/std:c++latest)
 endif()
-
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 add_library(fender STATIC ${SOURCE_FILES})
-
 if (UNIX)
 	target_link_libraries(fender sfml-system sfml-window sfml-audio sfml-graphics)
 endif (UNIX)

@@ -28,6 +28,7 @@ namespace fender::systems::SFMLSystems
         };
         int state{Init};
 
+        std::unordered_map<std::string, fender::components::Camera *> knownCameras;
         std::unordered_map<futils::IEntity *, sf::RenderWindow *> camToWindow;
         std::unordered_multimap<int, futils::IEntity *> layout;
         void renderWindow(futils::IEntity &cam);

@@ -12,6 +12,21 @@ namespace demo
         auto &winC = win->get<fender::components::Window>();
         winC.visible = true;
 
+        world = &entityManager->smartCreate<World>();
+        auto &worldC = world->get<fender::components::World>();
+        worldC.name = "SimpleGridWorld";
+        worldC.unit = 32;
+
+        camera = &entityManager->smartCreate<Camera>();
+        auto &cameraC = camera->get<fender::components::Camera>();
+        cameraC.window = win;
+        cameraC.activated = true;
+        cameraC.debugMode = true;
+        cameraC.name = "Default";
+        auto &cameraPos = camera->get<fender::components::Transform>();
+        cameraPos.position.x = 10;
+        cameraPos.position.y = 10;
+
         input = &entityManager->smartCreate<Input>();
         auto &inputC = input->get<fender::components::Input>();
         inputC.activated = true;

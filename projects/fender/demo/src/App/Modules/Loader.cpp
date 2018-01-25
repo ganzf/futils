@@ -75,11 +75,12 @@ namespace demo
                  && file.find(".dll") == std::string::npos)
                 || systemName == "Loader.cpp")
                 continue ;
+
             auto *b = &entityManager->smartCreate<fender::entities::Button>();
             b->borderColor(futils::Gray);
             b->setBorderVisible(true);
             auto &bText = b->get<fender::components::Text>();
-            bText.str = systemName;
+            bText.str = "Load";
             if (bText.str == "Loader.cpp")
                 continue ;
             bText.style.size = 18;
@@ -95,15 +96,34 @@ namespace demo
             alterColor.color = futils::Peacock;
 
             auto &bTr = b->get<fender::components::Transform>();
-            bTr.size.w = _rightFrame->get<fender::components::Transform>().size.w;
+            bTr.size.w = 2;
             bTr.size.h = 1.33;
 
             auto &bAction = b->get<fender::components::Clickable>();
             bAction.waitForRelease = true;
-            bAction.func = [this, file](){
+            auto *label = &entityManager->smartCreate<fender::entities::Text>(systemName);
+            label->setBorderVisible(false);
+            bAction.func = [this, file, &bText, label](){
                 this->entityManager->loadSystem(file);
+                bText.str = "ok";
+                auto &labelColor = label->get<fender::components::Text>();
+                labelColor.style.color = futils::Green;
             };
-            rightContent.content.push_back(b);
+
+            auto *list = &entityManager->smartCreate<fender::entities::ListView>();
+            auto &listC = list->get<fender::components::ListView>();
+            listC.order = futils::Ordering::Horizontal;
+
+            auto &labelTr = label->get<fender::components::Transform>();
+            labelTr.size.w = 6;
+            labelTr.size.h = 1.33;
+            listC.content.push_back(label);
+            listC.content.push_back(b);
+            auto &listTr = list->get<fender::components::Transform>();
+            listTr.size.w = 8;
+            listTr.size.h = 1.33;
+            list->setBorderVisible(false);
+            rightContent.content.push_back(list);
             found++;
         }
         if (found == 0)

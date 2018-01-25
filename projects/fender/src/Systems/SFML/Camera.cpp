@@ -25,6 +25,14 @@ namespace fender::systems::SFMLSystems
             transform.size.w = packet.window->getSize().x / unit;
             transform.size.h = packet.window->getSize().y / unit;
         });
+        addReaction<fender::events::RequestCamera>([this](futils::IMediatorPacket &pkg){
+            auto &packet = futils::Mediator::rebuild<fender::events::RequestCamera>(pkg);
+            auto callback = packet.getCallback();
+            if (knownCameras.find(packet.getName()) == knownCameras.end())
+                return ;
+            auto *cam = static_cast<fender::entities::Camera *>(&knownCameras[packet.getName()]->getEntity());
+            callback(cam);
+        });
         phase = Run;
     }
 
@@ -126,16 +134,17 @@ namespace fender::systems::SFMLSystems
     }
 
     void Camera::renderEachCam() {
-
         auto cameras = entityManager->get<components::Camera>();
         auto worlds = entityManager->get<components::World>();
 
         if (worlds.empty())
             return ;
         auto &world = worlds.front();
+        knownCameras.clear();
         for (auto &cam: cameras)
         {
             auto &entity = cam->getEntity();
+            knownCameras[cam->name] = cam;
             if (cam->activated && cam->window) {
                 renderCam(entity, *cam, *world);
             }
