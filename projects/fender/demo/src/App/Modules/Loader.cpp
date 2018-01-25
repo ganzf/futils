@@ -4,10 +4,11 @@
 
 #include "Components/rigidBody.hpp"
 #include "Loader.hpp"
+#include "Text.hpp"
 #include "Grid.hpp"
 #include "Dir.hpp"
 
-namespace demo
+namespace demo::systems
 {
     void Loader::initInputsCam() {
         auto &input = _input->get<fender::components::Input>();
@@ -188,9 +189,16 @@ namespace demo
         add("Grid", [this](){
             auto &inputC = _input->get<fender::components::Input>();
             inputC.activated = false;
-            currentDemo = "Grid";
-            entityManager->addSystem<Grid>();
-        });
+            currentDemo = "Grid (Demo)";
+            fender::events::ChangeGridColor cgc;
+            entityManager->addSystem<systems::Grid>();
+        }, futils::Crimson);
+        add("Text", [this](){
+            auto &inputC = _input->get<fender::components::Input>();
+            inputC.activated = false;
+            currentDemo = "Text (Demo)";
+            entityManager->addSystem<systems::Text>();
+        }, futils::Green);
     }
     void Loader::initMainFrame() {
         // entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float >{0, 0}, futils::Vec2<float>{10, 10});

@@ -7,7 +7,7 @@
 
 # include "AModule.hpp"
 
-namespace demo {
+namespace demo::systems {
     class Grid : public AModule {
         Window *win{nullptr};
         Camera *camera{nullptr};
@@ -17,7 +17,7 @@ namespace demo {
         void init();
         void update();
     public:
-        Grid(): AModule("Grid") {}
+        Grid(): AModule("Grid (Demo)") {}
         void run(float) override;
     };
 }

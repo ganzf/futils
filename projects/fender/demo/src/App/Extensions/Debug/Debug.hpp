@@ -19,6 +19,12 @@ public:
     Debug() {
         name = "Debug";
     }
+    ~Debug() {
+        auto cams = entityManager->get<fender::components::Camera>();
+        for (auto &cam: cams){
+            cam->debugMode = false;
+        }
+    }
     void run(float) override;
 };
 

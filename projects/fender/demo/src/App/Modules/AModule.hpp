@@ -27,7 +27,10 @@ namespace demo
     using ListView = fender::entities::ListView;
     using TextBox = fender::entities::TextBox;
     using Text = fender::entities::Text;
+}
 
+namespace demo::systems
+{
     /*
      * AModule is a abstract intermediate class between concrete demo::Modules
      * and futils::ISystem

@@ -10,9 +10,8 @@
 # include "AModule.hpp"
 # include "ecs.hpp"
 
-namespace demo
+namespace demo::systems
 {
-
     /*
      * Loader is the first module of the demo
      * It will create a small window with a demo-selector list.
@@ -46,7 +45,7 @@ namespace demo
         void loadExtensions();
         void loadDefaults();
 
-        void add(std::string const &label, std::function<void()> func)
+        void add(std::string const &label, std::function<void()> func, futils::Color filter = futils::White)
         {
             auto &leftContent = _leftFrame->get<fender::components::ListView>();
             auto *button = &entityManager->smartCreate<fender::entities::Button>();
@@ -54,7 +53,7 @@ namespace demo
             button->borderColor(futils::Sandybrown);
             auto &buttonImg = button->get<fender::components::Image>();
             auto &buttonColor = button->attach<fender::components::Color>();
-            buttonColor.color = futils::Ivoryblack;
+            buttonColor.color = filter;
             buttonImg.file = "button.jpg";
             auto &buttonTxt = button->get<fender::components::Text>();
             buttonTxt.str = label;

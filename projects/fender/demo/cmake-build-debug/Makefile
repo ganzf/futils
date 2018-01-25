@@ -204,6 +204,33 @@ src/App/Modules/Loader.cpp.s:
 	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Loader.cpp.s
 .PHONY : src/App/Modules/Loader.cpp.s
 
+src/App/Modules/Text.o: src/App/Modules/Text.cpp.o
+
+.PHONY : src/App/Modules/Text.o
+
+# target to build an object file
+src/App/Modules/Text.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Text.cpp.o
+.PHONY : src/App/Modules/Text.cpp.o
+
+src/App/Modules/Text.i: src/App/Modules/Text.cpp.i
+
+.PHONY : src/App/Modules/Text.i
+
+# target to preprocess a source file
+src/App/Modules/Text.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Text.cpp.i
+.PHONY : src/App/Modules/Text.cpp.i
+
+src/App/Modules/Text.s: src/App/Modules/Text.cpp.s
+
+.PHONY : src/App/Modules/Text.s
+
+# target to generate assembly for a file
+src/App/Modules/Text.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Text.cpp.s
+.PHONY : src/App/Modules/Text.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -249,6 +276,9 @@ help:
 	@echo "... src/App/Modules/Loader.o"
 	@echo "... src/App/Modules/Loader.i"
 	@echo "... src/App/Modules/Loader.s"
+	@echo "... src/App/Modules/Text.o"
+	@echo "... src/App/Modules/Text.i"
+	@echo "... src/App/Modules/Text.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

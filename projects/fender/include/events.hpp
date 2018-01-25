@@ -5,6 +5,7 @@
 #ifndef FENDER_EVENTS_HPP
 #define FENDER_EVENTS_HPP
 
+# include "rendering.hpp"
 # include "ecs.hpp"
 # include "mediator.hpp"
 # include "math.hpp"
@@ -18,6 +19,11 @@ namespace fender::events {
     struct Alert
     {
         std::string what;
+    };
+
+    struct ChangeGridColor
+    {
+        futils::Color color;
     };
 
     struct Shutdown // A simple message to shutdown every system in the engine.

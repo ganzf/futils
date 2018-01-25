@@ -4,10 +4,9 @@
 
 #include "Grid.hpp"
 
-namespace demo
+namespace demo::systems
 {
-    void Grid::init()
-    {
+    void Grid::init() {
         win = &entityManager->smartCreate<Window>(800, 600, "[Grid]");
         auto &winC = win->get<fender::components::Window>();
         winC.visible = true;
@@ -21,7 +20,6 @@ namespace demo
         auto &cameraC = camera->get<fender::components::Camera>();
         cameraC.window = win;
         cameraC.activated = true;
-        cameraC.debugMode = true;
         cameraC.name = "Default";
         auto &cameraPos = camera->get<fender::components::Transform>();
         cameraPos.position.x = 10;
@@ -34,12 +32,9 @@ namespace demo
             entityManager->removeSystem(name);
         };
     }
-
-    void Grid::update()
-    {
+    void Grid::update() {
 
     }
-
     void Grid::run(float) {
         switch (state) {
             case 0:

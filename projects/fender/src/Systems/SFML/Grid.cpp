@@ -31,6 +31,8 @@ namespace fender::systems::SFMLSystems {
         while (x < window.getSize().x) {
             vertical[0].position.x = x;
             vertical[1].position.x = x;
+            vertical[0].color << color;
+            vertical[1].color << color;
             window.draw(vertical, 2, sf::Lines);
             x += world->unit;
         }
@@ -38,6 +40,8 @@ namespace fender::systems::SFMLSystems {
         {
             horizontal[0].position.y  = y;
             horizontal[1].position.y = y;
+            horizontal[1].color << color;
+            horizontal[0].color << color;
             window.draw(horizontal, 2, sf::Lines);
             y += world->unit;
         }
@@ -46,6 +50,10 @@ namespace fender::systems::SFMLSystems {
     void Grid::init()
     {
         __init();
+        addReaction<events::ChangeGridColor>([this](futils::IMediatorPacket &pkg){
+            auto &packet = futils::Mediator::rebuild<events::ChangeGridColor>(pkg);
+            this->color = packet.color;
+        });
         addReaction<AllLayersRendered>([this](futils::IMediatorPacket &pkg){
             auto &packet = futils::Mediator::rebuild<AllLayersRendered>(pkg);
             if (!packet.window || !packet.camData)

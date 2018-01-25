@@ -15,7 +15,7 @@ demo::App::App(int, char *argv[]):
 int demo::App::start() {
     if (engine->start() != 0)
         return -1;
-    engine->addSystem<Loader>();
+    engine->addSystem<systems::Loader>();
     return 0;
 }
 

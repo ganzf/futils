@@ -106,6 +106,12 @@
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Loader.hpp">
 			<Option target="demoExe"/>
 		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Text.cpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Text.hpp">
+			<Option target="demoExe"/>
+		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/main.cpp">
 			<Option target="demoExe"/>
 		</Unit>
