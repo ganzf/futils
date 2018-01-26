@@ -31,6 +31,15 @@ namespace demo::systems
         inputC.map[futils::Keys::Escape] = [this](){
             entityManager->removeSystem(name);
         };
+
+        auto &gui = camera->get<fender::components::Children>();
+        auto *info = &entityManager->smartCreate<demo::Text>("You could show input fields and TextBox maybe ?");
+        gui.add(*info);
+        auto &infoPos = info->get<fender::components::ChildInfo>();
+        infoPos.offset.x = 5;
+        infoPos.offset.y = 5;
+        infoPos.relSize.w = 90;
+        infoPos.relSize.h = 10;
     }
     void AdvancedGUI::update() {
 
