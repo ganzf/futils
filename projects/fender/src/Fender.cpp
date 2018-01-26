@@ -27,8 +27,8 @@ fender::Fender::Fender(std::string const &arg0) {
     entityManager = std::make_unique<futils::EntityManager>();
     events = std::make_unique<futils::Mediator>();
     entityManager->provideMediator(*events);
-//    futils::SigHandler &sig = futils::SigHandler::inst();
-//    sig.set(SIGINT, onSigint);
+    futils::SigHandler &sig = futils::SigHandler::inst();
+    sig.set(SIGINT, onSigint);
 }
 
 void fender::Fender::loadSystemDir(std::string const &path)
