@@ -19,12 +19,13 @@ namespace fender::entities {
             attach<components::Children>();
         }
 
-        Camera(fender::entities::Window *win) {
+        Camera(fender::entities::Window *win, std::string const &name = "Default") {
             auto &transform = get<components::Transform>();
             transform.position.z = 10;
             auto &cam = attach<components::Camera>();
             attach<components::Children>();
             cam.window = win;
+            cam.name = name;
         }
 
         ~Camera() {
@@ -40,6 +41,17 @@ namespace fender::entities {
             auto &cam = get<components::Camera>();
             cam.activated = activated;
         }
+
+        void setWindow(fender::entities::Window *win) {
+            auto &cam = get<components::Camera>();
+            cam.window = win;
+        }
+
+        void setName(std::string const &name) {
+            auto &cam = get<components::Camera>();
+            cam.name = name;
+        }
+
     };
 }
 
