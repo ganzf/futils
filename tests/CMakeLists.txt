@@ -12,4 +12,9 @@ set(SOURCES
   )
 add_executable(tests ${SOURCES})
 include_directories(${PROJECT_SOURCE_DIR}/utils)
-target_link_libraries(tests criterion pthread dl)
+
+if(UNIX)
+    target_link_libraries(tests criterion pthread dl)
+elseif(WIN32)
+    target_link_libraries(tests lib/criterion.lib)
+endif()

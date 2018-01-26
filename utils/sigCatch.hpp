@@ -10,6 +10,7 @@
 
 namespace futils
 {
+#ifdef __unix__
     // Singleton Pattern for single interaction with the Signal API
     class SigHandler
     {
@@ -61,6 +62,24 @@ namespace futils
             return signame + std::string("\t is handled by ") + setHandlers[sig];
         }
     };
+#elif _WIN32
+    class SigHandler
+    {
+        SigHandler() {
+        }
+    public:
+        static SigHandler &inst() {
+        }
+
+        void set(int sig, void (*func)(int),
+                 std::string const &name = "undefined")
+        {
+        }
+
+        std::string get(int sig) {
+        }
+    };
+#endif
 }
 
 #endif //TESTS_SIGCATCH_H
