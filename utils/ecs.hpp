@@ -30,18 +30,22 @@ namespace futils
     public:
         virtual ~IComponent() {}
         // Friend of EntityManager - Very important - fake CRTP
-        void setTypeindex(futils::type_index index) {
+        void setTypeindex(futils::type_index index) noexcept {
             _typeindex = index;
         }
         // END
-        void setEntity(IEntity &ent) {
+        void setEntity(IEntity &ent) noexcept {
             __entity = &ent;
         }
         IEntity &getEntity() const {
             return *__entity;
         }
-        futils::type_index getTypeindex() const {
+        futils::type_index getTypeindex() const noexcept {
             return _typeindex;
+        }
+        template <typename Compo>
+        Compo &get() const {
+            return this->getEntity().get<Compo>();
         }
     };
 
