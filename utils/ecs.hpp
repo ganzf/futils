@@ -43,10 +43,6 @@ namespace futils
         futils::type_index getTypeindex() const noexcept {
             return _typeindex;
         }
-        template <typename Compo>
-        Compo &get() const {
-            return this->getEntity().get<Compo>();
-        }
     };
 
     class   ISystem
