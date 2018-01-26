@@ -4,12 +4,13 @@
 
 #include <Components/AbsoluteTransform.hpp>
 #include <Components/Border.hpp>
+#include <Components/Image.hpp>
 #include "Collision.hpp"
 
 namespace fender::systems::FysicsSystems {
 
     void Collision::detectCollisions() const {
-        auto rigidBody = entityManager->get<components::rigidBody>();
+        auto rigidBody = entityManager->get<components::Image>();
 
         unsigned int i = 0;
 
@@ -37,14 +38,17 @@ namespace fender::systems::FysicsSystems {
                     pkg.second = &rigidBody[j]->getEntity();
 
                     events->send<fender::events::Collision>(pkg);
-
-        /*            if (rigidBody[i]->getEntity().has<components::Border>()) {
+                    return ;
+/*
+                    if (rigidBody[i]->getEntity().has<components::Border>()) {
                         rigidBody[i]->getEntity().get<components::Border>().color = futils::Blueviolet;
                         rigidBody[i]->getEntity().get<components::Border>().thickness = 4;
+                        rigidBody[i]->getEntity().get<components::Border>().visible = true;
                     }
                     if (rigidBody[j]->getEntity().has<components::Border>()) {
                         rigidBody[j]->getEntity().get<components::Border>().color = futils::Blueviolet;
                         rigidBody[j]->getEntity().get<components::Border>().thickness = 4;
+                        rigidBody[j]->getEntity().get<components::Border>().visible = true;
                     }*/
                 }
 

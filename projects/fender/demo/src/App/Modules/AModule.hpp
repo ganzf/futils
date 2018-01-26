@@ -17,6 +17,7 @@
 # include "Entities/ListView.hpp"
 # include "Entities/TextBox.hpp"
 # include "Entities/InputField.hpp"
+# include "Components/rigidBody.hpp"
 
 namespace demo
 {
