@@ -7,6 +7,10 @@
 #include "Text.hpp"
 #include "Grid.hpp"
 #include "Dir.hpp"
+#include "Menu.hpp"
+#include "Collision.hpp"
+#include "Runner.hpp"
+#include "AdvancedGUI.hpp"
 
 namespace demo::systems
 {
@@ -199,6 +203,30 @@ namespace demo::systems
             currentDemo = "Text (Demo)";
             entityManager->addSystem<systems::Text>();
         }, futils::Green);
+        add("Menu", [this](){
+            auto &inputC = _input->get<fender::components::Input>();
+            inputC.activated = false;
+            currentDemo = "Menu (Demo)";
+            entityManager->addSystem<systems::Menu>();
+        }, futils::Lightblue);
+        add("Advanced gui", [this](){
+            auto &inputC = _input->get<fender::components::Input>();
+            inputC.activated = false;
+            currentDemo = "AdvancedGUI";
+            entityManager->addSystem<systems::AdvancedGUI>();
+        }, futils::Green);
+        add("Collision", [this](){
+            auto &inputC = _input->get<fender::components::Input>();
+            inputC.activated = false;
+            currentDemo = "Collision (Demo)";
+            entityManager->addSystem<systems::Collision>();
+        }, futils::Goldenrod);
+        add("Runner", [this](){
+            auto &inputC = _input->get<fender::components::Input>();
+            inputC.activated = false;
+            currentDemo = "Runner";
+            entityManager->addSystem<systems::Runner>();
+        }, futils::Mediumvioletred);
     }
     void Loader::initMainFrame() {
         // entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float >{0, 0}, futils::Vec2<float>{10, 10});

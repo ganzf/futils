@@ -12,6 +12,7 @@ namespace fender::components {
         bool hasFocus{false};
         std::function<void()> onFocus{[](){}};
         std::function<void()> onFocusLost{[](){}};
+        int index{0};
     };
 }
 

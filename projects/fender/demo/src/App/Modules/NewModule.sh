@@ -6,8 +6,8 @@ read -p "Is that right? [y/N] " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo
-    cp .template.cpp $1.cpp
-    cp .template.hpp $1.hpp
+    cp .templateCPP $1.cpp
+    cp .templateHPP $1.hpp
     echo "Replacing template elements..."
     sed -i s/_T_ARG1/"$1"/g $1.cpp
     sed -i s/_T_ARG1/"$1"/g $1.hpp

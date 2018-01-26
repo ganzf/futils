@@ -56,10 +56,26 @@ namespace {
             {futils::Keys::Colon, ':'},
             {futils::Keys::Dash, '-'},
     };
+
     std::unordered_map<futils::Keys, std::function<void(std::string &)>> advancedKeys = {
             {futils::Keys::Backspace, [](std::string &str){
-                str = str.substr(0, str.size() - 1);}
-            },
+                str = str.substr(0, str.size() - 1);
+            }},
+    };
+
+    std::unordered_map<futils::Keys, std::function<void(fender::components::Editable &)>> indexModifiers = {
+            {futils::Keys::ArrowLeft, [](fender::components::Editable &editable){
+                if (editable.index != 0)
+                    editable.index--;
+            }},
+            {futils::Keys::ArrowLeft, [](fender::components::Editable &editable){
+                auto &str = editable.getEntity().get<fender::components::Text>().str;
+                if (editable.index < (int)(str.size())) {
+                    editable.index += 1;
+                } else {
+                    editable.index = str.size();
+                }
+            }},
     };
 }
 
@@ -71,6 +87,7 @@ namespace fender::entities {
     public:
         InputField(std::string const &placeholder = "") {
             _editable = &attach<components::Editable>();
+
             _editable->onFocus = [this](){
                 this->_inputs->activated = true;
                 this->setBorderVisible(true);
@@ -87,7 +104,10 @@ namespace fender::entities {
             _inputs->name = "SomeInputField";
             for (auto &pair: keys) {
                 char c = pair.second;
-                _inputs->map[futils::InputSequence(pair.first)] = [this, c](){_text->str += c;};
+                _inputs->map[futils::InputSequence(pair.first)] = [this, c](){
+                    _text->str += c;
+                    _editable->index++;
+                };
             }
             for (auto &pair: advancedKeys) {
                 auto func = pair.second;

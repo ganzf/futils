@@ -150,6 +150,60 @@ src/App/App.cpp.s:
 	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/App.cpp.s
 .PHONY : src/App/App.cpp.s
 
+src/App/Modules/AdvancedGUI.o: src/App/Modules/AdvancedGUI.cpp.o
+
+.PHONY : src/App/Modules/AdvancedGUI.o
+
+# target to build an object file
+src/App/Modules/AdvancedGUI.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/AdvancedGUI.cpp.o
+.PHONY : src/App/Modules/AdvancedGUI.cpp.o
+
+src/App/Modules/AdvancedGUI.i: src/App/Modules/AdvancedGUI.cpp.i
+
+.PHONY : src/App/Modules/AdvancedGUI.i
+
+# target to preprocess a source file
+src/App/Modules/AdvancedGUI.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/AdvancedGUI.cpp.i
+.PHONY : src/App/Modules/AdvancedGUI.cpp.i
+
+src/App/Modules/AdvancedGUI.s: src/App/Modules/AdvancedGUI.cpp.s
+
+.PHONY : src/App/Modules/AdvancedGUI.s
+
+# target to generate assembly for a file
+src/App/Modules/AdvancedGUI.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/AdvancedGUI.cpp.s
+.PHONY : src/App/Modules/AdvancedGUI.cpp.s
+
+src/App/Modules/Collision.o: src/App/Modules/Collision.cpp.o
+
+.PHONY : src/App/Modules/Collision.o
+
+# target to build an object file
+src/App/Modules/Collision.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Collision.cpp.o
+.PHONY : src/App/Modules/Collision.cpp.o
+
+src/App/Modules/Collision.i: src/App/Modules/Collision.cpp.i
+
+.PHONY : src/App/Modules/Collision.i
+
+# target to preprocess a source file
+src/App/Modules/Collision.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Collision.cpp.i
+.PHONY : src/App/Modules/Collision.cpp.i
+
+src/App/Modules/Collision.s: src/App/Modules/Collision.cpp.s
+
+.PHONY : src/App/Modules/Collision.s
+
+# target to generate assembly for a file
+src/App/Modules/Collision.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Collision.cpp.s
+.PHONY : src/App/Modules/Collision.cpp.s
+
 src/App/Modules/Grid.o: src/App/Modules/Grid.cpp.o
 
 .PHONY : src/App/Modules/Grid.o
@@ -203,6 +257,60 @@ src/App/Modules/Loader.s: src/App/Modules/Loader.cpp.s
 src/App/Modules/Loader.cpp.s:
 	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Loader.cpp.s
 .PHONY : src/App/Modules/Loader.cpp.s
+
+src/App/Modules/Menu.o: src/App/Modules/Menu.cpp.o
+
+.PHONY : src/App/Modules/Menu.o
+
+# target to build an object file
+src/App/Modules/Menu.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Menu.cpp.o
+.PHONY : src/App/Modules/Menu.cpp.o
+
+src/App/Modules/Menu.i: src/App/Modules/Menu.cpp.i
+
+.PHONY : src/App/Modules/Menu.i
+
+# target to preprocess a source file
+src/App/Modules/Menu.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Menu.cpp.i
+.PHONY : src/App/Modules/Menu.cpp.i
+
+src/App/Modules/Menu.s: src/App/Modules/Menu.cpp.s
+
+.PHONY : src/App/Modules/Menu.s
+
+# target to generate assembly for a file
+src/App/Modules/Menu.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Menu.cpp.s
+.PHONY : src/App/Modules/Menu.cpp.s
+
+src/App/Modules/Runner.o: src/App/Modules/Runner.cpp.o
+
+.PHONY : src/App/Modules/Runner.o
+
+# target to build an object file
+src/App/Modules/Runner.cpp.o:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Runner.cpp.o
+.PHONY : src/App/Modules/Runner.cpp.o
+
+src/App/Modules/Runner.i: src/App/Modules/Runner.cpp.i
+
+.PHONY : src/App/Modules/Runner.i
+
+# target to preprocess a source file
+src/App/Modules/Runner.cpp.i:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Runner.cpp.i
+.PHONY : src/App/Modules/Runner.cpp.i
+
+src/App/Modules/Runner.s: src/App/Modules/Runner.cpp.s
+
+.PHONY : src/App/Modules/Runner.s
+
+# target to generate assembly for a file
+src/App/Modules/Runner.cpp.s:
+	$(MAKE) -f CMakeFiles/demoExe.dir/build.make CMakeFiles/demoExe.dir/src/App/Modules/Runner.cpp.s
+.PHONY : src/App/Modules/Runner.cpp.s
 
 src/App/Modules/Text.o: src/App/Modules/Text.cpp.o
 
@@ -270,12 +378,24 @@ help:
 	@echo "... src/App/App.o"
 	@echo "... src/App/App.i"
 	@echo "... src/App/App.s"
+	@echo "... src/App/Modules/AdvancedGUI.o"
+	@echo "... src/App/Modules/AdvancedGUI.i"
+	@echo "... src/App/Modules/AdvancedGUI.s"
+	@echo "... src/App/Modules/Collision.o"
+	@echo "... src/App/Modules/Collision.i"
+	@echo "... src/App/Modules/Collision.s"
 	@echo "... src/App/Modules/Grid.o"
 	@echo "... src/App/Modules/Grid.i"
 	@echo "... src/App/Modules/Grid.s"
 	@echo "... src/App/Modules/Loader.o"
 	@echo "... src/App/Modules/Loader.i"
 	@echo "... src/App/Modules/Loader.s"
+	@echo "... src/App/Modules/Menu.o"
+	@echo "... src/App/Modules/Menu.i"
+	@echo "... src/App/Modules/Menu.s"
+	@echo "... src/App/Modules/Runner.o"
+	@echo "... src/App/Modules/Runner.i"
+	@echo "... src/App/Modules/Runner.s"
 	@echo "... src/App/Modules/Text.o"
 	@echo "... src/App/Modules/Text.i"
 	@echo "... src/App/Modules/Text.s"

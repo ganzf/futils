@@ -94,6 +94,18 @@
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/AModule.hpp">
 			<Option target="demoExe"/>
 		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/AdvancedGUI.cpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/AdvancedGUI.hpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Collision.cpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Collision.hpp">
+			<Option target="demoExe"/>
+		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Grid.cpp">
 			<Option target="demoExe"/>
 		</Unit>
@@ -104,6 +116,18 @@
 			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Loader.hpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Menu.cpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Menu.hpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Runner.cpp">
+			<Option target="demoExe"/>
+		</Unit>
+		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Runner.hpp">
 			<Option target="demoExe"/>
 		</Unit>
 		<Unit filename="/home/arroganz/cpp/futils/projects/fender/demo/src/App/Modules/Text.cpp">
