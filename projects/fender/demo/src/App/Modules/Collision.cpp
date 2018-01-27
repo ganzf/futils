@@ -22,7 +22,7 @@ namespace demo::systems
             poulpi->setPosition(poulpi->getPositionX(), poulpi->getPositionY() - 1);
         };
         inputC.map[futils::Keys::Space] = [this]() {
-            auto *bullet = &entityManager->smartCreate<Ennemy>("golds.png");
+            auto *bullet = &entityManager->smartCreate<Bullet>("laser.png", futils::White);
             bullet->setPosition(poulpi->getPositionX() + 3, poulpi->getPositionY());
             auto &rigidBody = bullet->get<fender::components::rigidBody>();
             bullet->setBorderVisible(false);
@@ -42,7 +42,7 @@ namespace demo::systems
     }
 
     void Collision::createEntities() {
-        poulpi = &entityManager->smartCreate<fender::entities::Image>("ship.jpg", Vec2{2, 15}, Vec2{2, 2});
+        poulpi = &entityManager->smartCreate<fender::entities::Image>("ship.png", Vec2{2, 15}, Vec2{2, 2});
         poulpi->setBorderVisible(false);
 
         createEnemy();
@@ -61,6 +61,8 @@ namespace demo::systems
         addReaction<fender::events::Collision>([this](futils::IMediatorPacket &pkg){
             auto &packet = futils::Mediator::rebuild<fender::events::Collision>(pkg);
 
+            if (packet.first->getConcreteType() == packet.second->getConcreteType())
+                return ;
             entityManager->destroy(*(packet.first));
             entityManager->destroy((*packet.second));
 
@@ -73,7 +75,7 @@ namespace demo::systems
     void Collision::update() {
         if (ennemy != nullptr) {
             if (randomPop.getRandom() > 14.5) {
-                auto *bullet = &entityManager->smartCreate<Ennemy>("golds.png");
+                auto *bullet = &entityManager->smartCreate<Bullet>("laser.png", futils::Crimson);
                 bullet->setPosition(ennemy->getPositionX() - 2, ennemy->getPositionY());
                 auto &rigidBody = bullet->get<fender::components::rigidBody>();
                 bullet->setBorderVisible(false);

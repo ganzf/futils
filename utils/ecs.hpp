@@ -117,6 +117,7 @@ namespace futils
     class   IEntity
     {
         int _id;
+        futils::type_index concreteType;
         std::unordered_map<futils::type_index, IComponent *>    components;
 
         template                            <typename Compo>
@@ -133,11 +134,18 @@ namespace futils
         std::queue<std::pair<IComponent *, std::function<void()>>> lateinitComponents;
         futils::Mediator *events{nullptr};
         EntityManager *entityManager{nullptr};
-
+        void setConcreteType(futils::type_index t)
+        {
+            concreteType = t;
+        }
         void setId(int id) {
             _id = id;
         }
         // END.
+        futils::type_index getConcreteType() const {
+            return concreteType;
+        }
+
         IEntity() {
             this->_id = futils::UID::get();
         }
@@ -274,6 +282,7 @@ namespace futils
         void initEntity(T &entity)
         {
             entity.setId(idCount++);
+            entity.setConcreteType(futils::type<T>::index);
             entity.events = events;
             entity.entityManager = this;
             entity.onExtension = [this](IComponent &compo) {
