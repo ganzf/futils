@@ -34,8 +34,8 @@ void fender::systems::SFMLRenderer::init() {
     entityManager->addSystem<SFMLSystems::AssetLoader>();
     entityManager->addSystem<SFMLSystems::ListView>();
     entityManager->addSystem<SFMLSystems::Border>();
-    entityManager->addSystem<SFMLSystems::Text>();
     entityManager->addSystem<SFMLSystems::Image>();
+    entityManager->addSystem<SFMLSystems::Text>();
     entityManager->addSystem<SFMLSystems::Clickable>();
     entityManager->addSystem<SFMLSystems::Hoverable>();
     entityManager->addSystem<SFMLSystems::Editable>();
