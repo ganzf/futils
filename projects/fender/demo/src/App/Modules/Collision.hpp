@@ -8,6 +8,29 @@
 # include "AModule.hpp"
 
 namespace demo::systems {
+    class Bullet : public fender::entities::GameObject {
+    public:
+        Bullet(std::string const &img, futils::Color color) {
+            auto &image = attach<fender::components::Image>();
+            attach<fender::components::rigidBody>();
+            auto &filter = attach<fender::components::Color>();
+            filter.color = color;
+            image.file = img;
+            setSize(futils::Vec2<float>(1, 1));
+        }
+
+        ~Bullet() {
+            detach<fender::components::Image>();
+            detach<fender::components::rigidBody>();
+            detach<fender::components::Color>();
+        }
+
+        void changeDirection() {
+            auto &rb = get<fender::components::rigidBody>();
+            rb.force.y = rb.force.y * - 1;
+        }
+    };
+
     class Ennemy : public fender::entities::GameObject {
     public:
         Ennemy(std::string const &img, futils::Vec2<float> const &pos = {0, 0}, futils::Vec2<float> size = {1, 1}) {
