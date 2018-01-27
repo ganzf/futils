@@ -31,10 +31,12 @@ set(SOURCE_FILES
 		${SRC}
         src/Entities/Image.cpp src/Entities/Image.hpp src/Components/Clickable.cpp src/Components/Clickable.hpp src/Systems/SFML/Clickable.cpp src/Systems/SFML/Clickable.hpp src/Entities/Button.cpp src/Entities/Button.hpp)
 
+
 if (UNIX)
 	add_compile_options(-Wall -Wextra -Werror)
 elseif(WIN32)
-    add_compile_options(/std:c++latest)
+    set(CMAKE_CXX_FLAGS /std:c++latest)
+#    add_compile_options(/std:c++latest)
 endif()
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 add_library(fender STATIC ${SOURCE_FILES})
@@ -42,7 +44,19 @@ if (UNIX)
 	target_link_libraries(fender sfml-system sfml-window sfml-audio sfml-graphics)
 endif (UNIX)
 if (WIN32)
-	target_link_libraries(fender libraries/SFML/lib/sfml-system libraries/SFML/lib/sfml-window libraries/SFML/lib/sfml-audio libraries/SFML/lib/sfml-graphics)
+#    set(SFML_ROOT ${PROJECT_SOURCE_DIR}/projects/fender/libraries/SFML/)
+#    set(CMAKE_MODULE_PATH
+#			${CMAKE_MODULE_PATH}
+#			${PROJECT_SOURCE_DIR}/projects/fender/libraries/SFML/cmake/Modules/)
+#	find_package(SFML REQUIRED COMPONENTS system window audio graphics)
+#        message(${SFML_LIBRARIES})
+#	target_link_libraries(fender ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    target_link_libraries(fender
+            ${PROJECT_SOURCE_DIR}/projects/fender/libraries/SFML/lib/sfml-system.lib
+            ${PROJECT_SOURCE_DIR}/projects/fender/libraries/SFML/lib/sfml-window.lib
+            ${PROJECT_SOURCE_DIR}/projects/fender/libraries/SFML/lib/sfml-audio.lib
+            ${PROJECT_SOURCE_DIR}/projects/fender/libraries/SFML/lib/sfml-graphics.lib
+            )
 endif(WIN32)
 target_link_libraries(fender -lstdc++fs)
 include_directories(release include ${PROJECT_SOURCE_DIR}/utils src libraries/SFML/include)
