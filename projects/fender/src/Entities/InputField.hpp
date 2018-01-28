@@ -120,6 +120,10 @@ namespace fender::entities {
             detach<components::Editable>();
             detach<components::Text>();
         }
+        
+        void setInputsActivated(bool activated) {
+            _inputs->activated = activated;
+        }
     };
 }
 
