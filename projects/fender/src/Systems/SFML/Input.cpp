@@ -221,7 +221,6 @@ namespace fender::systems::SFMLSystems
 
         if ((_keyState[key] == futils::InputState::Down && state == futils::InputState::GoingDown));
         else
-
             _keyState[key] = state;
         // frameInputs[futils::InputAction(key, state)] = true;
         for (auto &input: entityManager->get<fender::components::Input>())
