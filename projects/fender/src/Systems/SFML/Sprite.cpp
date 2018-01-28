@@ -9,11 +9,17 @@ namespace fender::systems::SFMLSystems {
 
     void Sprite::update(float elapsed) {
         for (auto &sprite : entityManager->get<fender::components::Sprite>()) {
-            sprite->timeElapsed += elapsed;
+            if (timeElapsed.find(sprite) != timeElapsed.end()) {
+                timeElapsed[sprite] = timeElapsed[sprite] + elapsed;
+                continue;
+            }
+            timeElapsed[sprite] = elapsed;
+        }
+        for (auto &sprite : entityManager->get<fender::components::Sprite>()) {
             if (sprite->loop == false)
                 continue;
-            if (sprite->timeElapsed > sprite->speed) {
-                sprite->timeElapsed = 0.0;
+            if (timeElapsed[sprite] > sprite->speed) {
+                timeElapsed[sprite] = 0.0;
                 sprite->index += 1;
                 if (sprite->index >= sprite->files.size())
                     sprite->index = 0;

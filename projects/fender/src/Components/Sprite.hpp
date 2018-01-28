@@ -13,7 +13,6 @@ namespace fender::components
         std::vector<std::string>    files;
         bool loop{true};
         float speed{0.08};
-        float timeElapsed{0.0};
         unsigned int index{0};
 
         void addSprite(std::string const &file) {
