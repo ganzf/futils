@@ -2,6 +2,7 @@
 // Created by arroganz on 1/24/18.
 //
 
+#include <Entities/Sprite.hpp>
 #include "Menu.hpp"
 
 namespace demo::systems
@@ -31,6 +32,22 @@ namespace demo::systems
         inputC.map[futils::Keys::Escape] = [this](){
             entityManager->removeSystem(name);
         };
+
+        entityManager->smartCreate<fender::entities::Image>("poulpi.png", futils::Vec2<float>{5, 5});
+
+
+
+        auto *sprite = &entityManager->smartCreate<fender::entities::Sprite>(0.08);
+        for (int i = 0; i < 10; i++) {
+            std::string file = "ShipMenu";
+            file += std::to_string(i + 1);
+            file += ".png";
+            std::cout << "sprite add " << file << std::endl;
+            sprite->addSprite(file);
+        }
+        sprite->setPosition(10, 10);
+        sprite->setSize(5, 5);
+
     }
     void Menu::update() {
 

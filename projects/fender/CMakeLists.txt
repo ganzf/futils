@@ -29,7 +29,7 @@ set(SOURCE_FILES
 		${COMPONENTS}
 		${SYSTEMS}
 		${SRC}
-        src/Entities/Image.cpp src/Entities/Image.hpp src/Components/Clickable.cpp src/Components/Clickable.hpp src/Systems/SFML/Clickable.cpp src/Systems/SFML/Clickable.hpp src/Entities/Button.cpp src/Entities/Button.hpp)
+        src/Entities/Image.cpp src/Entities/Image.hpp src/Components/Clickable.cpp src/Components/Clickable.hpp src/Systems/SFML/Clickable.cpp src/Systems/SFML/Clickable.hpp src/Entities/Button.cpp src/Entities/Button.hpp src/Systems/SFML/Sprite.cpp src/Systems/SFML/Sprite.hpp src/Components/Sprite.cpp src/Components/Sprite.hpp src/Entities/Sprite.cpp src/Entities/Sprite.hpp)
 
 
 if (UNIX)
