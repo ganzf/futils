@@ -17,6 +17,7 @@
 #include "Hoverable.hpp"
 #include "Editable.hpp"
 #include "GameObject.hpp"
+#include "Sprite.hpp"
 
 fender::systems::SFMLRenderer::SFMLRenderer()
 {
@@ -39,6 +40,7 @@ void fender::systems::SFMLRenderer::init() {
     entityManager->addSystem<SFMLSystems::Clickable>();
     entityManager->addSystem<SFMLSystems::Hoverable>();
     entityManager->addSystem<SFMLSystems::Editable>();
+    entityManager->addSystem<SFMLSystems::Sprite>();
     addReaction<events::Shutdown>([this](futils::IMediatorPacket &){
         entityManager->removeSystem(name);
     });

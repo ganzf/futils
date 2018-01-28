@@ -43,7 +43,7 @@ namespace fender
         void loadSystemDir(std::string const &path);
 
         template <typename ...Args>
-        bool loadSystem(std::string const &path, Args... args)
+        futils::LoadStatus loadSystem(std::string const &path, Args... args)
         {
             return entityManager->loadSystem(path, args...);
         };

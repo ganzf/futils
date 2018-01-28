@@ -17,7 +17,7 @@ include_directories(
   include
   src)
 
-set_target_properties(demoExe PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../)
+set_target_properties(demoExe PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${DEMO_ROOT})
 
 if (UNIX)
 target_compile_options(demoExe PUBLIC -W -Wall -Werror -Wextra -g3)
