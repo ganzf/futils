@@ -9,6 +9,8 @@ namespace fender::systems::SFMLSystems {
 
     void Sprite::update(float elapsed) {
         for (auto &sprite : entityManager->get<fender::components::Sprite>()) {
+            if (sprite == nullptr)
+                continue;
             if (timeElapsed.find(sprite) != timeElapsed.end()) {
                 timeElapsed[sprite] = timeElapsed[sprite] + elapsed;
                 continue;
@@ -16,7 +18,7 @@ namespace fender::systems::SFMLSystems {
             timeElapsed[sprite] = elapsed;
         }
         for (auto &sprite : entityManager->get<fender::components::Sprite>()) {
-            if (sprite->loop == false)
+            if ( sprite == nullptr || sprite->loop == false)
                 continue;
             if (timeElapsed[sprite] > sprite->speed) {
                 timeElapsed[sprite] = 0.0;
