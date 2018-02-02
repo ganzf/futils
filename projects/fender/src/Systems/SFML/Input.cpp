@@ -187,7 +187,7 @@ namespace fender::systems::SFMLSystems
                     eventMouseReleased.pos.y = event.mouseButton.y;
                     events->send<futils::MouseReleased>(eventMouseReleased);
                 }
-                break ;
+                return ;
             }
 
             case sf::Event::MouseButtonPressed : {
@@ -200,7 +200,7 @@ namespace fender::systems::SFMLSystems
                     eventMouseClicked.pos.y = event.mouseButton.y;
                     events->send<futils::MouseClicked>(eventMouseClicked);
                 }
-                break;
+                return ;
             }
 
             case sf::Event::MouseMoved : {
@@ -210,7 +210,7 @@ namespace fender::systems::SFMLSystems
                 mm.current.x = event.mouseMove.x;
                 mm.current.y = event.mouseMove.y;
                 events->send<futils::MouseMoved>(mm);
-                break ;
+                return ;
             }
 
             // If it's nothing special, we'll try to find the key.
@@ -227,12 +227,19 @@ namespace fender::systems::SFMLSystems
         }
 
         // Now we've got a key and a state, we can process further.
+        // events sfml avec les states futils. Des que j'ai un keyPressed, je met goingDown a true pour une key.
+        // la sfml envoie tout le temps down, mais du coup il faut savoir que c'est la premiere fois.
+        if ((_keyState[key] == futils::InputState::Down
+             && state == futils::InputState::GoingDown)) {
 
-        if ((_keyState[key] == futils::InputState::Down && state == futils::InputState::GoingDown));
-        else
-
+        }
+        else {
             _keyState[key] = state;
+        }
+
         // frameInputs[futils::InputAction(key, state)] = true;
+
+        // Now for each know input, we'll check the sequences to call functions.
         for (auto &input: entityManager->get<fender::components::Input>())
         {
             if (input->activated)
@@ -248,11 +255,15 @@ namespace fender::systems::SFMLSystems
                     for (auto &action: sequence.actions)
                     {
                         if (_keyState[action.key] == action.state)
-                                //action.key == key && action.state == state)
                             count++;
                     }
-                    if (count == size)
+                    if (count == size) {
+                        for (auto &action: sequence.actions) {
+                            if (action.state == futils::InputState::GoingDown)
+                                _keyState[action.key] = futils::InputState::Down;
+                        }
                         func();
+                    }
                 }
             } else
             {

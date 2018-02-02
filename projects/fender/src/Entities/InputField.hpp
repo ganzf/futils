@@ -99,6 +99,10 @@ namespace fender::entities {
             };
             _text = &attach<components::Text>();
             _text->str = placeholder;
+            _text->style.font = "earthorbiter.ttf";
+            _text->style.size = 18;
+            _text->style.color = futils::White;
+
             _inputs = &attach<components::Input>();
             _inputs->activated = false;
             _inputs->name = "SomeInputField";
@@ -111,6 +115,9 @@ namespace fender::entities {
             }
             for (auto &pair: advancedKeys) {
                 auto func = pair.second;
+                _inputs->map[futils::InputSequence(pair.first, futils::InputState::Down)] = [this, func](){
+                    func(_text->str);
+                };
                 _inputs->map[futils::InputSequence(pair.first)] = [this, func](){
                     func(_text->str);
                 };
