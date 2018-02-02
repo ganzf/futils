@@ -25,7 +25,9 @@ namespace fender::systems::SFMLSystems {
                     sprite->index = 0;
                 if (sprite->getEntity().has<components::Image>()) {
                     auto &img = sprite->getEntity().get<components::Image>();
-                    img.file = sprite->files[sprite->index];
+                    img.file = sprite->files[sprite->index].source;
+                    img.position = sprite->files[sprite->index].position;
+                    img.size = sprite->files[sprite->index].size;
                 }
             }
         }

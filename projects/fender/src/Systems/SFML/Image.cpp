@@ -18,6 +18,8 @@ namespace fender::systems::SFMLSystems
         sf::RectangleShape sprite;
         sprite.setSize(sf::Vector2f(absolute.size.w, absolute.size.h));
         sprite.setTexture(&texture);
+        if (image.size.w != -1 && image.size.h != -1)
+            sprite.setTextureRect(sf::Rect(image.position.x, image.position.y, image.size.w, image.size.h));
         sprite.setPosition(absolute.position.x, absolute.position.y);
         if (entity.has<components::Color>()) {
             auto &colorComponent = entity.get<components::Color>();

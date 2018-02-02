@@ -2,6 +2,7 @@
 // Created by arroganz on 1/23/18.
 //
 
+#include <Entities/Sprite.hpp>
 #include "Components/rigidBody.hpp"
 #include "Loader.hpp"
 #include "Text.hpp"
@@ -71,6 +72,18 @@ namespace demo::systems
     void Loader::loadExtensions() {
         auto &rightContent = _rightFrame->get<fender::components::ListView>();
         rightContent.order = futils::Ordering::Vertical;
+
+        auto *sprite = &entityManager->smartCreate<fender::entities::Sprite>(0.04, true);
+        sprite->setBorderVisible(true);
+        sprite->autoLoad("spritesheet.png", futils::Vec2<int>(4, 4), futils::Vec2<int>(128, 128));
+        auto &gui = _cam->get<fender::components::Children>();
+        gui.add(*sprite);
+        auto &spriteInfos = sprite->get<fender::components::ChildInfo>();
+        spriteInfos.relSize.w = 10;
+        spriteInfos.relSize.h = 10;
+        spriteInfos.offset.x = 50;
+        spriteInfos.offset.y = 50;
+
         futils::Dir modules("./src/App/Extensions");
         int found = 0;
         for (auto &file: modules.getContent()) {
