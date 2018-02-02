@@ -74,13 +74,13 @@ namespace demo::systems
         rightContent.order = futils::Ordering::Vertical;
 
         auto *sprite = &entityManager->smartCreate<fender::entities::Sprite>(0.04, true);
-        sprite->setBorderVisible(true);
+        sprite->setBorderVisible(false);
         sprite->autoLoad("spritesheet.png", futils::Vec2<int>(4, 4), futils::Vec2<int>(128, 128));
         auto &gui = _cam->get<fender::components::Children>();
         gui.add(*sprite);
         auto &spriteInfos = sprite->get<fender::components::ChildInfo>();
-        spriteInfos.relSize.w = 10;
-        spriteInfos.relSize.h = 10;
+        spriteInfos.relSize.w = 30;
+        spriteInfos.relSize.h = 30;
         spriteInfos.offset.x = 50;
         spriteInfos.offset.y = 50;
 
