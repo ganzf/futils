@@ -227,7 +227,7 @@ namespace fender::systems::SFMLSystems
         }
 
 
-.        // Now we've got a key and a state, we can process further.
+        // Now we've got a key and a state, we can process further.
         // events sfml avec les states futils. Des que j'ai un keyPressed, je met goingDown a true pour une key.
         // la sfml envoie tout le temps down, mais du coup il faut savoir que c'est la premiere fois.
         if ((_keyState[key] == futils::InputState::Down
