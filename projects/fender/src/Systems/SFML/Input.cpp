@@ -140,21 +140,29 @@ namespace fender::systems::SFMLSystems
 
     void Input::process(sf::Event const &event)
     {
+        // Deprecated "simple keys" event.
         /*if (event.type == sf::Event::KeyPressed)
             events->send<futils::Keys>(sfToFutilsKeys[event.key.code]);*/
+
+        // If event.type is not handled, return
+        // TODO: Place in container for readability
         if (event.type != sf::Event::KeyPressed && event.type != sf::Event::KeyReleased
             && event.type != sf::Event::MouseButtonPressed && event.type != sf::Event::MouseWheelMoved
             && event.type != sf::Event::JoystickButtonPressed && event.type != sf::Event::MouseMoved
             &&event.type != sf::Event::MouseButtonReleased)
         return ;
 
+        // Let's create our key and state local var, initialize them to undefined.
         futils::Keys key = futils::Keys::Undefined;
         futils::InputState state = futils::InputState::Undefined;
 
+        // If we cannot match the sfml event type to a futils state, we'll return because there's no use going further.
         if (sfToFutilsState.find(event.type) != sfToFutilsState.end())
             state = sfToFutilsState.at(event.type);
+        else return ;
 
         switch (event.type) {
+
             case sf::Event::MouseWheelMoved : {
                 if (event.mouseWheel.delta > 0)
                     key = futils::Keys::MouseWheelUp;
@@ -162,11 +170,13 @@ namespace fender::systems::SFMLSystems
                     key = futils::Keys::MouseWheelDown;
                 break ;
             }
+
             case sf::Event::JoystickButtonPressed : {
                 if (event.joystickButton.button < sfJoystickToFutilsKeys.size())
                     key = sfJoystickToFutilsKeys[event.joystickButton.button];
                 break ;
             }
+
             case sf::Event::MouseButtonReleased : {
                 if (sfMouseToFutilsKeys.find(event.mouseButton.button) != sfMouseToFutilsKeys.end())
                     key = sfMouseToFutilsKeys.at(event.mouseButton.button);
@@ -177,8 +187,9 @@ namespace fender::systems::SFMLSystems
                     eventMouseReleased.pos.y = event.mouseButton.y;
                     events->send<futils::MouseReleased>(eventMouseReleased);
                 }
-                break ;
+                return ;
             }
+
             case sf::Event::MouseButtonPressed : {
                 if (sfMouseToFutilsKeys.find(event.mouseButton.button) != sfMouseToFutilsKeys.end())
                     key = sfMouseToFutilsKeys.at(event.mouseButton.button);
@@ -189,8 +200,9 @@ namespace fender::systems::SFMLSystems
                     eventMouseClicked.pos.y = event.mouseButton.y;
                     events->send<futils::MouseClicked>(eventMouseClicked);
                 }
-                break;
+                return ;
             }
+
             case sf::Event::MouseMoved : {
 
                 futils::MouseMoved mm;
@@ -198,31 +210,37 @@ namespace fender::systems::SFMLSystems
                 mm.current.x = event.mouseMove.x;
                 mm.current.y = event.mouseMove.y;
                 events->send<futils::MouseMoved>(mm);
-                break ;
+                return ;
             }
+
+            // If it's nothing special, we'll try to find the key.
             default:
             {
-                if (sfToFutilsKeys.find(event.key.code) != sfToFutilsKeys.end())
-                    key = sfToFutilsKeys.at(event.key.code);
+                try {
+                    if (sfToFutilsKeys.find(event.key.code) != sfToFutilsKeys.end())
+                        key = sfToFutilsKeys.at(event.key.code);
+                } catch (std::runtime_error const &error)
+                {
+                    return ;
+                }
             }
         }
 
-        if (event.type == sf::Event::JoystickButtonPressed ||
-            event.type == sf::Event::MouseButtonPressed ||
-            event.type == sf::Event::KeyPressed) {
-            for (std::unordered_map<futils::Keys, futils::InputState >::iterator k = _keyState.begin();
-                 k != _keyState.end() ; ++k) {
-                if (k->second == futils::InputState::GoingUp)
-                    k->second = futils::InputState::Up;
-                if (k->second == futils::InputState::GoingDown)
-                    k->second = futils::InputState::Down;
-            }
-        }
 
-        if ((_keyState[key] == futils::InputState::Down && state == futils::InputState::GoingDown));
-        else
+.        // Now we've got a key and a state, we can process further.
+        // events sfml avec les states futils. Des que j'ai un keyPressed, je met goingDown a true pour une key.
+        // la sfml envoie tout le temps down, mais du coup il faut savoir que c'est la premiere fois.
+        if ((_keyState[key] == futils::InputState::Down
+             && state == futils::InputState::GoingDown)) {
+
+        }
+        else {
             _keyState[key] = state;
+        }
+
         // frameInputs[futils::InputAction(key, state)] = true;
+
+        // Now for each know input, we'll check the sequences to call functions.
         for (auto &input: entityManager->get<fender::components::Input>())
         {
             if (input->activated)
@@ -238,11 +256,15 @@ namespace fender::systems::SFMLSystems
                     for (auto &action: sequence.actions)
                     {
                         if (_keyState[action.key] == action.state)
-                                //action.key == key && action.state == state)
                             count++;
                     }
-                    if (count == size)
+                    if (count == size) {
+                        for (auto &action: sequence.actions) {
+                            if (action.state == futils::InputState::GoingDown)
+                                _keyState[action.key] = futils::InputState::Down;
+                        }
                         func();
+                    }
                 }
             } else
             {
@@ -256,7 +278,12 @@ namespace fender::systems::SFMLSystems
 
     void Input::reset()
     {
-
+        for (auto k = _keyState.begin(); k != _keyState.end() ; ++k) {
+            if (k->second == futils::InputState::GoingUp)
+                k->second = futils::InputState::Up;
+            if (k->second == futils::InputState::GoingDown)
+                k->second = futils::InputState::Down;
+        }
     }
 
     void Input::run(float) {

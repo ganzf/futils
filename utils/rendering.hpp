@@ -375,6 +375,23 @@ namespace futils
         }
         return os;
     }
+
+    struct Image
+    {
+        Image() = default;
+        Image(std::string const &filePath,
+              Vec2<int> pos = Vec2<int>(0, 0),
+              Vec2<int> size = Vec2<int>(-1, -1)):
+                source(filePath),
+                position(pos),
+                size(size)
+        {
+
+        }
+        std::string source{""};
+        Vec2<int> position{0, 0};
+        Vec2<int> size{-1, 1};
+    };
 }
 
 #endif //FENDER_RENDERING_HPP

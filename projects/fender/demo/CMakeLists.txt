@@ -15,7 +15,7 @@ include_directories(
   ${FENDER_ROOT}/src
   ${PROJECT_SOURCE_DIR}/utils
   include
-  src)
+  src ../include)
 
 set_target_properties(demoExe PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${DEMO_ROOT})
 

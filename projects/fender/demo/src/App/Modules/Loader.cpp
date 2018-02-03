@@ -2,6 +2,7 @@
 // Created by arroganz on 1/23/18.
 //
 
+#include <Entities/Sprite.hpp>
 #include "Components/rigidBody.hpp"
 #include "Loader.hpp"
 #include "Text.hpp"
@@ -71,6 +72,28 @@ namespace demo::systems
     void Loader::loadExtensions() {
         auto &rightContent = _rightFrame->get<fender::components::ListView>();
         rightContent.order = futils::Ordering::Vertical;
+
+        auto &gui = _cam->get<fender::components::Children>();
+        auto *inputField = &entityManager->smartCreate<fender::entities::InputField>("placeholder");
+        gui.add(*inputField);
+        auto &inputInfos = inputField->get<fender::components::ChildInfo>();
+        inputInfos.relSize.w = 30;
+        inputInfos.relSize.h = 30;
+        inputInfos.offset.x = 50;
+        inputInfos.offset.y = 50;
+        inputField->setBorderVisible(true);
+
+//        auto *sprite = &entityManager->smartCreate<fender::entities::Sprite>(0.04, true);
+//        sprite->setBorderVisible(false);
+//        sprite->autoLoad("spritesheet.png", futils::Vec2<int>(4, 4), futils::Vec2<int>(128, 128));
+//        auto &spriteInfos = sprite->get<fender::components::ChildInfo>();
+//        spriteInfos.relSize.w = 30;
+//        spriteInfos.relSize.h = 30;
+//        spriteInfos.offset.x = 50;
+//        spriteInfos.offset.y = 50;
+
+
+
         futils::Dir modules("./src/App/Extensions");
         int found = 0;
         for (auto &file: modules.getContent()) {

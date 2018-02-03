@@ -22,9 +22,19 @@ namespace fender::entities {
             sprite.loop = loop;
         }
 
-        void addSprite(std::string const &file) {
+        void autoLoad(std::string const &file,
+                      futils::Vec2<int> gridNbr,
+                      futils::Vec2<int> gridSize)
+        {
             auto &sprites = get<fender::components::Sprite>();
-            sprites.addSprite(file);
+            sprites.autoLoad(file, gridNbr, gridSize);
+        }
+
+        void addSprite(std::string const &file,
+                       futils::Vec2<int> pos = futils::Vec2<int>(0, 0),
+                       futils::Vec2<int> size = futils::Vec2<int>(-1, -1)) {
+            auto &sprites = get<fender::components::Sprite>();
+            sprites.addSprite(file, pos, size);
         }
 
         ~Sprite() {
