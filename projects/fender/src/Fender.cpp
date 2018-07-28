@@ -2,6 +2,7 @@
 // Created by arroganz on 11/26/17.
 //
 
+#include <Systems/Log.hpp>
 # include "fender.hpp"
 # include "sigCatch.hpp"
 # include "goToBinDir.hpp"
@@ -30,13 +31,13 @@ fender::Fender::Fender(std::string const &arg0) {
 
 void fender::Fender::loadSystemDir(std::string const &path)
 {
-    events->send<std::string>("Loading systems in " + path);
+    events->send("Loading systems in " + path);
 }
 
 int fender::Fender::start(std::string const &configFilePath) {
     // Here I should probably load the dir with all modules
+    addSystem<systems::Log>();
     this->loadSystemDir(configFilePath);
-//    addSystem<systems::Log>();
 //    entityManager->run(); // I Want log to be the first thing to exist so that any string event can be tracked.
 //    addSystem<systems::Fysics>();
 //    entityManager->run(); // This way, the output is more coherent
