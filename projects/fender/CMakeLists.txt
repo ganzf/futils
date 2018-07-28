@@ -1,36 +1,12 @@
 cmake_minimum_required(VERSION 3.7)
 set(CMAKE_CXX_STANDARD 17)
 
-file(GLOB INCLUDE
-		"include/*.hpp"
-		)
-file(GLOB UTILS
-  "${PROJECT_SOURCE_DIR}/utils/*.hpp")
-file(GLOB SYSTEMS
-		"src/Systems/*.cpp"
-		"src/Systems/*.hpp"
-		"src/Systems/SFML/*.cpp"
-		"src/Systems/SFML/*.hpp"
-		"src/Systems/Fysics/*.cpp"
-		"src/Systems/Fysics/*.hpp")
-file(GLOB ENTITIES
-		"src/Entities/*.cpp"
-		"src/Entities/*.hpp")
-file(GLOB COMPONENTS
-		"src/Components/*.cpp"
-		"src/Components/*.hpp")
-file(GLOB SRC
-		"src/*.cpp")
+file(GLOB INCLUDE "include/*.hpp")
+file(GLOB UTILS"${PROJECT_SOURCE_DIR}/utils/*.hpp")
 
-set(SOURCE_FILES
-		${INCLUDE}
-		${UTILS}
-		${ENTITIES}
-		${COMPONENTS}
-		${SYSTEMS}
-		${SRC}
-        src/Entities/Image.cpp src/Entities/Image.hpp src/Components/Clickable.cpp src/Components/Clickable.hpp src/Systems/SFML/Clickable.cpp src/Systems/SFML/Clickable.hpp src/Entities/Button.cpp src/Entities/Button.hpp src/Systems/SFML/Sprite.cpp src/Systems/SFML/Sprite.hpp src/Components/Sprite.cpp src/Components/Sprite.hpp src/Entities/Sprite.cpp src/Entities/Sprite.hpp)
+file(GLOB SRC "src/*.cpp")
 
+set(SOURCE_FILES ${INCLUDE} ${UTILS} ${SRC})
 
 if (UNIX)
 	add_compile_options(-Wall -Wextra -Werror)

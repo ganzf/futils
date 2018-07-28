@@ -37,7 +37,7 @@ namespace fender
         futils::UP<futils::Mediator> events;
     public:
         Fender(std::string const &);
-        int start();
+        int start(std::string const &configFilePath);
         int run();
 
         void loadSystemDir(std::string const &path);
