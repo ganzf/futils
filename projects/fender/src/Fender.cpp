@@ -2,7 +2,9 @@
 // Created by arroganz on 11/26/17.
 //
 
-#include <Systems/Log.hpp>
+# include <string>
+# include <iostream>
+# include <experimental/filesystem>
 # include "fender.hpp"
 # include "sigCatch.hpp"
 # include "goToBinDir.hpp"
@@ -31,22 +33,25 @@ fender::Fender::Fender(std::string const &arg0) {
 
 void fender::Fender::loadSystemDir(std::string const &path)
 {
-    events->send("Loading systems in " + path);
+    std::cout << "Loading all systems in " << path << std::endl;
+    const auto fsPath = std::experimental::filesystem::path(path);
+    int count = 0;
+    for (auto & p : std::experimental::filesystem::directory_iterator(fsPath)) {
+        std::cout << "-> Loading " << p << " from " << path << std::endl;
+        loadSystem(p.path());
+        count += 1;
+    }
 }
 
 int fender::Fender::start(std::string const &configFilePath) {
     // Here I should probably load the dir with all modules
-    addSystem<systems::Log>();
     this->loadSystemDir(configFilePath);
-//    entityManager->run(); // I Want log to be the first thing to exist so that any string event can be tracked.
-//    addSystem<systems::Fysics>();
-//    entityManager->run(); // This way, the output is more coherent
-//    addSystem<systems::SFMLRenderer>();
     return entityManager->run(); // this will init all systems
 }
 
 int fender::Fender::run() {
     int64_t runs = 0;
+    events->send<std::string>("Fender running...");
     for (;entityManager->getNumberOfSystems() > 0; runs++) {
         if (entityManager->run() != 0 || interrupt)
             break ;

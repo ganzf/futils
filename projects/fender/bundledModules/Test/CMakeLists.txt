@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.9)
+project(Test VERSION 1.0 DESCRIPTION "Test system for fender")
+add_library(Test SHARED Test.cpp Test.hpp include/events.hpp)
+target_include_directories(Test PUBLIC include utils)
+set_target_properties(Test PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(Test PROPERTIES PUBLIC_HEADER Test.hpp)

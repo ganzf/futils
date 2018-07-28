@@ -2,7 +2,7 @@
 // Created by arroganz on 12/16/17.
 //
 
-#include <events.hpp>
+#include "events.hpp"
 #include "Log.hpp"
 
 extern "C" futils::ISystem *build()
@@ -17,14 +17,12 @@ Log::Log()
 
 void Log::init() {
     phase++;
-    events->require<std::string>
-            (this,
-             [this](futils::IMediatorPacket &pkg) {
+    events->require<std::string>(this, [this](futils::IMediatorPacket &pkg) {
         auto &s = futils::Mediator::rebuild<std::string>(pkg);
-        std::cout << "--> \t" << s << std::endl;
+        std::cout << " Log --> \t" << s << std::endl;
     });
-    addReaction<events::Shutdown>([this](futils::IMediatorPacket &){
-       entityManager->removeSystem(name);
+    addReaction<fender::events::Shutdown>([this](futils::IMediatorPacket &){
+        entityManager->removeSystem(name);
     });
 }
 
