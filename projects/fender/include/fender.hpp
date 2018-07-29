@@ -31,16 +31,22 @@ namespace fender
     using vec2ui = futils::Vec2<unsigned int>;
     using vec3ui = futils::Vec3<unsigned int>;
 
+    struct StartParameters {
+        std::string configFilePath;
+        bool recursive = false;
+        bool logWhenLoading = true;
+    };
+
     class Fender
     {
         futils::UP<futils::EntityManager> entityManager;
         futils::UP<futils::Mediator> events;
     public:
         Fender(std::string const &);
-        int start(std::string const &configFilePath);
+        int start(const StartParameters params);
         int run();
 
-        void loadSystemDir(std::string const &path);
+        int loadSystemDir(std::string const &path, bool recursive, bool log);
 
         template <typename ...Args>
         futils::LoadStatus loadSystem(std::string const &path, Args... args)

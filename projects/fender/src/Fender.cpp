@@ -31,22 +31,30 @@ fender::Fender::Fender(std::string const &arg0) {
     sig.set(SIGINT, onSigint);
 }
 
-void fender::Fender::loadSystemDir(std::string const &path)
+int fender::Fender::loadSystemDir(std::string const &path, bool recursive, bool log)
 {
     std::cout << "Loading all systems in " << path << std::endl;
     const auto fsPath = std::experimental::filesystem::path(path);
     int count = 0;
     for (auto & p : std::experimental::filesystem::directory_iterator(fsPath)) {
-        std::cout << "-> Loading " << p << " from " << path << std::endl;
+        if (log)
+            std::cout << "-> Loading " << p << " from " << path << std::endl;
+        if (recursive && std::experimental::filesystem::is_directory(p.path())) {
+            if (log)
+                std::cout << "--> Loading directory " << p.path() << std::endl;
+            loadSystemDir(p.path(), recursive, log);
+        }
         loadSystem(p.path());
         count += 1;
     }
+    return count;
 }
 
-int fender::Fender::start(std::string const &configFilePath) {
+int fender::Fender::start(const StartParameters params) {
     // Here I should probably load the dir with all modules
-    this->loadSystemDir(configFilePath);
-    return entityManager->run(); // this will init all systems
+    const int numberOfSystems = this->loadSystemDir(params.configFilePath, params.recursive, params.logWhenLoading);
+    events->send<std::string>("Fender loaded " + std::to_string(numberOfSystems) + " systems.");
+    return entityManager->run(); // this will init all systems, and return how many systems ran.
 }
 
 int fender::Fender::run() {
