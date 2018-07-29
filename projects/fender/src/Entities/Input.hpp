@@ -24,5 +24,10 @@ namespace fender::entities
             auto &input = get<components::Input>();
             input.activated = activated;
         }
+
+        void on(futils::Keys key, std::function<void()> reaction) {
+            auto &input = get<components::Input>();
+            input.map[key] = reaction;
+        }
     };
 }

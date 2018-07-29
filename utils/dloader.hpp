@@ -28,9 +28,10 @@ namespace futils
         Dloader(std::string const &path, int mode = RTLD_LAZY):
                 _path(path)
         {
+            std::cout << "Loading library in " << path << std::endl;
             _handle = dlopen(path.c_str(), mode);
             if (_handle == nullptr)
-                throw std::runtime_error("Cannot find " + path);
+                throw std::runtime_error(dlerror());
         }
 
         template    <typename T, typename ...Args>
