@@ -43,10 +43,10 @@ namespace fender
         futils::UP<futils::Mediator> events;
     public:
         Fender(std::string const &);
-        int start(const StartParameters params);
+        int start(StartParameters params);
         int run();
 
-        int loadSystemDir(std::string const &path, bool recursive, bool log);
+        void loadSystemDir(std::string const &path, bool recursive, bool log);
 
         template <typename ...Args>
         futils::LoadStatus loadSystem(std::string const &path, Args... args)

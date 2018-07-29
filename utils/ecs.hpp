@@ -512,7 +512,6 @@ namespace futils
 
         int run()
         {
-            int count = 0;
             try {
                 auto elapsed = timeKeeper.loop();
                 for (auto &pair: orderMap)
@@ -520,7 +519,6 @@ namespace futils
                     auto &system = pair.second;
                     currentSystem = system;
                     system->run(elapsed);
-                    count += 1;
                 }
                 cleanSystems();
             } catch (std::out_of_range const &)
@@ -531,7 +529,7 @@ namespace futils
                 }
                 throw ;
             }
-            return count;
+            return 0;
         }
 
         ~EntityManager()
