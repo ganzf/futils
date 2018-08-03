@@ -17,6 +17,7 @@ namespace fender::systems::SFMLSystems
 {
     Camera::Camera(): System("Camera") {
         afterBuild = [this](){
+            __init();
             addReaction<WorldAttached>([this](futils::IMediatorPacket &pkg){
                 auto &world = futils::Mediator::rebuild<WorldAttached>(pkg);
                 if (world.compo.type == fender::components::World::Type::Normal) {

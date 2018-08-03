@@ -21,6 +21,12 @@ namespace fender::systems::SFMLSystems {
 
     public:
         IsoCam() : System("IsoCam") {}
-        virtual void run(float) override {};
+        virtual void run(float) override {
+            switch (state) {
+                case States::Init:
+                    state += 1;
+                    return __init();
+            }
+        };
     };
 }

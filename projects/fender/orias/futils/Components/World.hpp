@@ -12,6 +12,7 @@ namespace fender::components {
             Normal = 0,
             Isometric
         };
+        World(Type type = Type::Normal): type(type) {}
 
         int unit{2};
         vec3f size;

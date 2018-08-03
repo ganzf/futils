@@ -527,7 +527,7 @@ namespace futils
                     std::cout << "Failed to erase " << systemsMarkedForErase.front() << std::endl;
                     systemsMarkedForErase.pop();
                 }
-                throw ;
+//                throw ;
             }
             return 0;
         }
