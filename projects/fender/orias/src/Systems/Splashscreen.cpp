@@ -24,10 +24,8 @@ namespace orias::scenes {
                                                 windowConfig["height"].asFloat(),
                                                 windowConfig["title"].asString() + " (version " + version.asString() + ")");
 
-        // Ca pue faut faire une meilleure entite.
-        world = &entityManager->create<World>("SplashscreenWorld");
-        world->detach<fender::components::World>();
-        world->attach<fender::components::World>(fender::components::World::Type::Isometric);
+        world = &entityManager->create<World>("SplashscreenWorld",
+                                              fender::components::World::Type::Isometric);
 
         camera = &entityManager->create<Camera>(window, "MainCamera");
         input = &entityManager->create<Input>();

@@ -13,6 +13,12 @@ namespace fender::entities {
         World() {
             attach<components::World>();
         }
+
+        World(std::string const &name, fender::components::World::Type type) {
+            auto &world = attach<components::World>(type);
+            world.name = name;
+        }
+
         World(std::string const &name, futils::Vec2<float> size = {100, 100}, int unit = 32) {
             auto &world = attach<components::World>();
             world.name = name;

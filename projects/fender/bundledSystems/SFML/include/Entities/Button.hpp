@@ -17,9 +17,10 @@ namespace fender::entities {
     class Button : public GameObject {
 
     public:
-        Button() {;
+        Button(std::string const &label) {
             attach<components::Image>();
-            attach<components::Text>();
+            auto &text = attach<components::Text>();
+            text.str = label;
             attach<components::Clickable>();
             auto &hover = attach<components::Hoverable>();
             hover.onHover = [this](){
