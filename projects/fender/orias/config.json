@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "rendering": {
+    "window": {
+      "width": 1600,
+      "height": 900,
+      "title": "Orias"
+    }
+  },
+  "dependencies": {
+    "logWhenLoading": true,
+    "recursive": true,
+    "directory": "./modules"
+  },
+  "game": {
+    "playerName": "Fluff"
+  }
+}

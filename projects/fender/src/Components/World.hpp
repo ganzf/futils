@@ -8,9 +8,15 @@
 
 namespace fender::components {
     struct World : futils::IComponent {
-        int unit{32};
+        enum class Type {
+            Normal = 0,
+            Isometric
+        };
+
+        int unit{2};
         vec3f size;
         std::string name;
+        Type type;
     };
 }
 
